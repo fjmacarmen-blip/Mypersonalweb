@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Francisco Javier Martínez Alba - Director de Hotel | 25+ Años de Experiencia</title>
+
+  <meta name="description" content="Francisco Javier Martínez Alba. Director de hotel con 25+ años de experiencia en gestión operativa, liderazgo de equipos y cumplimiento normativo." />
+  <link rel="canonical" href="http://localhost:5500/" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- AOS Animation Library -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              50: '#f0f4f8', 100: '#d9e2ec', 200: '#bcccdc', 300: '#9fb3c8',
+              400: '#829ab1', 500: '#627d98', 600: '#486581', 700: '#334e68',
+              800: '#243b53', 900: '#102a43', 950: '#0a1929',
+            },
+            accent: { gold: '#d4af37', cyan: '#00d4ff', teal: '#14b8a6' }
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-20px)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0a1929 0%, #102a43 25%, #1a365d 50%, #102a43 75%, #0a1929 100%);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+      min-height: 100vh;
+    }
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+    .tab-content { display: none; animation: fadeIn 0.6s ease-out; }
+    .tab-content.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .nav-item { position: relative; transition: all 0.3s ease; }
+    .nav-item.active { color: #ffffff; }
+    .nav-item.active::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, #d4af37, #00d4ff);
+      animation: shimmer 2s linear infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    .nav-item:hover { color: #d9e2ec; transform: translateY(-2px); }
+    .card-gradient {
+      background: linear-gradient(145deg, rgba(255,255,255,0.98) 0%, rgba(240,244,248,0.95) 100%);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .hero-gradient {
+      background: linear-gradient(135deg, rgba(16,42,67,0.95) 0%, rgba(10,25,41,0.9) 50%, rgba(16,42,67,0.95) 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero-gradient::before {
+      content: ''; position: absolute; top: -50%; right: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(212,175,55,0.1) 0%, transparent 70%);
+      animation: pulse 8s ease-in-out infinite;
+    }
+    .navy-bg { background: linear-gradient(135deg, #102a43 0%, #243b53 100%); }
+    .hover-lift { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+    .hover-lift:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 25px 50px rgba(16,42,67,0.4); }
+
+    /* DASHBOARD MODAL STYLES */
+    .dash-modal { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(10,25,41,0.95); backdrop-filter: blur(10px); }
+    .dash-modal.active { display: flex; }
+    .dash-container { width: 95%; height: 95%; max-width: 1400px; margin: auto; background: white; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }
+    .dash-header { background: linear-gradient(135deg, #102a43 0%, #243b53 100%); color: white; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #d4af37; }
+    .dash-body { flex: 1; overflow: hidden; display: flex; }
+    .dash-sidebar { width: 260px; background: #102a43; color: white; overflow-y: auto; border-right: 1px solid #243b53; }
+    .dash-main { flex: 1; overflow: auto; background: #f4f6f8; padding: 0; }
+    .dash-nav-item { padding: 1rem 1.5rem; cursor: pointer; transition: all 0.3s; border-left: 4px solid transparent; display: flex; align-items: center; gap: 10px; user-select:none; }
+    .dash-nav-item:hover, .dash-nav-item.active { background: rgba(255,255,255,0.1); border-left-color: #d4af37; }
+    .dash-nav-item .icon { width: 24px; text-align: center; }
+    .dash-card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 1.5rem; }
+    .dash-btn { padding: 0.6rem 1.2rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; border: none; display: inline-flex; align-items: center; gap: 0.5rem; }
+    .dash-btn-primary { background: #102a43; color: white; }
+    .dash-btn-primary:hover { background: #243b53; transform: translateY(-2px); }
+    .dash-btn-outline { background: transparent; border: 1px solid #cbd5e1; color: #102a43; }
+    .dash-btn-outline:hover { background: #f1f5f9; }
+    .dash-btn-success { background: #10b981; color: white; }
+    .dash-input, .dash-textarea, .dash-select { width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 0.95rem; margin-bottom: 0.75rem; }
+    .dash-textarea { min-height: 120px; resize: vertical; font-family: inherit; }
+    .dash-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .dash-table th, .dash-table td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
+    .dash-table th { background: #f1f5f9; font-weight: 600; color: #475569; }
+    .dash-badge { padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600; }
+    .dash-badge-sector { background: #e0f2fe; color: #0369a1; }
+    .dash-badge-match-high { background: #dcfce7; color: #166534; }
+    .dash-badge-match-med { background: #fef3c7; color: #92400e; }
+    .dash-badge-match-low { background: #fee2e2; color: #991b1b; }
+    .dash-metric-card { background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); padding: 1.25rem; border-radius: 12px; border-left: 4px solid #102a43; }
+    .dash-metric-value { font-size: 2rem; font-weight: 700; color: #102a43; }
+    .dash-loading { display: none; align-items: center; gap: 0.75rem; color: #64748b; margin: 1rem 0; }
+    .dash-loading.active { display: flex; }
+    .spinner { width: 20px; height: 20px; border: 3px solid #e2e8f0; border-top-color: #102a43; border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .sector-btn { padding: 0.5rem 1rem; border: 2px solid #e2e8f0; border-radius: 20px; cursor: pointer; background: white; font-weight: 500; transition: all 0.3s; }
+    .sector-btn.active { border-color: #102a43; background: #102a43; color: white; }
+    .sector-btn[data-sector="hotel"].active { background: #0ea5e9; border-color: #0ea5e9; }
+    .sector-btn[data-sector="docencia"].active { background: #22c55e; border-color: #22c55e; }
+    .sector-btn[data-sector="admin"].active { background: #8b5cf6; border-color: #8b5cf6; }
+
+    /* Dashboard Tab Panels */
+    .dash-tab-panel { display: none; padding: 2rem; }
+    .dash-tab-panel.active { display: block; }
+
+    /* Document Viewer */
+    .doc-viewer { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; max-height: 400px; overflow-y: auto; font-family: 'Segoe UI', Arial, sans-serif; font-size: 0.9rem; white-space: pre-wrap; }
+
+    /* Interview Modal */
+    .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(10,25,41,0.95); backdrop-filter: blur(10px); }
+    .modal.active { display: flex; align-items: flex-start; justify-content: center; padding: 2rem; overflow-y: auto; }
+    .modal-content { position: relative; margin: auto; max-width: 900px; width: 100%; background: white; border-radius: 16px; box-shadow: 0 25px 50px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto; }
+    .modal-header { background: linear-gradient(135deg, #102a43 0%, #243b53 100%); color: white; padding: 2rem; border-bottom: 3px solid #d4af37; }
+    .modal-body { padding: 2rem; }
+    .close-modal { position: absolute; top: 1.5rem; right: 1.5rem; color: white; font-size: 2rem; cursor: pointer; transition: all 0.3s; }
+    .close-modal:hover { color: #d4af37; transform: rotate(90deg); }
+
+    /* Photo Gallery */
+    .photo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+    .photo-card { position: relative; overflow: hidden; border-radius: 12px; aspect-ratio: 1; cursor: pointer; }
+    .photo-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .photo-card:hover img { transform: scale(1.1); }
+    .photo-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(16,42,67,0.9), transparent); opacity: 0; transition: opacity 0.3s ease; display: flex; align-items: flex-end; padding: 1.5rem; }
+    .photo-card:hover .photo-overlay { opacity: 1; }
+
+    /* Private dashboard button (hidden until unlocked) */
+    .private-hidden { display: none !important; }
+
+    @media (max-width: 768px) {
+      .dash-sidebar { display: none; }
+      .dash-container { width: 100%; height: 100%; border-radius: 0; }
+    }
+    @media (max-width: 640px){
+      h1{ line-height: 1.05; }
+      .card-gradient{ backdrop-filter: blur(14px); }
+      .tab-content .text-lg{ font-size: 1.02rem; }
+    }
+  </style>
+</head>
+
+<body class="text-slate-800 antialiased">
+
+  <!-- NAVBAR -->
+  <header class="bg-navy-950/90 backdrop-blur-xl shadow-2xl sticky top-0 z-50 border-b border-navy-700/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-20">
+        <div class="flex items-center">
+          <div class="flex-shrink-0 flex items-center gap-3">
+            <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-accent-gold shadow-lg animate-pulse-slow">
+              <img src="https://placehold.co/100x100/102a43/d4af37?text=FM" alt="FJ Martínez Alba" class="w-full h-full object-cover" loading="lazy" decoding="async">
+            </div>
+            <div>
+              <span class="font-bold text-2xl tracking-tight text-white block">FJ Martínez Alba</span>
+              <p class="text-xs text-accent-gold font-medium">Director de Hotel</p>
+            </div>
+          </div>
+        </div>
+        <nav class="hidden md:flex space-x-1 items-center h-full">
+          <button onclick="switchTab('inicio')" id="btn-inicio" class="nav-item active h-full px-5 inline-flex items-center text-sm font-semibold text-white">
+            <i class="fas fa-home mr-2"></i>Inicio
+          </button>
+          <button onclick="switchTab('experiencia')" id="btn-experiencia" class="nav-item h-full px-5 inline-flex items-center text-sm font-semibold text-navy-300">
+            <i class="fas fa-briefcase mr-2"></i>Experiencia
+          </button>
+          <button onclick="switchTab('formacion')" id="btn-formacion" class="nav-item h-full px-5 inline-flex items-center text-sm font-semibold text-navy-300">
+            <i class="fas fa-graduation-cap mr-2"></i>Formación
+          </button>
+          <button onclick="switchTab('competencias')" id="btn-competencias" class="nav-item h-full px-5 inline-flex items-center text-sm font-semibold text-navy-300">
+            <i class="fas fa-star mr-2"></i>Competencias
+          </button>
+          <button onclick="switchTab('blog')" id="btn-blog" class="nav-item h-full px-5 inline-flex items-center text-sm font-semibold text-navy-300">
+            <i class="fas fa-layer-group mr-2"></i>Blog & Más
+          </button>
+        </nav>
+        <div class="flex items-center md:hidden">
+          <button onclick="toggleMobileMenu()" class="text-navy-300 hover:text-accent-gold p-2">
+            <i class="fas fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden bg-navy-950/95 backdrop-blur-xl border-t border-navy-700">
+      <div class="px-2 pt-2 pb-3 space-y-1">
+        <button onclick="switchTab('inicio'); toggleMobileMenu()" class="block w-full text-left px-3 py-3 rounded-lg text-base font-medium text-white bg-navy-900/50"><i class="fas fa-home mr-2"></i>Inicio</button>
+        <button onclick="switchTab('experiencia'); toggleMobileMenu()" class="block w-full text-left px-3 py-3 rounded-lg text-base font-medium text-navy-300"><i class="fas fa-briefcase mr-2"></i>Experiencia</button>
+        <button onclick="switchTab('formacion'); toggleMobileMenu()" class="block w-full text-left px-3 py-3 rounded-lg text-base font-medium text-navy-300"><i class="fas fa-graduation-cap mr-2"></i>Formación</button>
+        <button onclick="switchTab('competencias'); toggleMobileMenu()" class="block w-full text-left px-3 py-3 rounded-lg text-base font-medium text-navy-300"><i class="fas fa-star mr-2"></i>Competencias</button>
+        <button onclick="switchTab('blog'); toggleMobileMenu()" class="block w-full text-left px-3 py-3 rounded-lg text-base font-medium text-navy-300"><i class="fas fa-layer-group mr-2"></i>Blog & Más</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+    <!-- TAB: INICIO -->
+    <section id="inicio" class="tab-content active">
+      <div class="relative rounded-3xl overflow-hidden shadow-2xl mb-8 hero-gradient border border-navy-600" data-aos="fade-up">
+        <div class="absolute inset-0 bg-gradient-to-r from-navy-950/80 via-transparent to-transparent z-10"></div>
+        <div class="absolute inset-0" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1920'); background-size: cover; background-position: center; opacity: 0.25;"></div>
+        <div class="absolute inset-0 z-0">
+          <div class="absolute top-20 left-10 w-2 h-2 bg-accent-gold rounded-full animate-float"></div>
+          <div class="absolute top-40 right-20 w-3 h-3 bg-accent-cyan rounded-full animate-float" style="animation-delay: 1s;"></div>
+        </div>
+        <div class="relative z-20 px-8 py-20 md:py-28">
+          <div class="md:flex md:items-center md:justify-between">
+            <div class="md:w-2/3" data-aos="fade-right" data-aos-delay="200">
+              <div class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-accent-gold/20 to-accent-cyan/20 border border-accent-gold/50 rounded-full text-accent-gold text-sm font-bold mb-6 backdrop-blur-sm animate-pulse-slow">
+                <i class="fas fa-award"></i><span>25+ Años de Excelencia en Dirección Hotelera</span>
+              </div>
+              <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+                Francisco Javier<br><span class="bg-gradient-to-r from-white via-navy-200 to-accent-gold bg-clip-text text-transparent">Martínez Alba</span>
+              </h1>
+              <p class="text-xl text-navy-200 mb-3 font-medium">Director de Hotel · Project Manager · Gestión Operativa</p>
+              <p class="text-lg text-navy-300 mb-8">Especialista en Dirección Integral de Establecimientos 3★ a 5★</p>
+              <div class="flex flex-wrap gap-4 text-sm text-navy-300 mb-10">
+                <span class="flex items-center gap-2 px-4 py-2 bg-navy-800/50 rounded-lg border border-navy-600"><i class="fas fa-map-marker-alt text-accent-gold"></i> Algeciras (Cádiz)</span>
+                <span class="flex items-center gap-2 px-4 py-2 bg-navy-800/50 rounded-lg border border-navy-600"><i class="fas fa-phone text-accent-gold"></i> 635 493 853</span>
+                <span class="flex items-center gap-2 px-4 py-2 bg-navy-800/50 rounded-lg border border-navy-600"><i class="fas fa-envelope text-accent-gold"></i> pacozzy@hotmail.com</span>
+              </div>
+              <div class="flex gap-4 flex-wrap">
+                <a href="mailto:pacozzy@hotmail.com" class="px-8 py-4 bg-gradient-to-r from-accent-gold to-yellow-500 text-navy-900 rounded-xl text-sm font-bold hover:shadow-2xl transition-all inline-block">
+                  <i class="fas fa-envelope mr-2"></i>Contactar
+                </a>
+
+                <!-- PRIVATE: hidden until unlocked -->
+                <button id="privateDashboardBtn" class="private-hidden px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl text-sm font-bold hover:shadow-2xl transition-all inline-flex items-center gap-2 animate-pulse-slow"
+                        onclick="openJobDashboard()" aria-controls="jobDashboardModal">
+                  <i class="fas fa-search"></i>Buscando Empleo (Privado)
+                </button>
+              </div>
+
+              <p class="text-xs text-navy-400 mt-4">
+                Nota: Dashboard privado (Ctrl+Alt+D para desbloquear en tu PC).
+              </p>
+            </div>
+
+            <div class="hidden md:block md:w-1/3" data-aos="fade-left" data-aos-delay="400">
+              <div class="relative">
+                <div class="absolute inset-0 bg-gradient-to-r from-accent-gold to-accent-cyan rounded-full blur-3xl opacity-40 animate-pulse-slow"></div>
+                <div class="relative w-72 h-72 mx-auto rounded-full p-3 bg-gradient-to-br from-navy-600 to-navy-800 border-4 border-accent-gold/50 shadow-2xl">
+                  <img src="https://placehold.co/400x400/102a43/d4af37?text=FM" alt="Perfil" class="w-full h-full object-cover rounded-full border-4 border-navy-950" loading="lazy" decoding="async">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+        <div class="card-gradient p-6 rounded-2xl shadow-xl hover-lift border border-navy-200" data-aos="fade-up">
+          <div class="flex items-center gap-4">
+            <div class="p-4 navy-bg rounded-xl text-white shadow-lg"><i class="fas fa-hotel text-2xl"></i></div>
+            <div><p class="text-sm text-navy-600 font-medium">Años de Experiencia</p><p class="text-4xl font-bold text-navy-900">25+</p></div>
+          </div>
+        </div>
+        <div class="card-gradient p-6 rounded-2xl shadow-xl hover-lift border border-navy-200" data-aos="fade-up" data-aos-delay="100">
+          <div class="flex items-center gap-4">
+            <div class="p-4 navy-bg rounded-xl text-white shadow-lg"><i class="fas fa-star text-2xl"></i></div>
+            <div><p class="text-sm text-navy-600 font-medium">Hoteles Dirigidos</p><p class="text-4xl font-bold text-navy-900">10+</p></div>
+          </div>
+        </div>
+        <div class="card-gradient p-6 rounded-2xl shadow-xl hover-lift border border-navy-200" data-aos="fade-up" data-aos-delay="200">
+          <div class="flex items-center gap-4">
+            <div class="p-4 navy-bg rounded-xl text-white shadow-lg"><i class="fas fa-certificate text-2xl"></i></div>
+            <div><p class="text-sm text-navy-600 font-medium">Certificaciones</p><p class="text-4xl font-bold text-navy-900">8+</p></div>
+          </div>
+        </div>
+        <div class="card-gradient p-6 rounded-2xl shadow-xl hover-lift border border-navy-200" data-aos="fade-up" data-aos-delay="300">
+          <div class="flex items-center gap-4">
+            <div class="p-4 navy-bg rounded-xl text-white shadow-lg"><i class="fas fa-users text-2xl"></i></div>
+            <div><p class="text-sm text-navy-600 font-medium">Equipos Liderados</p><p class="text-4xl font-bold text-navy-900">50+</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-gradient rounded-2xl shadow-xl p-10 border border-navy-200" data-aos="fade-up">
+        <h2 class="text-3xl font-bold text-navy-900 mb-8 flex items-center gap-3">
+          <span class="w-1.5 h-10 bg-gradient-to-b from-accent-gold to-accent-cyan rounded-full"></span>
+          Perfil Profesional
+        </h2>
+        <p class="text-navy-700 leading-relaxed text-lg mb-6">
+          Director de hotel con más de <strong class="text-navy-900">25 años de experiencia</strong> en dirección integral de establecimientos hoteleros (3★ a 5★), tanto urbanos como vacacionales. Especializado en gestión operativa, liderazgo de equipos, control económico, cumplimiento normativo y relaciones institucionales.
+        </p>
+        <p class="text-navy-700 leading-relaxed text-lg mb-8">
+          Destaca por su <strong class="text-accent-gold">perfil híbrido único</strong>: dirección hotelera + alta cualificación administrativa y documental acreditada oficialmente (Certificados Profesionales ADGG0108 y ADGG0308).
+        </p>
+        <div class="grid md:grid-cols-3 gap-5">
+          <div class="flex items-center gap-4 p-5 bg-gradient-to-br from-navy-50 to-navy-100 rounded-xl border border-navy-200 hover:shadow-lg transition-all">
+            <div class="p-3 navy-bg rounded-lg text-white"><i class="fas fa-check-circle text-2xl"></i></div>
+            <div><p class="font-bold text-navy-900">Gestión Operativa</p><p class="text-sm text-navy-600">Dirección integral</p></div>
+          </div>
+          <div class="flex items-center gap-4 p-5 bg-gradient-to-br from-navy-50 to-navy-100 rounded-xl border border-navy-200 hover:shadow-lg transition-all">
+            <div class="p-3 navy-bg rounded-lg text-white"><i class="fas fa-clipboard-check text-2xl"></i></div>
+            <div><p class="font-bold text-navy-900">Cumplimiento Normativo</p><p class="text-sm text-navy-600">Auditorías e inspecciones</p></div>
+          </div>
+          <div class="flex items-center gap-4 p-5 bg-gradient-to-br from-navy-50 to-navy-100 rounded-xl border border-navy-200 hover:shadow-lg transition-all">
+            <div class="p-3 navy-bg rounded-lg text-white"><i class="fas fa-file-contract text-2xl"></i></div>
+            <div><p class="font-bold text-navy-900">Gestión Documental</p><p class="text-sm text-navy-600">Certificado profesional</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: EXPERIENCIA -->
+    <section id="experiencia" class="tab-content">
+      <h2 class="text-4xl font-bold text-white mb-10" data-aos="fade-right">Trayectoria Profesional</h2>
+
+      <div class="space-y-8">
+        <!-- Job 1 -->
+        <div class="card-gradient rounded-2xl shadow-xl overflow-hidden hover-lift border border-navy-200" data-aos="fade-up">
+          <div class="md:flex">
+            <div class="md:w-2/5 relative group">
+              <img src="https://image.qwenlm.ai/public_source/b99abdd2-03b2-4ccf-8a45-3ba075553bb1/3a06e1b57-2c98-45f7-a9d3-58d82278d22e8309.png" alt="Hotel Altos de Istán" class="w-full h-72 md:h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" decoding="async">
+              <div class="absolute top-4 left-4">
+                <span class="px-5 py-2.5 navy-bg text-white rounded-xl text-sm font-bold shadow-lg border border-accent-gold/50 flex items-center gap-2">
+                  <i class="fas fa-star text-yellow-400"></i> 4★
+                </span>
+              </div>
+            </div>
+            <div class="p-8 md:w-3/5">
+              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-6">
+                <div>
+                  <h3 class="text-2xl font-bold text-navy-900 mb-2">Director / Project Manager</h3>
+                  <p class="text-navy-600 font-bold text-lg">Hotel Altos de Istán - Istán (Málaga)</p>
+                  <p class="text-sm text-navy-500 mt-2"><i class="fas fa-map-marker-alt mr-2 text-accent-gold"></i>Parque Natural Sierra de las Nieves · 14 km de Marbella</p>
+                </div>
+                <span class="inline-flex items-center rounded-xl bg-gradient-to-r from-navy-100 to-navy-50 px-4 py-3 text-sm font-bold text-navy-700 mt-4 sm:mt-0 border border-navy-200">
+                  <i class="far fa-calendar mr-2 text-accent-gold"></i>Feb 2019 – Ene 2025
+                </span>
+              </div>
+              <div class="grid md:grid-cols-2 gap-5">
+                <ul class="space-y-3 text-sm text-navy-700">
+                  <li class="flex items-start gap-3"><i class="fas fa-check-circle text-accent-gold mt-1"></i><span>Dirección completa del establecimiento</span></li>
+                  <li class="flex items-start gap-3"><i class="fas fa-check-circle text-accent-gold mt-1"></i><span>Organización de procedimientos internos</span></li>
+                  <li class="flex items-start gap-3"><i class="fas fa-check-circle text-accent-gold mt-1"></i><span>Supervisión del cumplimiento normativo</span></li>
+                </ul>
+                <ul class="space-y-3 text-sm text-navy-700">
+                  <li class="flex items-start gap-3"><i class="fas fa-check-circle text-accent-gold mt-1"></i><span>Interlocución con organismos públicos</span></li>
+                  <li class="flex items-start gap-3"><i class="fas fa-check-circle text-accent-gold mt-1"></i><span>Coordinación de auditorías externas</span></li>
+                  <li class="flex items-start gap-3"><i class="fas fa-check-circle text-accent-gold mt-1"></i><span>Gestión contractual con proveedores</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Job 2 -->
+        <div class="card-gradient rounded-2xl shadow-xl overflow-hidden hover-lift border border-navy-200" data-aos="fade-up">
+          <div class="md:flex">
+            <div class="md:w-2/5 relative group">
+              <img src="https://image.qwenlm.ai/public_source/b99abdd2-03b2-4ccf-8a45-3ba075553bb1/655c5100e-e923-4e5c-b839-afeb083a78e02503.png" alt="Hotel Reina Cristina" class="w-full h-72 md:h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" decoding="async">
+              <div class="absolute top-4 left-4">
+                <span class="px-5 py-2.5 navy-bg text-white rounded-xl text-sm font-bold shadow-lg border border-accent-gold/50 flex items-center gap-2">
+                  <i class="fas fa-star text-yellow-400"></i> 4★
+                </span>
+              </div>
+            </div>
+            <div class="p-8 md:w-3/5">
+              <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-6">
+                <div>
+                  <h3 class="text-2xl font-bold text-navy-900 mb-2">Director</h3>
+                  <p class="text-navy-600 font-bold text-lg">Hoteles Globales – Hotel Reina Cristina - Algeciras</p>
+                  <p class="text-sm text-navy-500 mt-2"><i class="fas fa-landmark mr-2 text-accent-gold"></i>Edificio histórico 1901 · Arquitectura colonial inglesa</p>
+                </div>
+                <span class="inline-flex items-center rounded-xl bg-gradient-to-r from-navy-100 to-navy-50 px-4 py-3 text-sm font-bold text-navy-700 mt-4 sm:mt-0 border border-navy-200">
+                  <i class="far fa-calendar mr-2 text-accent-gold"></i>Ene 2015 – Jun 2018
+                </span>
+              </div>
+              <div class="grid md:grid-cols-2 gap-5">
+                <ul class="space-y-3 text-sm text-navy-700">
+                  <li class="flex items-start gap-3"><i class="fas fa-check-circle text-accent-gold mt-1"></i><span>Dirección operativa y administrativa</span></li>
+                  <li class="flex items-start gap-3"><i class="fas fa-check-circle text-accent-gold mt-1"></i><span>Negociación con proveedores estratégicos</span></li>
+                </ul>
+                <ul class="space-y-3 text-sm text-navy-700">
+                  <li class="flex items-start gap-3"><i class="fas fa-check-circle text-accent-gold mt-1"></i><span>Coordinación con asesorías jurídicas</span></li>
+                  <li class="flex items-start gap-3"><i class="fas fa-check-circle text-accent-gold mt-1"></i><span>Control documental y normativo</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="text-3xl font-bold text-white mt-16 mb-8" data-aos="fade-right">Otros Establecimientos</h3>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="card-gradient rounded-xl shadow-lg overflow-hidden hover-lift border border-navy-200" data-aos="zoom-in">
+            <div class="relative overflow-hidden">
+              <img src="https://image.qwenlm.ai/public_source/b99abdd2-03b2-4ccf-8a45-3ba075553bb1/755c5100e-e923-4e5c-b839-afeb083a78e05986.png" alt="THB Flora Lanzarote" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-110" loading="lazy" decoding="async">
+              <div class="absolute top-3 right-3">
+                <span class="px-3 py-1 navy-bg text-white rounded-lg text-xs font-bold">3★</span>
+              </div>
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-navy-900 mb-2 text-lg">THB Flora</h4>
+              <p class="text-sm text-navy-600 mb-3">Puerto del Carmen, Lanzarote · THB Hotels</p>
+              <p class="text-xs text-navy-500"><i class="far fa-calendar mr-2"></i>Jun 2013 – Ene 2015</p>
+            </div>
+          </div>
+
+          <div class="card-gradient rounded-xl shadow-lg overflow-hidden hover-lift border border-navy-200" data-aos="zoom-in" data-aos-delay="100">
+            <div class="relative overflow-hidden">
+              <img src="https://image.qwenlm.ai/public_source/b99abdd2-03b2-4ccf-8a45-3ba075553bb1/0a06e1b57-2c98-45f7-a9d3-58d82278d22e4716.png" alt="Aura Hotel Algeciras" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-110" loading="lazy" decoding="async">
+              <div class="absolute top-3 right-3">
+                <span class="px-3 py-1 navy-bg text-white rounded-lg text-xs font-bold">3★</span>
+              </div>
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-navy-900 mb-2 text-lg">Aura Hotel Algeciras</h4>
+              <p class="text-sm text-navy-600 mb-3">Sercotel Hotels · Hotel urbano de negocios</p>
+              <p class="text-xs text-navy-500"><i class="far fa-calendar mr-2"></i>Feb 2011 – May 2013</p>
+            </div>
+          </div>
+
+          <div class="card-gradient rounded-xl shadow-lg overflow-hidden hover-lift border border-navy-200" data-aos="zoom-in" data-aos-delay="200">
+            <div class="relative overflow-hidden">
+              <img src="https://image.qwenlm.ai/public_source/b99abdd2-03b2-4ccf-8a45-3ba075553bb1/4a06e1b57-2c98-45f7-a9d3-58d82278d22e2766.png" alt="Dominican Bay" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-110" loading="lazy" decoding="async">
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-navy-900 mb-2 text-lg">Dominican Bay</h4>
+              <p class="text-sm text-navy-600 mb-3">República Dominicana · All Inclusive</p>
+            </div>
+          </div>
+
+          <div class="card-gradient rounded-xl shadow-lg overflow-hidden hover-lift border border-navy-200" data-aos="zoom-in">
+            <div class="relative overflow-hidden">
+              <img src="https://image.qwenlm.ai/public_source/b99abdd2-03b2-4ccf-8a45-3ba075553bb1/5a06e1b57-2c98-45f7-a9d3-58d82278d22e5752.png" alt="Tamaimo Tropical" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-110" loading="lazy" decoding="async">
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-navy-900 mb-2 text-lg">Tamaimo Tropical</h4>
+              <p class="text-sm text-navy-600 mb-3">Tenerife · Globales Hotels</p>
+            </div>
+          </div>
+
+          <div class="card-gradient rounded-xl shadow-lg overflow-hidden hover-lift border border-navy-200" data-aos="zoom-in" data-aos-delay="100">
+            <div class="relative overflow-hidden">
+              <img src="https://image.qwenlm.ai/public_source/b99abdd2-03b2-4ccf-8a45-3ba075553bb1/0a06e1b57-2c98-45f7-a9d3-58d82278d22e2834.png" alt="Hilton Gatwick" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-110" loading="lazy" decoding="async">
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-navy-900 mb-2 text-lg">Hilton London Gatwick</h4>
+              <p class="text-sm text-navy-600 mb-3">Reino Unido · Hilton International</p>
+            </div>
+          </div>
+
+          <div class="card-gradient rounded-xl shadow-lg overflow-hidden hover-lift border border-navy-200" data-aos="zoom-in" data-aos-delay="200">
+            <div class="relative overflow-hidden">
+              <img src="https://image.qwenlm.ai/public_source/b99abdd2-03b2-4ccf-8a45-3ba075553bb1/9a06e1b57-2c98-45f7-a9d3-58d82278d22e7874.png" alt="Belsana Mallorca" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-110" loading="lazy" decoding="async">
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-navy-900 mb-2 text-lg">BelleVue Belsana</h4>
+              <p class="text-sm text-navy-600 mb-3">Porto Colom, Mallorca · Frente al mar</p>
+            </div>
+          </div>
+
+          <div class="card-gradient rounded-xl shadow-lg overflow-hidden hover-lift border border-navy-200" data-aos="zoom-in">
+            <div class="relative overflow-hidden">
+              <img src="https://image.qwenlm.ai/public_source/b99abdd2-03b2-4ccf-8a45-3ba075553bb1/8a06e1b57-2c98-45f7-a9d3-58d82278d22e9262.png" alt="Aquarius Lanzarote" class="w-full h-56 object-cover transition-transform duration-500 hover:scale-110" loading="lazy" decoding="async">
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-navy-900 mb-2 text-lg">BelleVue Aquarius</h4>
+              <p class="text-sm text-navy-600 mb-3">Puerto del Carmen · Aparthotel</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: FORMACIÓN -->
+    <section id="formacion" class="tab-content">
+      <h2 class="text-4xl font-bold text-white mb-10" data-aos="fade-right">Formación y Certificaciones</h2>
+
+      <div class="card-gradient rounded-2xl shadow-xl p-10 mb-10 border border-navy-200" data-aos="fade-up">
+        <div class="flex items-start gap-8">
+          <div class="flex-shrink-0 w-24 h-24 navy-bg rounded-2xl flex items-center justify-center text-white shadow-xl border-2 border-accent-gold">
+            <i class="fas fa-graduation-cap text-4xl"></i>
+          </div>
+          <div class="flex-grow">
+            <h3 class="text-3xl font-bold text-navy-900 mb-3">Técnico en Empresas y Actividades Turísticas (TEAT)</h3>
+            <p class="text-navy-600 text-xl mb-3 font-medium">Escuela de Turismo de Jerez – Universidad de Cádiz</p>
+            <div class="flex items-center gap-6 text-sm text-navy-500">
+              <span class="flex items-center gap-2 px-3 py-1 bg-navy-100 rounded-lg"><i class="fas fa-check text-accent-gold"></i> Titulación Oficial</span>
+              <span class="flex items-center gap-2 px-3 py-1 bg-navy-100 rounded-lg"><i class="fas fa-check text-accent-gold"></i> Especialización Hotelera</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="text-2xl font-bold text-white mb-8" data-aos="fade-right">Certificados Profesionales Oficiales</h3>
+
+      <div class="grid lg:grid-cols-2 gap-8 mb-12">
+        <div class="card-gradient rounded-2xl shadow-xl p-8 border border-navy-200 hover-lift" data-aos="fade-up">
+          <div class="flex items-start gap-5 mb-6">
+            <div class="p-5 bg-gradient-to-br from-navy-100 to-navy-50 rounded-xl text-navy-700">
+              <i class="fas fa-certificate text-4xl"></i>
+            </div>
+            <div>
+              <h4 class="text-xl font-bold text-navy-900 mb-1">ADGG0108 - Asistencia a la Dirección</h4>
+              <p class="text-sm text-navy-600 font-medium">Junta de Andalucía · 2025</p>
+              <p class="text-xs text-navy-500 mt-2">Real Decreto 1210/2009</p>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <p class="text-sm text-navy-700 flex items-center gap-2"><i class="fas fa-check text-accent-gold"></i>Gestión de comunicaciones de dirección</p>
+            <p class="text-sm text-navy-700 flex items-center gap-2"><i class="fas fa-check text-accent-gold"></i>Asistencia en organización directiva</p>
+            <p class="text-sm text-navy-700 flex items-center gap-2"><i class="fas fa-check text-accent-gold"></i>Elaboración documentación profesional</p>
+          </div>
+        </div>
+
+        <div class="card-gradient rounded-2xl shadow-xl p-8 border border-navy-200 hover-lift" data-aos="fade-up" data-aos-delay="100">
+          <div class="flex items-start gap-5 mb-6">
+            <div class="p-5 bg-gradient-to-br from-navy-100 to-navy-50 rounded-xl text-navy-700">
+              <i class="fas fa-file-contract text-4xl"></i>
+            </div>
+            <div>
+              <h4 class="text-xl font-bold text-navy-900 mb-1">ADGG0308 - Asistencia Documental y de Gestión</h4>
+              <p class="text-sm text-navy-600 font-medium">Junta de Andalucía · 2025</p>
+              <p class="text-xs text-navy-500 mt-2">Real Decreto 645/2011</p>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <p class="text-sm text-navy-700 flex items-center gap-2"><i class="fas fa-check text-accent-gold"></i>Gestión documental avanzada</p>
+            <p class="text-sm text-navy-700 flex items-center gap-2"><i class="fas fa-check text-accent-gold"></i>Administración de sistemas de información</p>
+            <p class="text-sm text-navy-700 flex items-center gap-2"><i class="fas fa-check text-accent-gold"></i>Gestión ante Administraciones Públicas</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="text-2xl font-bold text-white mb-8" data-aos="fade-right">Otras Certificaciones</h3>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="card-gradient rounded-xl shadow-lg p-5 border border-navy-200 hover-lift flex items-center gap-4" data-aos="zoom-in">
+          <div class="p-4 bg-navy-100 rounded-lg text-navy-700"><i class="fas fa-shield-virus text-2xl"></i></div>
+          <div><p class="text-sm font-bold text-navy-900">Prevención de Legionelosis</p><p class="text-xs text-navy-600">Normativa Sanitaria</p></div>
+        </div>
+        <div class="card-gradient rounded-xl shadow-lg p-5 border border-navy-200 hover-lift flex items-center gap-4" data-aos="zoom-in" data-aos-delay="50">
+          <div class="p-4 bg-navy-100 rounded-lg text-navy-700"><i class="fas fa-lock text-2xl"></i></div>
+          <div><p class="text-sm font-bold text-navy-900">Ciberseguridad Aplicada</p><p class="text-xs text-navy-600">SEPE</p></div>
+        </div>
+        <div class="card-gradient rounded-xl shadow-lg p-5 border border-navy-200 hover-lift flex items-center gap-4" data-aos="zoom-in" data-aos-delay="100">
+          <div class="p-4 bg-navy-100 rounded-lg text-navy-700"><i class="fas fa-leaf text-2xl"></i></div>
+          <div><p class="text-sm font-bold text-navy-900">Gestión Ambiental</p><p class="text-xs text-navy-600">Sostenibilidad · SEPE</p></div>
+        </div>
+        <div class="card-gradient rounded-xl shadow-lg p-5 border border-navy-200 hover-lift flex items-center gap-4" data-aos="zoom-in">
+          <div class="p-4 bg-navy-100 rounded-lg text-navy-700"><i class="fas fa-user-shield text-2xl"></i></div>
+          <div><p class="text-sm font-bold text-navy-900">Protección de Datos</p><p class="text-xs text-navy-600">RGPD</p></div>
+        </div>
+        <div class="card-gradient rounded-xl shadow-lg p-5 border border-navy-200 hover-lift flex items-center gap-4" data-aos="zoom-in" data-aos-delay="50">
+          <div class="p-4 bg-navy-100 rounded-lg text-navy-700"><i class="fas fa-chart-line text-2xl"></i></div>
+          <div><p class="text-sm font-bold text-navy-900">Revenue Management</p><p class="text-xs text-navy-600">Gestión de Ingresos</p></div>
+        </div>
+        <div class="card-gradient rounded-xl shadow-lg p-5 border border-navy-200 hover-lift flex items-center gap-4" data-aos="zoom-in" data-aos-delay="100">
+          <div class="p-4 bg-navy-100 rounded-lg text-navy-700"><i class="fas fa-heartbeat text-2xl"></i></div>
+          <div><p class="text-sm font-bold text-navy-900">Primeros Auxilios + DEA</p><p class="text-xs text-navy-600">Emergencias Sanitarias</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: COMPETENCIAS -->
+    <section id="competencias" class="tab-content">
+      <h2 class="text-4xl font-bold text-white mb-10" data-aos="fade-right">Competencias Profesionales</h2>
+
+      <div class="grid lg:grid-cols-2 gap-8">
+        <div class="card-gradient rounded-2xl shadow-xl p-10 border border-navy-200" data-aos="fade-up">
+          <h3 class="text-2xl font-bold text-navy-900 mb-8 flex items-center gap-3">
+            <span class="w-2 h-10 bg-gradient-to-b from-accent-gold to-accent-cyan rounded-full"></span>
+            Competencias Clave
+          </h3>
+          <div class="flex flex-wrap gap-3">
+            <span class="px-5 py-3 bg-gradient-to-r from-navy-50 to-navy-100 text-navy-800 rounded-xl text-sm font-semibold shadow-sm border border-navy-200 hover:shadow-md transition-all hover:scale-105">Dirección integral de hoteles</span>
+            <span class="px-5 py-3 bg-gradient-to-r from-navy-50 to-navy-100 text-navy-800 rounded-xl text-sm font-semibold shadow-sm border border-navy-200 hover:shadow-md transition-all hover:scale-105">Liderazgo de equipos</span>
+            <span class="px-5 py-3 bg-gradient-to-r from-navy-50 to-navy-100 text-navy-800 rounded-xl text-sm font-semibold shadow-sm border border-navy-200 hover:shadow-md transition-all hover:scale-105">Control presupuestario</span>
+            <span class="px-5 py-3 bg-gradient-to-r from-navy-50 to-navy-100 text-navy-800 rounded-xl text-sm font-semibold shadow-sm border border-navy-200 hover:shadow-md transition-all hover:scale-105">Cumplimiento normativo</span>
+            <span class="px-5 py-3 bg-gradient-to-r from-navy-50 to-navy-100 text-navy-800 rounded-xl text-sm font-semibold shadow-sm border border-navy-200 hover:shadow-md transition-all hover:scale-105">Auditorías</span>
+            <span class="px-5 py-3 bg-gradient-to-r from-navy-50 to-navy-100 text-navy-800 rounded-xl text-sm font-semibold shadow-sm border border-navy-200 hover:shadow-md transition-all hover:scale-105">Negociación</span>
+            <span class="px-5 py-3 bg-gradient-to-r from-navy-50 to-navy-100 text-navy-800 rounded-xl text-sm font-semibold shadow-sm border border-navy-200 hover:shadow-md transition-all hover:scale-105">Relaciones institucionales</span>
+            <span class="px-5 py-3 bg-gradient-to-r from-navy-50 to-navy-100 text-navy-800 rounded-xl text-sm font-semibold shadow-sm border border-navy-200 hover:shadow-md transition-all hover:scale-105">Gestión documental</span>
+            <span class="px-5 py-3 bg-gradient-to-r from-navy-50 to-navy-100 text-navy-800 rounded-xl text-sm font-semibold shadow-sm border border-navy-200 hover:shadow-md transition-all hover:scale-105">Planificación estratégica</span>
+            <span class="px-5 py-3 bg-gradient-to-r from-navy-50 to-navy-100 text-navy-800 rounded-xl text-sm font-semibold shadow-sm border border-navy-200 hover:shadow-md transition-all hover:scale-105">Gestión de crisis</span>
+          </div>
+        </div>
+
+        <div class="space-y-6">
+          <div class="card-gradient rounded-2xl shadow-xl p-8 border border-navy-200" data-aos="fade-up" data-aos-delay="100">
+            <h3 class="text-xl font-bold text-navy-900 mb-6 flex items-center gap-3">
+              <i class="fas fa-language text-accent-gold text-2xl"></i>
+              Idiomas
+            </h3>
+            <div class="space-y-5">
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="text-sm font-bold text-navy-700">Español</span>
+                  <span class="text-sm font-medium text-navy-600">Nativo</span>
+                </div>
+                <div class="w-full bg-navy-200 rounded-full h-3 overflow-hidden">
+                  <div class="navy-bg h-3 rounded-full transition-all duration-1000" style="width: 100%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="text-sm font-bold text-navy-700">Inglés</span>
+                  <span class="text-sm font-medium text-navy-600">B1 Acreditado (UC9999_3)</span>
+                </div>
+                <div class="w-full bg-navy-200 rounded-full h-3 overflow-hidden">
+                  <div class="navy-bg h-3 rounded-full transition-all duration-1000" style="width: 60%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="text-sm font-bold text-navy-700">Alemán</span>
+                  <span class="text-sm font-medium text-navy-600">A2 Acreditado (UC9996_2)</span>
+                </div>
+                <div class="w-full bg-navy-200 rounded-full h-3 overflow-hidden">
+                  <div class="navy-bg h-3 rounded-full transition-all duration-1000" style="width: 40%"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="text-sm font-bold text-navy-700">Francés / Italiano</span>
+                  <span class="text-sm font-medium text-navy-600">Básico</span>
+                </div>
+                <div class="w-full bg-navy-200 rounded-full h-3 overflow-hidden">
+                  <div class="navy-bg h-3 rounded-full transition-all duration-1000" style="width: 25%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-gradient rounded-2xl shadow-xl p-8 border border-navy-200" data-aos="fade-up" data-aos-delay="200">
+            <h3 class="text-xl font-bold text-navy-900 mb-6 flex items-center gap-3">
+              <i class="fas fa-laptop text-accent-gold text-2xl"></i>
+              Informática
+            </h3>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="flex items-center gap-4 p-4 bg-navy-50 rounded-xl border border-navy-200 hover:shadow-md transition-all">
+                <i class="fab fa-microsoft text-navy-600 text-2xl"></i>
+                <span class="text-sm font-bold text-navy-700">Office Avanzado</span>
+              </div>
+              <div class="flex items-center gap-4 p-4 bg-navy-50 rounded-xl border border-navy-200 hover:shadow-md transition-all">
+                <i class="fas fa-file-alt text-navy-600 text-2xl"></i>
+                <span class="text-sm font-bold text-navy-700">Gestión Documental</span>
+              </div>
+              <div class="flex items-center gap-4 p-4 bg-navy-50 rounded-xl border border-navy-200 hover:shadow-md transition-all">
+                <i class="fas fa-cog text-navy-600 text-2xl"></i>
+                <span class="text-sm font-bold text-navy-700">Herramientas Admin</span>
+              </div>
+              <div class="flex items-center gap-4 p-4 bg-navy-50 rounded-xl border border-navy-200 hover:shadow-md transition-all">
+                <i class="fas fa-share-alt text-navy-500 text-2xl"></i>
+                <span class="text-sm font-bold text-navy-700">Redes Sociales</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-10 card-gradient rounded-2xl shadow-xl p-10 border border-navy-200" data-aos="fade-up">
+        <h3 class="text-2xl font-bold text-navy-900 mb-8 flex items-center gap-3">
+          <span class="w-2 h-10 bg-gradient-to-b from-accent-gold to-accent-cyan rounded-full"></span>
+          Unidades de Competencia Acreditadas
+        </h3>
+
+        <div class="overflow-x-auto">
+          <table class="w-full competency-table">
+            <thead>
+              <tr class="border-b-3 border-navy-300 bg-gradient-to-r from-navy-100 to-navy-50">
+                <th class="text-left py-4 px-5 text-navy-900 font-bold">Código</th>
+                <th class="text-left py-4 px-5 text-navy-900 font-bold">Denominación</th>
+                <th class="text-center py-4 px-5 text-navy-900 font-bold">Nivel</th>
+              </tr>
+            </thead>
+            <tbody class="text-sm">
+              <tr class="border-b border-navy-200">
+                <td class="py-4 px-5 font-mono text-navy-700 font-semibold">UC0982_3</td>
+                <td class="py-4 px-5 text-navy-900">Gestionar las comunicaciones de la dirección</td>
+                <td class="py-4 px-5 text-center"><span class="px-3 py-1.5 bg-navy-100 text-navy-700 rounded-lg text-xs font-bold border border-navy-300">3</span></td>
+              </tr>
+              <tr class="border-b border-navy-200">
+                <td class="py-4 px-5 font-mono text-navy-700 font-semibold">UC0983_3</td>
+                <td class="py-4 px-5 text-navy-900">Gestionar actividades de asistencia a la dirección en materia de organización</td>
+                <td class="py-4 px-5 text-center"><span class="px-3 py-1.5 bg-navy-100 text-navy-700 rounded-lg text-xs font-bold border border-navy-300">3</span></td>
+              </tr>
+              <tr class="border-b border-navy-200">
+                <td class="py-4 px-5 font-mono text-navy-700 font-semibold">UC0986_3</td>
+                <td class="py-4 px-5 text-navy-900">Elaborar documentación y presentaciones profesionales</td>
+                <td class="py-4 px-5 text-center"><span class="px-3 py-1.5 bg-navy-100 text-navy-700 rounded-lg text-xs font-bold border border-navy-300">3</span></td>
+              </tr>
+              <tr class="border-b border-navy-200">
+                <td class="py-4 px-5 font-mono text-navy-700 font-semibold">UC0987_3</td>
+                <td class="py-4 px-5 text-navy-900">Administrar los sistemas de almacenamiento de la información</td>
+                <td class="py-4 px-5 text-center"><span class="px-3 py-1.5 bg-navy-100 text-navy-700 rounded-lg text-xs font-bold border border-navy-300">3</span></td>
+              </tr>
+              <tr class="border-b border-navy-200">
+                <td class="py-4 px-5 font-mono text-navy-700 font-semibold">UC0988_3</td>
+                <td class="py-4 px-5 text-navy-900">Gestionar expedientes y documentación jurídica y empresarial ante Organismos y Administraciones Públicas</td>
+                <td class="py-4 px-5 text-center"><span class="px-3 py-1.5 bg-navy-100 text-navy-700 rounded-lg text-xs font-bold border border-navy-300">3</span></td>
+              </tr>
+              <tr class="border-b border-navy-200">
+                <td class="py-4 px-5 font-mono text-navy-700 font-semibold">UC9999_3</td>
+                <td class="py-4 px-5 text-navy-900">Comunicarse en lengua inglesa con un nivel de usuario independiente (B1)</td>
+                <td class="py-4 px-5 text-center"><span class="px-3 py-1.5 bg-navy-100 text-navy-700 rounded-lg text-xs font-bold border border-navy-300">3</span></td>
+              </tr>
+              <tr class="border-b border-navy-200">
+                <td class="py-4 px-5 font-mono text-navy-700 font-semibold">UC9996_2</td>
+                <td class="py-4 px-5 text-navy-900">Comunicarse en una segunda lengua extranjera distinta del inglés con nivel A2</td>
+                <td class="py-4 px-5 text-center"><span class="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-xs font-bold border border-blue-300">2</span></td>
+              </tr>
+              <tr class="border-b border-navy-200">
+                <td class="py-4 px-5 font-mono text-navy-700 font-semibold">UC0233_2</td>
+                <td class="py-4 px-5 text-navy-900">Manejar aplicaciones ofimáticas en la gestión de la información y la documentación</td>
+                <td class="py-4 px-5 text-center"><span class="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-xs font-bold border border-blue-300">2</span></td>
+              </tr>
+              <tr class="border-b border-navy-200">
+                <td class="py-4 px-5 font-mono text-navy-700 font-semibold">UC0979_2</td>
+                <td class="py-4 px-5 text-navy-900">Gestionar operaciones administrativas de tesorería</td>
+                <td class="py-4 px-5 text-center"><span class="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-xs font-bold border border-blue-300">2</span></td>
+              </tr>
+              <tr>
+                <td class="py-4 px-5 font-mono text-navy-700 font-semibold">UC0980_2</td>
+                <td class="py-4 px-5 text-navy-900">Gestionar operaciones administrativas de recursos humanos</td>
+                <td class="py-4 px-5 text-center"><span class="px-3 py-1.5 bg-blue-100 text-blue-700 rounded-lg text-xs font-bold border border-blue-300">2</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: BLOG & MÁS -->
+    <section id="blog" class="tab-content">
+      <div class="flex justify-between items-center mb-10" data-aos="fade-right">
+        <h2 class="text-4xl font-bold text-white">Blog & Cajón de Sastre</h2>
+        <a href="https://www.linkedin.com/in/franciscojaviermartinezalba" target="_blank" class="bg-[#0077b5] hover:bg-[#005885] text-white px-6 py-3 rounded-xl text-sm font-bold transition-all flex items-center gap-2 shadow-lg hover:shadow-2xl">
+          <i class="fab fa-linkedin"></i> LinkedIn
+        </a>
+      </div>
+
+      <div class="card-gradient rounded-2xl shadow-xl p-8 mb-10 border border-navy-200" data-aos
