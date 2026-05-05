@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dashboard Candidaturas — Francisco Javier Martínez Alba</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1117;--sidebar:#0f1923;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --gold:#c9a84c;--gold2:#e8c96a;--gold-dim:rgba(201,168,76,0.12);
+  --text:#e8eaf0;--muted:#7a8499;--muted2:#3d4a5c;
+  --green:#22c55e;--blue:#3b82f6;--amber:#f59e0b;--red:#ef4444;
+  --hotel:#0ea5e9;--docencia:#22c55e;--admin:#8b5cf6;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;display:flex;flex-direction:column}
+.hdr{height:58px;background:var(--sidebar);border-bottom:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:space-between;padding:0 18px;flex-shrink:0;z-index:30}
+.hdr-brand{display:flex;align-items:center;gap:10px}
+.hdr-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#e8c96a);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#0d1117;flex-shrink:0}
+.hdr-name{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:700;line-height:1}
+.hdr-sub{font-size:10px;color:var(--gold);font-weight:500;letter-spacing:.4px}
+.hdr-right{display:flex;align-items:center;gap:8px}
+.hdr-badge{padding:4px 10px;border-radius:100px;background:var(--gold-dim);border:1px solid rgba(201,168,76,0.3);font-size:11px;color:var(--gold);font-weight:600}
+.hamburger{background:none;border:none;cursor:pointer;color:var(--muted);padding:6px;display:none}
+.hamburger svg{width:20px;height:20px}
+@media(max-width:768px){.hamburger{display:flex}.hdr-badge{display:none}}
+.body{flex:1;display:flex;overflow:hidden;position:relative}
+.sidebar{width:215px;background:var(--sidebar);border-right:1px solid var(--border);flex-shrink:0;overflow-y:auto;display:flex;flex-direction:column;z-index:20}
+.sidebar-section{padding:10px 0;border-bottom:1px solid var(--border)}
+.sidebar-label{font-size:9px;color:var(--muted2);text-transform:uppercase;letter-spacing:.9px;padding:0 14px 7px}
+.nav-item{padding:9px 14px;cursor:pointer;border-left:3px solid transparent;display:flex;align-items:center;gap:9px;font-size:12px;font-weight:500;color:var(--muted);transition:all .2s;white-space:nowrap}
+.nav-item:hover{color:var(--text);background:rgba(255,255,255,.04)}
+.nav-item.active{color:var(--text);background:rgba(201,168,76,.08);border-left-color:var(--gold)}
+.nav-item svg{width:15px;height:15px;flex-shrink:0}
+.nav-count{margin-left:auto;border-radius:100px;font-size:9px;font-weight:700;padding:1px 6px}
+.nc-default{background:rgba(255,255,255,.1);color:var(--muted)}
+.nc-gold{background:rgba(201,168,76,.25);color:var(--gold)}
+.nc-pulse{animation:ncpulse 2s ease infinite}
+@keyframes ncpulse{0%,100%{opacity:1}50%{opacity:.5}}
+.sidebar-bottom{margin-top:auto;border-top:1px solid var(--border);padding:12px 14px}
+.sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:40;display:none}
+.sidebar-overlay.open{display:block}
+@media(max-width:768px){
+  .sidebar{position:fixed;left:0;top:58px;bottom:0;transform:translateX(-100%);transition:transform .3s;z-index:41}
+  .sidebar.mobile-open{transform:translateX(0)}
+}
+.main{flex:1;overflow-y:auto;background:#f0f2f5;padding:22px}
+@media(max-width:768px){.main{padding:14px}}
+.tab{display:none}.tab.active{display:block;animation:fadeUp .3s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 1px 6px rgba(0,0,0,.08);margin-bottom:16px}
+.card-title{font-weight:700;font-size:14px;color:#1e293b;margin-bottom:14px;display:flex;align-items:center;gap:7px}
+.card-title svg{width:15px;height:15px;color:var(--gold)}
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+@media(max-width:900px){.metrics-grid{grid-template-columns:repeat(2,1fr)}}
+.metric{background:#fff;border-radius:12px;padding:16px;box-shadow:0 1px 6px rgba(0,0,0,.08);border-top:3px solid #e2e8f0}
+.metric.m-total{border-top-color:#102a43}.metric.m-interview{border-top-color:var(--green)}
+.metric.m-pending{border-top-color:var(--amber)}.metric.m-companies{border-top-color:var(--blue)}
+.metric-lbl{font-size:10px;color:#64748b;margin-bottom:5px;font-weight:500}
+.metric-val{font-size:30px;font-weight:800;color:#0f172a;line-height:1}
+.metric-sub{font-size:10px;color:#94a3b8;margin-top:3px}
+.btn{padding:7px 14px;border-radius:8px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12px;cursor:pointer;border:none;display:inline-flex;align-items:center;gap:6px;transition:all .2s;text-decoration:none}
+.btn-primary{background:#102a43;color:#fff}.btn-primary:hover{background:#1e3a5f}
+.btn-gold{background:var(--gold);color:#0d1117}.btn-gold:hover{background:var(--gold2)}
+.btn-outline{background:transparent;border:1px solid #cbd5e1;color:#334155}.btn-outline:hover{background:#f8fafc}
+.btn-danger{background:#fee2e2;color:#dc2626;border:1px solid #fca5a5}
+.btn-green{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0}
+.btn-sm{padding:5px 10px;font-size:11px}
+.btn-icon{padding:6px;border-radius:7px;background:transparent;border:1px solid #e2e8f0;color:#64748b;cursor:pointer;transition:all .2s;display:inline-flex}
+.btn-icon:hover{background:#f8fafc}
+.btn-icon svg{width:13px;height:13px}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:700;color:#0f172a}
+.status{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:100px;font-size:10px;font-weight:700;white-space:nowrap}
+.s-enviada{background:#eff6ff;color:#2563eb}.s-sinrespuesta{background:#f1f5f9;color:#64748b}
+.s-revision{background:#fffbeb;color:#b45309}.s-entrevista{background:#f0fdf4;color:#15803d}
+.s-oferta{background:rgba(201,168,76,.15);color:#92670a}.s-rechazada{background:#fef2f2;color:#dc2626}
+.s-descartada{background:#f8fafc;color:#94a3b8}
+.pill-sector{padding:2px 8px;border-radius:100px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.ps-hotel{background:#e0f2fe;color:#0369a1}.ps-docencia{background:#dcfce7;color:#15803d}.ps-admin{background:#ede9fe;color:#6d28d9}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr}}
+.form-group{display:flex;flex-direction:column;gap:4px}.form-group.full{grid-column:1/-1}
+.form-label{font-size:11px;font-weight:600;color:#475569}.form-label span{color:#ef4444}
+.form-input,.form-select,.form-textarea{padding:8px 11px;border:1px solid #e2e8f0;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:12px;color:#1e293b;transition:border .2s}
+.form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:#102a43}
+.form-textarea{min-height:80px;resize:vertical}
+.form-actions{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;display:none;align-items:center;justify-content:center;padding:14px}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:14px;padding:24px;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.4)}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.modal-title{font-weight:700;font-size:16px;color:#0f172a}
+.modal-close{background:none;border:none;cursor:pointer;color:#94a3b8}
+.modal-close svg{width:17px;height:17px}
+.cand-card{background:#fff;border-radius:11px;padding:16px;box-shadow:0 1px 6px rgba(0,0,0,.08);margin-bottom:9px;border-left:4px solid #334155;transition:all .25s}
+.cand-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.1)}
+.cand-card.hotel{border-left-color:var(--hotel)}.cand-card.docencia{border-left-color:var(--docencia)}.cand-card.admin{border-left-color:var(--admin)}
+.filter-row{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.filter-chip{padding:4px 11px;border:1.5px solid #e2e8f0;border-radius:100px;background:#fff;font-size:11px;font-weight:600;color:#475569;cursor:pointer;transition:all .2s}
+.filter-chip:hover{border-color:#94a3b8}
+.filter-chip.active{border-color:#102a43;background:#102a43;color:#fff}
+.filter-chip.fc-hotel.active{border-color:var(--hotel);background:var(--hotel)}
+.filter-chip.fc-docencia.active{border-color:var(--docencia);background:var(--docencia)}
+.filter-chip.fc-admin.active{border-color:var(--admin);background:var(--admin)}
+.cv-tabs{display:flex;gap:3px;margin-bottom:16px;background:#f1f5f9;border-radius:9px;padding:3px}
+.cv-tab-btn{flex:1;padding:7px;border-radius:7px;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:#64748b;cursor:pointer;transition:all .2s}
+.cv-tab-btn.active{background:#fff;color:#0f172a;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.cv-content{display:none}.cv-content.active{display:block}
+.doc-output{background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;min-height:260px;font-size:12px;line-height:1.7;color:#334155;white-space:pre-wrap;font-family:'Segoe UI',Arial,sans-serif}
+.ai-loading{display:none;align-items:center;gap:8px;padding:12px;color:#64748b;font-size:12px}
+.ai-loading.show{display:flex}
+.spinner{width:18px;height:18px;border:2px solid #e2e8f0;border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+.emp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:768px){.emp-grid{grid-template-columns:repeat(2,1fr)}}
+.met-bar{height:26px;background:#f1f5f9;border-radius:7px;overflow:hidden;margin-top:5px;margin-bottom:12px}
+.met-bar-fill{height:100%;border-radius:7px;display:flex;align-items:center;padding-left:9px;font-size:10px;font-weight:700;color:#fff;min-width:36px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:768px){.two-col{grid-template-columns:1fr}}
+.list-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:12px}
+.list-row:last-child{border-bottom:none}
+.empty{text-align:center;padding:40px 20px;color:#94a3b8}
+/* BUSQUEDA */
+.search-hero{background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:14px;padding:24px;margin-bottom:18px;border:1px solid rgba(201,168,76,.2)}
+.search-hero-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:6px}
+.search-hero-sub{font-size:12px;color:#94a3b8;margin-bottom:16px;line-height:1.5}
+.search-pill{padding:4px 12px;border-radius:100px;font-size:10px;font-weight:700;display:inline-flex;align-items:center;gap:5px;margin:3px}
+.sp-hotel{background:rgba(14,165,233,.15);color:#38bdf8;border:1px solid rgba(14,165,233,.3)}
+.sp-docencia{background:rgba(34,197,94,.12);color:#4ade80;border:1px solid rgba(34,197,94,.25)}
+.sp-admin{background:rgba(139,92,246,.15);color:#a78bfa;border:1px solid rgba(139,92,246,.3)}
+.sp-geo{background:rgba(255,255,255,.07);color:#cbd5e1;border:1px solid rgba(255,255,255,.12)}
+.sector-block{background:#fff;border-radius:12px;box-shadow:0 1px 6px rgba(0,0,0,.08);overflow:hidden;margin-bottom:14px}
+.sector-block-hdr{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f1f5f9}
+.sector-block-label{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;color:#0f172a}
+.sector-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.sector-dot.hotel{background:var(--hotel)}.sector-dot.docencia{background:var(--docencia)}.sector-dot.admin{background:var(--admin)}
+.sector-block-body{padding:14px 18px}
+.vacante-card{border:1px solid #e2e8f0;border-radius:10px;padding:14px;margin-bottom:10px;background:#fafbfc;transition:all .2s}
+.vacante-card:hover{border-color:#cbd5e1;background:#fff}
+.match-badge{padding:3px 9px;border-radius:100px;font-size:10px;font-weight:800;flex-shrink:0}
+.match-alto{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0}
+.match-medio{background:#fffbeb;color:#b45309;border:1px solid #fde68a}
+.match-bajo{background:#f8fafc;color:#64748b;border:1px solid #e2e8f0}
+.accion-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:7px;font-size:11px;font-weight:700}
+.accion-hoy{background:#fef9c3;color:#a16207;border:1px solid #fde68a}
+.accion-pronto{background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd}
+.accion-seguimiento{background:#f3e8ff;color:#7e22ce;border:1px solid #e9d5ff}
+.accion-descartar{background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0}
+.search-step{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:9px;background:#f8fafc;border:1px solid #e2e8f0;font-size:12px;color:#475569;margin-bottom:8px;transition:all .3s}
+.search-step.active{background:#fffbeb;border-color:#fde68a;color:#b45309}
+.search-step.done{background:#f0fdf4;border-color:#bbf7d0;color:#15803d}
+.search-step.error{background:#fef2f2;border-color:#fca5a5;color:#dc2626}
+.step-icon{width:22px;height:22px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.history-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f1f5f9;font-size:12px}
+.history-item:last-child{border-bottom:none}
+.config-item{background:#fff;border-radius:12px;padding:18px;box-shadow:0 1px 6px rgba(0,0,0,.08);margin-bottom:14px}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:3px}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-brand">
+    <button class="hamburger" onclick="toggleMobileMenu()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <div class="hdr-avatar">FM</div>
+    <div><div class="hdr-name">Dashboard Candidaturas</div><div class="hdr-sub">Francisco Javier Martínez Alba</div></div>
+  </div>
+  <div class="hdr-right">
+    <span class="hdr-badge" id="hdr-total">0 candidaturas</span>
+    <button class="btn btn-gold btn-sm" onclick="openModal('modal-add')">+ Nueva</button>
+  </div>
+</div>
+<div class="body">
+  <div class="sidebar-overlay" id="sidebar-overlay" onclick="closeMobileMenu()"></div>
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Panel</div>
+      <div class="nav-item active" onclick="goTab('dashboard',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Dashboard</div>
+      <div class="nav-item" onclick="goTab('busqueda',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Búsqueda Diaria<span class="nav-count nc-gold nc-pulse" id="nav-new-badge" style="display:none">HOY</span></div>
+      <div class="nav-item" onclick="goTab('cv',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Adaptar CV<span class="nav-count nc-gold">IA</span></div>
+      <div class="nav-item" onclick="goTab('tracking',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>Candidaturas<span class="nav-count nc-default" id="nav-cand">0</span></div>
+      <div class="nav-item" onclick="goTab('empresas',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>Empresas<span class="nav-count nc-default" id="nav-emp">0</span></div>
+      <div class="nav-item" onclick="goTab('metrics',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Métricas</div>
+      <div class="nav-item" onclick="goTab('config',this)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Config</div>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="sidebar-label" style="padding:0 0 6px">Integración Miweb</div>
+      <div style="font-size:11px;color:var(--muted);background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);border-radius:8px;padding:8px 10px">📌 Sprint siguiente</div>
+    </div>
+  </div>
+  <div class="main">
+
+    <!-- DASHBOARD -->
+    <div id="tab-dashboard" class="tab active">
+      <div class="sec-hdr"><div class="sec-title">Resumen de Búsqueda</div><button class="btn btn-outline btn-sm" onclick="openModal('modal-add')">+ Nueva candidatura</button></div>
+      <div class="metrics-grid">
+        <div class="metric m-total"><div class="metric-lbl">Total candidaturas</div><div class="metric-val" id="d-total">0</div></div>
+        <div class="metric m-interview"><div class="metric-lbl">Entrevistas</div><div class="metric-val" id="d-interviews">0</div><div class="metric-sub" id="d-conv">0% conv.</div></div>
+        <div class="metric m-pending"><div class="metric-lbl">Sin respuesta</div><div class="metric-val" id="d-pending">0</div></div>
+        <div class="metric m-companies"><div class="metric-lbl">Empresas</div><div class="metric-val" id="d-companies">0</div></div>
+      </div>
+      <div id="d-search-banner" style="display:none;margin-bottom:16px;padding:14px 18px;background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:12px;border:1px solid rgba(201,168,76,.3);align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+        <div><div style="font-weight:700;font-size:14px;color:#fff;margin-bottom:3px">🔍 Búsqueda diaria pendiente</div><div style="font-size:11px;color:#94a3b8">Hoy no se ha ejecutado la búsqueda automática</div></div>
+        <button class="btn btn-gold btn-sm" onclick="goTab('busqueda',document.querySelectorAll('.nav-item')[1])">Buscar ahora →</button>
+      </div>
+      <div class="two-col">
+        <div class="card"><div class="card-title">Últimas candidaturas</div><div id="d-recent"></div></div>
+        <div class="card"><div class="card-title">Por sector</div><div id="d-sectors"></div></div>
+      </div>
+      <div class="card"><div class="card-title">Pipeline de estados</div><div id="d-pipeline" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px"></div></div>
+    </div>
+
+    <!-- BÚSQUEDA DIARIA -->
+    <div id="tab-busqueda" class="tab">
+      <div class="search-hero">
+        <div class="search-hero-title">🔍 Búsqueda Diaria de Vacantes</div>
+        <div class="search-hero-sub">Claude busca ofertas en tiempo real usando web search. Filtra por tu perfil y recomienda la acción óptima para cada vacante.<br><strong style="color:#fde68a">⚠️ Requiere conexión a Internet. La IA funciona en el navegador con conexión activa.</strong></div>
+        <div style="margin-bottom:16px">
+          <span class="search-pill sp-hotel">🏨 Director / GM Hotelero</span>
+          <span class="search-pill sp-docencia">🎓 Docente FP · SSCE0110</span>
+          <span class="search-pill sp-admin">📋 Asistente Dir. / Admin</span>
+          <span class="search-pill sp-geo">🌍 España + Internacional</span>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+          <div>
+            <div style="font-size:11px;color:#64748b" id="last-search-txt">Sin búsquedas previas</div>
+            <div style="font-size:11px;color:var(--gold);font-weight:600;margin-top:3px" id="next-search-txt">Ejecuta tu primera búsqueda</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-gold" id="btn-search-main" onclick="runDailySearch()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Buscar ahora</button>
+            <button class="btn btn-outline btn-sm" onclick="showSearchHistory()">Historial</button>
+          </div>
+        </div>
+      </div>
+      <div id="search-progress" style="display:none" class="card">
+        <div class="card-title">Búsqueda en progreso...</div>
+        <div id="search-steps">
+          <div class="search-step" id="step-hotel"><div class="step-icon">🏨</div><span>Buscando vacantes de Director Hotelero...</span></div>
+          <div class="search-step" id="step-docencia"><div class="step-icon">🎓</div><span>Buscando vacantes de Docente FP...</span></div>
+          <div class="search-step" id="step-admin"><div class="step-icon">📋</div><span>Buscando vacantes administrativas...</span></div>
+          <div class="search-step" id="step-compile"><div class="step-icon">✨</div><span>Analizando match con tu perfil...</span></div>
+        </div>
+      </div>
+      <div id="search-results"><div class="empty" style="padding:60px 20px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="44" height="44"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><p style="font-size:14px;font-weight:600;margin-bottom:6px">Sin resultados todavía</p><p style="font-size:12px">Pulsa "Buscar ahora" para encontrar vacantes de hoy</p></div></div>
+      <div id="search-history-panel" style="display:none">
+        <div class="sec-hdr" style="margin-top:8px"><div class="sec-title" style="font-size:17px">Historial</div><button class="btn btn-outline btn-sm" onclick="document.getElementById('search-history-panel').style.display='none'">Cerrar</button></div>
+        <div class="card"><div id="search-history-list"></div></div>
+      </div>
+    </div>
+
+    <!-- CV -->
+    <div id="tab-cv" class="tab">
+      <div class="sec-hdr"><div class="sec-title">Adaptar CV con IA</div></div>
+      <div class="card">
+        <div class="form-group" style="margin-bottom:12px"><label class="form-label">Pega el texto completo de la oferta</label><textarea id="cv-offer" class="form-textarea" style="min-height:110px" placeholder="Pega aquí la descripción completa de la oferta..."></textarea></div>
+        <div style="margin-bottom:12px"><div class="form-label" style="margin-bottom:7px">Sector objetivo</div>
+          <div class="filter-row">
+            <span class="filter-chip fc-hotel active" data-sector="hotel" onclick="selectCVSector('hotel')">🏨 Hostelería</span>
+            <span class="filter-chip fc-docencia" data-sector="docencia" onclick="selectCVSector('docencia')">🎓 Docencia FP</span>
+            <span class="filter-chip fc-admin" data-sector="admin" onclick="selectCVSector('admin')">📋 Administrativo</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-gold" onclick="generateDocs()">Generar documentos</button>
+          <button class="btn btn-outline btn-sm" onclick="document.getElementById('cv-offer').value=''">Limpiar</button>
+        </div>
+        <div class="ai-loading" id="ai-loading"><div class="spinner"></div><span id="ai-loading-text">Generando con Claude...</span></div>
+      </div>
+      <div class="card">
+        <div class="cv-tabs">
+          <button class="cv-tab-btn active" onclick="switchCVTab('cv',this)">📄 CV Adaptado</button>
+          <button class="cv-tab-btn" onclick="switchCVTab('letter',this)">✉️ Carta</button>
+          <button class="cv-tab-btn" onclick="switchCVTab('email',this)">📧 Correo</button>
+        </div>
+        <div id="cv-content-cv" class="cv-content active"><div class="doc-output" id="cv-out-cv">Pega una oferta y pulsa "Generar documentos"...</div><button class="btn btn-primary btn-sm" style="margin-top:8px" onclick="copyDoc('cv-out-cv')">📋 Copiar</button></div>
+        <div id="cv-content-letter" class="cv-content"><div class="doc-output" id="cv-out-letter">La carta se generará automáticamente...</div><button class="btn btn-outline btn-sm" style="margin-top:8px" onclick="copyDoc('cv-out-letter')">📋 Copiar</button></div>
+        <div id="cv-content-email" class="cv-content"><div class="doc-output" id="cv-out-email">El correo se generará automáticamente...</div><button class="btn btn-outline btn-sm" style="margin-top:8px" onclick="copyDoc('cv-out-email')">📋 Copiar</button></div>
+      </div>
+    </div>
+
+    <!-- CANDIDATURAS -->
+    <div id="tab-tracking" class="tab">
+      <div class="sec-hdr"><div class="sec-title">Candidaturas</div><button class="btn btn-gold btn-sm" onclick="openModal('modal-add')">+ Nueva</button></div>
+      <div class="filter-row" style="margin-bottom:14px">
+        <span class="filter-chip active" data-filter="all" onclick="setFilter('all',this)">Todos</span>
+        <span class="filter-chip fc-hotel" data-filter="hotel" onclick="setFilter('hotel',this)">🏨 Hostelería</span>
+        <span class="filter-chip fc-docencia" data-filter="docencia" onclick="setFilter('docencia',this)">🎓 Docencia</span>
+        <span class="filter-chip fc-admin" data-filter="admin" onclick="setFilter('admin',this)">📋 Admin</span>
+        <span class="filter-chip" data-filter="Entrevista" onclick="setFilter('Entrevista',this)">✅ Entrevistas</span>
+        <span class="filter-chip" data-filter="Sin respuesta" onclick="setFilter('Sin respuesta',this)">⏳ Sin respuesta</span>
+      </div>
+      <div id="tracking-list"></div>
+    </div>
+
+    <!-- EMPRESAS -->
+    <div id="tab-empresas" class="tab">
+      <div class="sec-hdr"><div class="sec-title">Directorio de Empresas</div><button class="btn btn-primary btn-sm" onclick="openModal('modal-empresa')">+ Nueva empresa</button></div>
+      <div id="empresa-list" class="emp-grid"></div>
+    </div>
+
+    <!-- MÉTRICAS -->
+    <div id="tab-metrics" class="tab">
+      <div class="sec-hdr"><div class="sec-title">Métricas y Análisis</div></div>
+      <div class="metrics-grid" style="margin-bottom:18px">
+        <div class="metric m-total"><div class="metric-lbl">Total</div><div class="metric-val" id="m-total">0</div></div>
+        <div class="metric m-interview"><div class="metric-lbl">Entrevistas</div><div class="metric-val" id="m-interviews">0</div><div class="metric-sub" id="m-conv">0%</div></div>
+        <div class="metric m-pending"><div class="metric-lbl">Sin respuesta</div><div class="metric-val" id="m-pending">0</div></div>
+        <div class="metric" style="border-top-color:var(--red)"><div class="metric-lbl">Rechazadas</div><div class="metric-val" id="m-rejected">0</div></div>
+      </div>
+      <div class="two-col">
+        <div class="card"><div class="card-title">Rendimiento por Sector</div><div id="m-by-sector"></div></div>
+        <div class="card"><div class="card-title">Distribución estados</div><div id="m-by-status"></div></div>
+      </div>
+      <div class="card"><div class="card-title">Canal de captación</div><div id="m-by-canal" style="display:flex;gap:7px;flex-wrap:wrap"></div></div>
+    </div>
+
+    <!-- CONFIG -->
+    <div id="tab-config" class="tab">
+      <div class="sec-hdr"><div class="sec-title">Configuración</div></div>
+      <div class="config-item">
+        <h4 style="font-weight:700;font-size:14px;color:#1e293b;margin-bottom:4px">🤖 Claude API — Búsqueda y CV</h4>
+        <p style="font-size:12px;color:#64748b;margin-bottom:10px">La búsqueda diaria y la generación de CV usan Claude con web search en tiempo real. Requiere conexión a Internet.</p>
+        <div style="padding:9px 13px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;font-size:12px;color:#b45309">⚠️ Abre este archivo en <strong>Chrome o Edge</strong> para que la IA funcione correctamente.</div>
+      </div>
+      <div class="config-item">
+        <h4 style="font-weight:700;font-size:14px;color:#1e293b;margin-bottom:4px">💾 Datos</h4>
+        <p style="font-size:12px;color:#64748b;margin-bottom:10px">Los datos se guardan en tu navegador (localStorage). Exporta regularmente para no perderlos.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-sm" onclick="exportData()">📥 Exportar JSON</button>
+          <button class="btn btn-danger btn-sm" onclick="clearAllData()">🗑️ Borrar todo</button>
+        </div>
+      </div>
+      <div class="config-item">
+        <h4 style="font-weight:700;font-size:14px;color:#1e293b;margin-bottom:4px">🔗 Integración con Miweb</h4>
+        <div style="padding:9px 13px;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;font-size:12px;color:#b45309;margin-top:8px">📌 Pendiente de integración — sprint siguiente</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL CANDIDATURA -->
+<div class="modal-overlay" id="modal-add">
+  <div class="modal">
+    <div class="modal-hdr"><div class="modal-title">✏️ Nueva Candidatura</div><button class="modal-close" onclick="closeModal('modal-add')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">Empresa<span>*</span></label><input id="f-empresa" class="form-input" placeholder="Ej. Hotel Meliá"/></div>
+      <div class="form-group"><label class="form-label">Rol / Puesto<span>*</span></label><input id="f-rol" class="form-input" placeholder="Ej. Director de Hotel"/></div>
+      <div class="form-group"><label class="form-label">Sector<span>*</span></label><select id="f-sector" class="form-select"><option value="hotel">🏨 Hostelería</option><option value="docencia">🎓 Docencia FP</option><option value="admin">📋 Administrativo</option></select></div>
+      <div class="form-group"><label class="form-label">Estado</label><select id="f-estado" class="form-select"><option value="Enviada">Enviada</option><option value="Sin respuesta" selected>Sin respuesta</option><option value="En revisión">En revisión</option><option value="Entrevista">Entrevista</option><option value="Oferta">Oferta</option><option value="Rechazada">Rechazada</option><option value="Descartada">Descartada</option></select></div>
+      <div class="form-group"><label class="form-label">Canal</label><select id="f-canal" class="form-select"><option>LinkedIn</option><option>Infojobs</option><option>Email directo</option><option>Portal web</option><option>Visita presencial</option><option>Contacto personal</option><option>Otro</option></select></div>
+      <div class="form-group"><label class="form-label">Fecha</label><input id="f-fecha" type="date" class="form-input"/></div>
+      <div class="form-group full"><label class="form-label">Notas</label><textarea id="f-detalle" class="form-textarea" placeholder="Detalles, contacto, seguimiento..."></textarea></div>
+    </div>
+    <div class="form-actions"><button class="btn btn-gold" onclick="saveCandidatura()">Guardar candidatura</button><button class="btn btn-outline" onclick="closeModal('modal-add')">Cancelar</button></div>
+  </div>
+</div>
+
+<!-- MODAL EMPRESA -->
+<div class="modal-overlay" id="modal-empresa">
+  <div class="modal">
+    <div class="modal-hdr"><div class="modal-title">🏢 Nueva Empresa</div><button class="modal-close" onclick="closeModal('modal-empresa')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">Nombre<span>*</span></label><input id="e-nombre" class="form-input"/></div>
+      <div class="form-group"><label class="form-label">Sector</label><select id="e-sector" class="form-select"><option value="">Sin especificar</option><option value="hotel">🏨 Hostelería</option><option value="docencia">🎓 Docencia</option><option value="admin">📋 Administrativo</option></select></div>
+      <div class="form-group"><label class="form-label">Email</label><input id="e-email" type="email" class="form-input"/></div>
+      <div class="form-group"><label class="form-label">Teléfono</label><input id="e-telefono" type="tel" class="form-input"/></div>
+      <div class="form-group full"><label class="form-label">Notas</label><textarea id="e-notas" class="form-textarea"></textarea></div>
+    </div>
+    <div class="form-actions"><button class="btn btn-primary" onclick="saveEmpresa()">Guardar empresa</button><button class="btn btn-outline" onclick="closeModal('modal-empresa')">Cancelar</button></div>
+  </div>
+</div>
+
+<script>
+// DATA
+let data={entries:[{id:1777539121637,empresa:"TME",rol:"Controlador",sector:"admin",fecha:"2026-04-30",estado:"Sin respuesta",canal:"Otro",detalle:""},{id:1777365531789,empresa:"Holiday Inn",rol:"Director",sector:"hotel",fecha:"2026-04-28",estado:"Sin respuesta",canal:"Portal web",detalle:""},{id:1777364859996,empresa:"Barceló Hotels",rol:"Director",sector:"hotel",fecha:"2026-04-28",estado:"Sin respuesta",canal:"Portal web",detalle:""},{id:1776845084234,empresa:"Hotel Albarán",rol:"Director",sector:"hotel",fecha:"2026-04-22",estado:"Sin respuesta",canal:"Visita presencial",detalle:"Visita de cortesía"},{id:1776761508301,empresa:"Les Roches",rol:"Docente",sector:"docencia",fecha:"2026-04-21",estado:"Sin respuesta",canal:"LinkedIn",detalle:""},{id:1776420085457,empresa:"BlueSea Hotels",rol:"Director",sector:"hotel",fecha:"2026-04-17",estado:"Entrevista",canal:"Email directo",detalle:"Entrevista por email"},{id:1776330615173,empresa:"SGS",rol:"Auxiliar Administrativo",sector:"admin",fecha:"2026-04-16",estado:"Sin respuesta",canal:"Otro",detalle:""},{id:1776330428484,empresa:"Valderrama",rol:"Clubhouse Manager",sector:"hotel",fecha:"2026-04-16",estado:"Rechazada",canal:"LinkedIn",detalle:""}],companies:[{id:1,nombre:"TME",sector:"admin",email:"",telefono:"",notas:""},{id:2,nombre:"Holiday Inn",sector:"hotel",email:"",telefono:"",notas:""},{id:3,nombre:"Barceló Hotels",sector:"hotel",email:"",telefono:"",notas:""},{id:4,nombre:"Hotel Albarán",sector:"hotel",email:"",telefono:"",notas:""},{id:5,nombre:"Les Roches",sector:"docencia",email:"",telefono:"",notas:""},{id:6,nombre:"BlueSea Hotels",sector:"hotel",email:"",telefono:"",notas:""},{id:7,nombre:"SGS",sector:"admin",email:"",telefono:"",notas:""},{id:8,nombre:"Valderrama",sector:"hotel",email:"",telefono:"",notas:""}],searchHistory:[]};
+
+// STORAGE
+function saveData(){try{localStorage.setItem('fjm_dash_v3',JSON.stringify(data));}catch(e){}}
+function loadData(){try{const r=localStorage.getItem('fjm_dash_v3');if(r)data=JSON.parse(r);}catch(e){}}
+
+// NAV
+function goTab(id,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(el)el.classList.add('active');
+  if(id==='dashboard')renderDashboard();
+  if(id==='busqueda')renderSearchTab();
+  if(id==='tracking')renderTracking();
+  if(id==='empresas')renderEmpresas();
+  if(id==='metrics')renderMetrics();
+}
+function toggleMobileMenu(){document.getElementById('sidebar').classList.toggle('mobile-open');document.getElementById('sidebar-overlay').classList.toggle('open');}
+function closeMobileMenu(){document.getElementById('sidebar').classList.remove('mobile-open');document.getElementById('sidebar-overlay').classList.remove('open');}
+
+// MODALS
+function openModal(id){if(id==='modal-add')document.getElementById('f-fecha').value=new Date().toISOString().split('T')[0];document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));});
+
+// HELPERS
+const SC={'Enviada':'s-enviada','Sin respuesta':'s-sinrespuesta','En revisión':'s-revision','Entrevista':'s-entrevista','Oferta':'s-oferta','Rechazada':'s-rechazada','Descartada':'s-descartada'};
+const SL={hotel:'🏨 Hostelería',docencia:'🎓 Docencia',admin:'📋 Admin'};
+const SP={hotel:'ps-hotel',docencia:'ps-docencia',admin:'ps-admin'};
+function sb(s){return`<span class="status ${SC[s]||'s-sinrespuesta'}">${s||'Sin respuesta'}</span>`;}
+function sp(s){return`<span class="pill-sector ${SP[s]||'ps-hotel'}">${SL[s]||s}</span>`;}
+function today(){return new Date().toISOString().split('T')[0];}
+function fmtDate(d){if(!d)return'—';const dt=new Date(d+'T12:00:00');return dt.toLocaleDateString('es-ES',{day:'2-digit',month:'short',year:'numeric'});}
+function fmtTime(ts){const d=new Date(ts);return d.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'})+' · '+d.toLocaleDateString('es-ES',{day:'2-digit',month:'short'});}
+
+// CRUD
+function saveCandidatura(){const e=document.getElementById('f-empresa').value.trim(),r=document.getElementById('f-rol').value.trim();if(!e||!r){alert('⚠️ Empresa y rol obligatorios');return;}data.entries.unshift({id:Date.now(),empresa:e,rol:r,sector:document.getElementById('f-sector').value,fecha:document.getElementById('f-fecha').value,estado:document.getElementById('f-estado').value,canal:document.getElementById('f-canal').value,detalle:document.getElementById('f-detalle').value.trim()});saveData();closeModal('modal-add');['f-empresa','f-rol','f-detalle'].forEach(id=>document.getElementById(id).value='');document.getElementById('f-estado').value='Sin respuesta';renderAll();updateCounts();}
+function deleteCandidatura(id){if(!confirm('¿Eliminar?'))return;data.entries=data.entries.filter(e=>e.id!==id);saveData();renderAll();updateCounts();}
+function updateEstado(id,val){const e=data.entries.find(x=>x.id===id);if(e){e.estado=val;saveData();renderDashboard();renderMetrics();}}
+function saveEmpresa(){const n=document.getElementById('e-nombre').value.trim();if(!n){alert('⚠️ Nombre obligatorio');return;}data.companies.unshift({id:Date.now(),nombre:n,sector:document.getElementById('e-sector').value,email:document.getElementById('e-email').value,telefono:document.getElementById('e-telefono').value,notas:document.getElementById('e-notas').value.trim()});saveData();closeModal('modal-empresa');['e-nombre','e-email','e-telefono','e-notas'].forEach(id=>document.getElementById(id).value='');renderEmpresas();updateCounts();}
+function deleteEmpresa(id){if(!confirm('¿Eliminar?'))return;data.companies=data.companies.filter(c=>c.id!==id);saveData();renderEmpresas();updateCounts();}
+
+// FILTER
+let currentFilter='all';
+function setFilter(val,el){currentFilter=val;document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');renderTracking();}
+function filteredEntries(){if(currentFilter==='all')return data.entries;if(['hotel','docencia','admin'].includes(currentFilter))return data.entries.filter(e=>e.sector===currentFilter);return data.entries.filter(e=>e.estado===currentFilter);}
+
+// RENDER
+function renderDashboard(){
+  const tot=data.entries.length,intv=data.entries.filter(e=>e.estado==='Entrevista').length,pend=data.entries.filter(e=>e.estado==='Sin respuesta').length,conv=tot>0?Math.round(intv/tot*100):0;
+  document.getElementById('d-total').textContent=tot;document.getElementById('d-interviews').textContent=intv;document.getElementById('d-pending').textContent=pend;document.getElementById('d-companies').textContent=data.companies.length;document.getElementById('d-conv').textContent=conv+'% conv.';
+  document.getElementById('d-recent').innerHTML=data.entries.slice(0,5).map(e=>`<div class="list-row"><span>${e.empresa} <em style="color:#94a3b8;font-size:11px">— ${e.rol}</em></span>${sb(e.estado)}</div>`).join('')||'<div class="empty" style="padding:20px"><p>Sin candidaturas</p></div>';
+  const sec={};data.entries.forEach(e=>{sec[e.sector]=(sec[e.sector]||0)+1;});
+  document.getElementById('d-sectors').innerHTML=Object.entries(sec).map(([s,c])=>`<div class="list-row"><span>${SL[s]||s}</span><strong>${c}</strong></div>`).join('')||'<p style="color:#94a3b8;font-size:12px">Sin datos</p>';
+  const pipe={};data.entries.forEach(e=>{pipe[e.estado]=(pipe[e.estado]||0)+1;});
+  document.getElementById('d-pipeline').innerHTML=['Enviada','Sin respuesta','En revisión','Entrevista','Oferta','Rechazada','Descartada'].filter(s=>pipe[s]).map(s=>`<div style="text-align:center;min-width:65px">${sb(s)}<div style="font-size:18px;font-weight:800;color:#0f172a;margin-top:3px">${pipe[s]}</div></div>`).join('');
+  const banner=document.getElementById('d-search-banner');const last=data.searchHistory[0];banner.style.display=(!last||last.date!==today())?'flex':'none';
+}
+function renderTracking(){const list=filteredEntries(),c=document.getElementById('tracking-list');if(!list.length){c.innerHTML='<div class="empty"><p>Sin candidaturas para este filtro</p></div>';return;}c.innerHTML=list.map(e=>`<div class="cand-card ${e.sector}"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px"><div><div style="font-weight:700;font-size:15px;color:#0f172a">${e.empresa}</div><div style="font-size:12px;color:#475569">${e.rol}</div></div>${sb(e.estado)}</div><div style="display:flex;gap:7px;margin-top:8px;flex-wrap:wrap">${sp(e.sector)}<span style="font-size:11px;color:#94a3b8">📅 ${fmtDate(e.fecha)}</span>${e.canal?`<span style="font-size:11px;color:#94a3b8">🔗 ${e.canal}</span>`:''}</div>${e.detalle?`<div style="font-size:11px;color:#64748b;margin-top:7px;padding:7px 9px;background:#f8fafc;border-radius:6px">${e.detalle}</div>`:''}<div style="display:flex;gap:6px;margin-top:9px;flex-wrap:wrap;align-items:center"><select class="form-select" style="padding:4px 8px;font-size:11px;width:auto" onchange="updateEstado(${e.id},this.value)">${['Enviada','Sin respuesta','En revisión','Entrevista','Oferta','Rechazada','Descartada'].map(s=>`<option${s===e.estado?' selected':''}>${s}</option>`).join('')}</select><button class="btn-icon" onclick="deleteCandidatura(${e.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></button></div></div>`).join('');}
+function renderEmpresas(){const c=document.getElementById('empresa-list');if(!data.companies.length){c.innerHTML='<div class="empty" style="grid-column:1/-1"><p>Directorio vacío</p></div>';return;}c.innerHTML=data.companies.map(co=>`<div style="background:#fff;border-radius:11px;padding:16px;box-shadow:0 1px 6px rgba(0,0,0,.08);border-top:3px solid ${co.sector==='docencia'?'var(--docencia)':co.sector==='admin'?'var(--admin)':'var(--hotel)'}"><div style="display:flex;justify-content:space-between;margin-bottom:5px"><div style="font-weight:700;font-size:14px;color:#0f172a">${co.nombre}</div><button class="btn-icon" onclick="deleteEmpresa(${co.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg></button></div>${co.sector?`<div style="margin-bottom:5px">${sp(co.sector)}</div>`:''}${co.email?`<div style="font-size:11px;color:#64748b">✉️ ${co.email}</div>`:''}${co.telefono?`<div style="font-size:11px;color:#64748b">📞 ${co.telefono}</div>`:''}${co.notas?`<div style="font-size:11px;color:#94a3b8;margin-top:5px;font-style:italic">${co.notas}</div>`:''}</div>`).join('');}
+function renderMetrics(){const tot=data.entries.length,intv=data.entries.filter(e=>e.estado==='Entrevista').length,pend=data.entries.filter(e=>e.estado==='Sin respuesta').length,rej=data.entries.filter(e=>e.estado==='Rechazada').length;document.getElementById('m-total').textContent=tot;document.getElementById('m-interviews').textContent=intv;document.getElementById('m-conv').textContent=(tot>0?Math.round(intv/tot*100):0)+'% conversión';document.getElementById('m-pending').textContent=pend;document.getElementById('m-rejected').textContent=rej;const bySec={};data.entries.forEach(e=>{if(!bySec[e.sector])bySec[e.sector]={t:0,i:0};bySec[e.sector].t++;if(e.estado==='Entrevista')bySec[e.sector].i++;});document.getElementById('m-by-sector').innerHTML=Object.keys(bySec).length===0?'<p style="color:#94a3b8;font-size:12px">Sin datos</p>':Object.entries(bySec).map(([s,st])=>{const p=Math.round(st.i/st.t*100);const c={hotel:'var(--hotel)',docencia:'var(--docencia)',admin:'var(--admin)'};return`<div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600"><span>${SL[s]||s}</span><span>${st.t} · ${p}%</span></div><div class="met-bar"><div class="met-bar-fill" style="width:${Math.max(p,5)}%;background:${c[s]||'#334155'}">${p}%</div></div></div>`;}).join('');const bySt={};data.entries.forEach(e=>{bySt[e.estado]=(bySt[e.estado]||0)+1;});document.getElementById('m-by-status').innerHTML=Object.entries(bySt).map(([s,c])=>`<div class="list-row">${sb(s)}<strong>${c}</strong></div>`).join('')||'<p style="color:#94a3b8;font-size:12px">Sin datos</p>';const byCan={};data.entries.forEach(e=>{if(e.canal)byCan[e.canal]=(byCan[e.canal]||0)+1;});document.getElementById('m-by-canal').innerHTML=Object.entries(byCan).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`<div style="padding:6px 12px;background:#f1f5f9;border-radius:7px;font-size:11px;font-weight:600;color:#334155">${c} <span style="color:var(--gold)">${n}</span></div>`).join('')||'<span style="color:#94a3b8;font-size:12px">Sin datos</span>';}
+function updateCounts(){document.getElementById('nav-cand').textContent=data.entries.length;document.getElementById('nav-emp').textContent=data.companies.length;document.getElementById('hdr-total').textContent=data.entries.length+' candidaturas';}
+function renderAll(){renderDashboard();renderTracking();renderEmpresas();renderMetrics();}
+
+// BÚSQUEDA
+let isSearching=false;
+const PROFILE_SEARCH=`Candidato: Francisco Javier Martínez Alba. Director de Hotel / Docente FP / Asistente Dirección. 25+ años dirigiendo hoteles 3-5 estrellas en España e internacional. Habilitación docente SSCE0110 (2025). Certificados ADGG0108 y ADGG0308. Inglés B1, Alemán A2. Disponible para relocación.`;
+
+function setStep(id,state){const el=document.getElementById('step-'+id);if(!el)return;el.className='search-step '+state;const ic={active:'<div class="spinner" style="width:16px;height:16px"></div>',done:'✅',error:'❌'};el.querySelector('.step-icon').innerHTML=ic[state]||el.querySelector('.step-icon').textContent;}
+
+async function runDailySearch(){
+  if(isSearching)return;isSearching=true;
+  const btn=document.getElementById('btn-search-main');btn.disabled=true;btn.textContent='Buscando...';
+  document.getElementById('search-progress').style.display='block';
+  document.getElementById('search-results').innerHTML='';
+  document.getElementById('search-history-panel').style.display='none';
+  ['hotel','docencia','admin','compile'].forEach(s=>setStep(s,''));
+  const results={hotel:[],docencia:[],admin:[]};
+  const prompts={
+    hotel:`Busca ofertas de empleo REALES Y ACTUALES (2026) de Director de Hotel, General Manager, Hotel Manager en España e internacional. Busca en LinkedIn, Infojobs, Indeed, portales de cadenas hoteleras. Devuelve SOLO JSON sin texto extra: {"vacantes":[{"empresa":"nombre","puesto":"puesto","ubicacion":"ciudad, país","salario":"rango o No especificado","portal":"fuente","match":"Alto/Medio/Bajo","motivo_match":"razón breve","accion":"Aplicar hoy/Aplicar esta semana/Guardar para seguimiento/Descartar","interacciones":["paso 1","paso 2"]}]} Incluye 4-6 vacantes reales.`,
+    docencia:`Busca ofertas REALES Y ACTUALES (2026) de Profesor/Docente FP de Hostelería y Turismo en España (centros privados, academias, plataformas). Devuelve SOLO JSON: {"vacantes":[{"empresa":"centro","puesto":"puesto","ubicacion":"ciudad","salario":"rango o No especificado","portal":"fuente","match":"Alto/Medio/Bajo","motivo_match":"razón","accion":"Aplicar hoy/Aplicar esta semana/Guardar/Descartar","interacciones":["paso 1","paso 2"]}]} 3-5 vacantes.`,
+    admin:`Busca ofertas REALES Y ACTUALES (2026) de Asistente de Dirección, Auxiliar Administrativo, Secretario/a de Dirección en España. Devuelve SOLO JSON: {"vacantes":[{"empresa":"nombre","puesto":"puesto","ubicacion":"ciudad","salario":"rango o No especificado","portal":"fuente","match":"Alto/Medio/Bajo","motivo_match":"razón","accion":"Aplicar hoy/Aplicar esta semana/Guardar/Descartar","interacciones":["paso 1","paso 2"]}]} 3-5 vacantes.`
+  };
+  for(const sec of['hotel','docencia','admin']){
+    setStep(sec,'active');
+    try{
+      const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,tools:[{type:'web_search_20250305',name:'web_search'}],messages:[{role:'user',content:`${PROFILE_SEARCH}\n\n${prompts[sec]}`}]})});
+      const d=await res.json();
+      if(!res.ok)throw new Error(d.error?.message||'API '+res.status);
+      const txt=d.content.filter(b=>b.type==='text').map(b=>b.text).join('');
+      const m=txt.match(/\{[\s\S]*"vacantes"[\s\S]*\}/);
+      if(m){const p=JSON.parse(m[0]);results[sec]=(p.vacantes||[]).map(v=>({...v,sector:sec}));}
+      setStep(sec,'done');
+    }catch(err){results[sec]=[{empresa:'Sin resultados',puesto:'Error: '+err.message,ubicacion:'—',salario:'—',portal:'—',match:'Bajo',motivo_match:'No se pudo completar la búsqueda',accion:'Descartar',sector:sec,interacciones:['Reintentar más tarde']}];setStep(sec,'error');}
+  }
+  setStep('compile','active');await new Promise(r=>setTimeout(r,500));setStep('compile','done');
+  const all=[...results.hotel,...results.docencia,...results.admin];
+  data.searchHistory.unshift({date:today(),timestamp:Date.now(),total:all.length,byAlto:all.filter(v=>v.match==='Alto').length,vacantes:all});
+  if(data.searchHistory.length>30)data.searchHistory=data.searchHistory.slice(0,30);
+  saveData();
+  setTimeout(()=>{
+    document.getElementById('search-progress').style.display='none';
+    renderSearchResults(all);updateSearchMeta();
+    const badge=document.getElementById('nav-new-badge');if(badge){const a=all.filter(v=>v.match==='Alto').length;badge.style.display=a?'inline-block':'none';badge.textContent=a+' altas';}
+    btn.disabled=false;btn.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Buscar ahora';
+    isSearching=false;renderDashboard();
+  },600);
+}
+
+function renderSearchResults(vacantes){
+  const sn={hotel:'🏨 Director / GM Hotelero',docencia:'🎓 Docente FP Hostelería',admin:'📋 Asistente Dirección / Admin'};
+  let html='';
+  for(const sec of['hotel','docencia','admin']){
+    const list=vacantes.filter(v=>v.sector===sec);if(!list.length)continue;
+    const altas=list.filter(v=>v.match==='Alto').length;
+    html+=`<div class="sector-block"><div class="sector-block-hdr"><div class="sector-block-label"><span class="sector-dot ${sec}"></span>${sn[sec]}</div><div style="font-size:11px;color:#94a3b8">${list.length} vacantes · ${altas} match alto</div></div><div class="sector-block-body">${list.map(v=>{
+      const mc={Alto:'match-alto',Medio:'match-medio',Bajo:'match-bajo'}[v.match]||'match-bajo';
+      const ac={'Aplicar hoy':'accion-hoy','Aplicar esta semana':'accion-pronto','Guardar para seguimiento':'accion-seguimiento','Descartar':'accion-descartar'}[v.accion]||'accion-descartar';
+      const ae={'Aplicar hoy':'🔥','Aplicar esta semana':'📅','Guardar para seguimiento':'🔖','Descartar':'✗'}[v.accion]||'';
+      const inter=Array.isArray(v.interacciones)?v.interacciones:[];
+      const vStr=JSON.stringify(v).replace(/"/g,'&quot;');
+      return`<div class="vacante-card"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:7px"><div><div style="font-weight:700;font-size:14px;color:#0f172a">${v.empresa||'—'}</div><div style="font-size:12px;color:#475569">${v.puesto||'—'}</div></div><span class="match-badge ${mc}">↑ ${v.match||'?'}</span></div><div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:7px">${v.ubicacion?`<span style="font-size:10px;color:#64748b">📍 ${v.ubicacion}</span>`:''}${v.salario&&v.salario!=='No especificado'?`<span style="font-size:10px;color:#64748b">💶 ${v.salario}</span>`:''}${v.portal?`<span style="font-size:10px;color:#64748b">🔗 ${v.portal}</span>`:''}</div>${v.motivo_match?`<div style="font-size:11px;color:#64748b;background:#f8fafc;border-radius:6px;padding:7px 10px;margin-bottom:7px;border-left:3px solid var(--gold)">💡 ${v.motivo_match}</div>`:''} ${inter.length?`<div style="margin-bottom:8px"><div style="font-size:10px;font-weight:700;color:#94a3b8;text-transform:uppercase;margin-bottom:5px">Interacciones</div>${inter.map((a,i)=>`<div style="font-size:11px;color:#475569;display:flex;gap:5px;margin-bottom:3px"><span style="color:var(--gold);font-weight:700">${i+1}.</span>${a}</div>`).join('')}</div>`:''}<div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px"><span class="accion-badge ${ac}">${ae} ${v.accion||'—'}</span><button class="btn btn-green btn-sm" onclick='addVacanteToTracker(${vStr})'>+ Tracker</button></div></div>`;
+    }).join('')}</div></div>`;
+  }
+  document.getElementById('search-results').innerHTML=html||'<div class="empty"><p>No se encontraron resultados</p></div>';
+}
+
+function addVacanteToTracker(v){data.entries.unshift({id:Date.now(),empresa:v.empresa,rol:v.puesto,sector:v.sector||'hotel',fecha:today(),estado:'Enviada',canal:'Búsqueda Automática',detalle:v.motivo_match||''});saveData();updateCounts();renderDashboard();alert('✅ Añadida: '+v.empresa+' — '+v.puesto);}
+function updateSearchMeta(){const last=data.searchHistory[0];if(!last)return;document.getElementById('last-search-txt').textContent='Última: '+fmtTime(last.timestamp)+' · '+last.total+' vacantes';document.getElementById('next-search-txt').textContent='Próxima: mañana al abrir la app';}
+function renderSearchTab(){const last=data.searchHistory[0];updateSearchMeta();if(last&&last.date===today()&&last.vacantes){renderSearchResults(last.vacantes);const badge=document.getElementById('nav-new-badge');if(badge){const a=last.vacantes.filter(v=>v.match==='Alto').length;badge.style.display=a?'inline-block':'none';badge.textContent=a+' altas';}}}
+function showSearchHistory(){const p=document.getElementById('search-history-panel');p.style.display=p.style.display==='none'?'block':'none';document.getElementById('search-history-list').innerHTML=data.searchHistory.length===0?'<p style="color:#94a3b8;font-size:12px;text-align:center;padding:16px">Sin historial</p>':data.searchHistory.map((h,i)=>`<div class="history-item"><div><div style="font-weight:600;font-size:13px">${fmtDate(h.date)}</div><div style="font-size:11px;color:#94a3b8">${h.total} vacantes · ${h.byAlto} match alto</div></div><button class="btn btn-outline btn-sm" onclick="loadHistoryEntry(${i})">Ver</button></div>`).join('');}
+function loadHistoryEntry(i){const h=data.searchHistory[i];if(h&&h.vacantes)renderSearchResults(h.vacantes);document.getElementById('search-history-panel').style.display='none';}
+
+// CV
+let currentCVSector='hotel';
+const PROFILE_CV=`FRANCISCO JAVIER MARTÍNEZ ALBA | 635 493 853 | pacozzy@hotmail.com | Algeciras (Cádiz) | linkedin.com/in/franciscojaviermartinezalba\nEXPERIENCIA 25+ AÑOS: Director Altos de Istán (4★,Málaga) 2019-2025 · Reina Cristina (4★,Algeciras-Globales) 2015-2018 · THB Flora (3★,Lanzarote) 2013-2015 · Aura Algeciras (3★,Sercotel) 2011-2013 · Dominican Bay (All-Inc,RD) 2008-2011 · Tamaimo Tropical (Globales,Tenerife) 2006-2008 · Hilton London Gatwick 2003-2006 · BelleVue Belsana (Mallorca) 2000-2003 · BelleVue Aquarius (Lanzarote) 1998-2000\nFORMACIÓN: TEAT Univ.Cádiz · SSCE0110 Docencia FP Grados A,B,C (2025) · ADGG0108 Asistencia Dirección · ADGG0308 Gestión Documental\nIDIOMAS: Español nativo · Inglés B1 (UC9999_3) · Alemán A2 (UC9996_2)`;
+function selectCVSector(s){currentCVSector=s;document.querySelectorAll('[data-sector]').forEach(c=>c.classList.remove('active'));document.querySelector(`[data-sector="${s}"]`).classList.add('active');}
+function switchCVTab(t,btn){document.querySelectorAll('.cv-tab-btn').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.cv-content').forEach(c=>c.classList.remove('active'));if(btn)btn.classList.add('active');document.getElementById('cv-content-'+t).classList.add('active');}
+function copyDoc(id){navigator.clipboard.writeText(document.getElementById(id).innerText).then(()=>alert('✅ Copiado'));}
+async function generateDocs(){
+  const offer=document.getElementById('cv-offer').value.trim();if(!offer){alert('⚠️ Pega una oferta');return;}
+  document.getElementById('ai-loading').classList.add('show');
+  const sLbl={hotel:'Dirección Hotelera',docencia:'Docencia FP Hostelería',admin:'Administrativo'};
+  try{
+    document.getElementById('ai-loading-text').textContent='Generando CV...';
+    document.getElementById('cv-out-cv').textContent=await callClaude(`Adapta el CV para sector ${sLbl[currentCVSector]}. Texto plano profesional, máx 1 página. Sin markdown. OFERTA: ${offer}\nPERFIL: ${PROFILE_CV}`);
+    document.getElementById('ai-loading-text').textContent='Redactando carta...';
+    document.getElementById('cv-out-letter').textContent=await callClaude(`Carta de presentación profesional en español, sector ${sLbl[currentCVSector]}, 3 párrafos, sin markdown. OFERTA: ${offer}\nPERFIL: ${PROFILE_CV}`);
+    document.getElementById('ai-loading-text').textContent='Redactando email...';
+    document.getElementById('cv-out-email').textContent=await callClaude(`Email de candidatura conciso, sector ${sLbl[currentCVSector]}. Incluye asunto, cuerpo 4 líneas, firma. Sin markdown. OFERTA: ${offer}`);
+  }catch(err){['cv-out-cv','cv-out-letter','cv-out-email'].forEach(id=>document.getElementById(id).textContent='Error: '+err.message+'\n\nAsegúrate de estar en Chrome/Edge con conexión a Internet.');}
+  finally{document.getElementById('ai-loading').classList.remove('show');}
+}
+async function callClaude(prompt){const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:prompt}]})});const d=await res.json();if(!res.ok)throw new Error(d.error?.message||'API error '+res.status);return d.content.map(b=>b.text||'').join('');}
+
+// EXPORT
+function exportData(){const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='candidaturas_'+today()+'.json';a.click();}
+function clearAllData(){if(!confirm('⚠️ ¿Borrar TODO?'))return;data={entries:[],companies:[],searchHistory:[]};saveData();renderAll();updateCounts();}
+
+// INIT
+loadData();renderAll();updateCounts();
+const lastSrch=data.searchHistory[0];
+if(!lastSrch||lastSrch.date!==today()){const b=document.getElementById('nav-new-badge');if(b){b.style.display='inline-block';b.textContent='HOY';}}
+</script>
+</body>
+</html>

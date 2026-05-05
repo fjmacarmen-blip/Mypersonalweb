@@ -1,0 +1,505 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:var(--color-background-tertiary);
+  --card:var(--color-background-primary);
+  --border:var(--color-border-tertiary);
+  --border2:var(--color-border-secondary);
+  --gold:#c9a84c;--gold2:#e8c96a;--gold-bg:rgba(201,168,76,0.1);
+  --text:var(--color-text-primary);
+  --muted:var(--color-text-secondary);
+  --muted2:var(--color-text-tertiary);
+  --hotel:#0ea5e9;--docencia:#22c55e;--admin:#8b5cf6;
+}
+body{font-family:var(--font-sans);background:transparent;color:var(--text);min-height:100vh}
+.app{display:flex;flex-direction:column;min-height:600px}
+header{background:var(--card);border-bottom:1px solid var(--border2);padding:0 20px;position:sticky;top:0;z-index:10}
+.hdr-inner{display:flex;align-items:center;justify-content:space-between;height:56px;max-width:1000px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px}
+.avatar-ring{width:38px;height:38px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;background:var(--gold-bg)}
+.avatar-ring img{width:100%;height:100%;object-fit:cover}
+.avatar-ring span{font-size:13px;font-weight:500;color:var(--gold)}
+.brand-text{line-height:1.2}
+.brand-name{font-family:var(--font-serif);font-size:15px;font-weight:500;color:var(--text)}
+.brand-role{font-size:11px;color:var(--gold)}
+nav{display:flex;gap:2px}
+.nav-btn{background:none;border:none;cursor:pointer;padding:7px 12px;border-radius:var(--border-radius-md);font-family:var(--font-sans);font-size:12px;font-weight:500;color:var(--muted);transition:all .2s;display:flex;align-items:center;gap:5px}
+.nav-btn:hover{color:var(--text);background:var(--color-background-secondary)}
+.nav-btn.active{color:var(--text);background:var(--color-background-secondary);border-bottom:2px solid var(--gold)}
+
+main{max-width:1000px;margin:0 auto;padding:28px 20px;width:100%}
+.tab{display:none}.tab.active{display:block}
+
+/* SECTION HEADER */
+.sh{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.sh-title{font-family:var(--font-serif);font-size:28px;font-weight:500;white-space:nowrap;color:var(--text)}
+.sh-line{flex:1;height:0.5px;background:linear-gradient(to right,var(--gold),transparent)}
+
+/* CARD */
+.card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--border-radius-lg);padding:20px}
+.card+.card{margin-top:14px}
+
+/* NOTICE BANNER */
+.notice{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--border-radius-md);border:0.5px solid;margin-bottom:14px;font-size:12px}
+.notice-drive{background:rgba(59,130,246,0.06);border-color:rgba(59,130,246,0.25);color:#185fa5}
+.notice-photo{background:rgba(201,168,76,0.07);border-color:rgba(201,168,76,0.3);color:#8a6a1a}
+.notice svg{width:14px;height:14px;flex-shrink:0}
+
+/* BADGE */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:100px;font-size:10px;font-weight:500;border:0.5px solid}
+.badge-gold{background:var(--gold-bg);border-color:rgba(201,168,76,0.35);color:#8a6a1a}
+.badge-hotel{background:rgba(14,165,233,0.08);border-color:rgba(14,165,233,0.3);color:#0369a1}
+.badge-docencia{background:rgba(34,197,94,0.08);border-color:rgba(34,197,94,0.3);color:#15803d}
+.badge-admin{background:rgba(139,92,246,0.08);border-color:rgba(139,92,246,0.3);color:#6d28d9}
+.badge-legal{background:rgba(100,116,139,0.08);border-color:rgba(100,116,139,0.25);color:#475569}
+
+/* COMPETENCIAS TAB */
+.comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:700px){.comp-grid{grid-template-columns:1fr}}
+.comp-card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--border-radius-lg);padding:20px}
+.comp-card-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.comp-stripe{width:3px;height:20px;border-radius:2px;background:var(--gold);flex-shrink:0}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{padding:5px 12px;border-radius:100px;border:0.5px solid var(--border2);font-size:11px;font-weight:400;color:var(--muted);transition:all .2s;cursor:default}
+.tag:hover{border-color:rgba(201,168,76,0.4);color:var(--gold)}
+.lang-row{margin-bottom:12px}
+.lang-hdr{display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px}
+.lang-name{font-weight:500;color:var(--text)}
+.lang-level{color:var(--muted)}
+.lang-track{height:6px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden}
+.lang-fill{height:100%;border-radius:3px;background:linear-gradient(to right,var(--gold),var(--gold2))}
+
+/* DOCENCIA FP SECTION — new */
+.fp-hero{background:var(--card);border:0.5px solid var(--border);border-radius:var(--border-radius-lg);padding:24px;margin-bottom:14px;border-left:3px solid var(--docencia)}
+.fp-title{font-family:var(--font-serif);font-size:18px;font-weight:500;color:var(--text);margin-bottom:6px}
+.fp-sub{font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.6}
+.fp-legal{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.fp-modules{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+@media(max-width:700px){.fp-modules{grid-template-columns:1fr}}
+.fp-module{background:var(--color-background-secondary);border:0.5px solid var(--border);border-radius:var(--border-radius-md);padding:14px}
+.fp-module-code{font-size:10px;font-weight:500;color:var(--gold);margin-bottom:4px;font-family:var(--font-mono)}
+.fp-module-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px;line-height:1.4}
+.fp-module-meta{font-size:10px;color:var(--muted)}
+.fp-warning{display:flex;gap:8px;padding:10px 14px;background:rgba(245,158,11,0.07);border:0.5px solid rgba(245,158,11,0.3);border-radius:var(--border-radius-md);font-size:11px;color:#92400e;line-height:1.5;margin-top:14px}
+.fp-warning svg{width:14px;height:14px;flex-shrink:0;margin-top:1px;color:#d97706}
+
+/* UC TABLE */
+.uc-wrap{overflow-x:auto;border-radius:var(--border-radius-md);border:0.5px solid var(--border)}
+.uc-table{width:100%;border-collapse:collapse;font-size:11px}
+.uc-table th{text-align:left;padding:9px 12px;font-weight:500;font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:.5px;border-bottom:0.5px solid var(--border);background:var(--color-background-secondary)}
+.uc-table td{padding:9px 12px;border-bottom:0.5px solid var(--border);color:var(--muted);vertical-align:top}
+.uc-table tr:last-child td{border-bottom:none}
+.uc-table tr:hover td{background:var(--color-background-secondary)}
+.uc-code{font-family:var(--font-mono);color:var(--gold);font-size:10px}
+
+/* BLOG TAB */
+.blog-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:700px){.blog-grid{grid-template-columns:1fr}}
+.post-card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--border-radius-lg);padding:18px;transition:all .2s;cursor:pointer}
+.post-card:hover{border-color:var(--border2);box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.post-type{font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.6px;color:var(--muted2);margin-bottom:8px}
+.post-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:6px;line-height:1.4}
+.post-excerpt{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+.post-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted2)}
+.post-dot{width:4px;height:4px;border-radius:50%;background:var(--border2)}
+
+.linkedin-banner{background:var(--card);border:0.5px solid var(--border);border-radius:var(--border-radius-lg);padding:20px;margin-bottom:20px}
+.li-hdr{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.li-icon{width:36px;height:36px;border-radius:var(--border-radius-md);background:rgba(0,119,181,0.1);border:0.5px solid rgba(0,119,181,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.li-title{font-size:14px;font-weight:500;color:var(--text)}
+.li-sub{font-size:11px;color:var(--muted)}
+.li-notice{display:flex;gap:8px;align-items:flex-start;padding:10px 14px;background:rgba(59,130,246,0.06);border:0.5px solid rgba(59,130,246,0.2);border-radius:var(--border-radius-md);font-size:11px;color:var(--muted);line-height:1.5}
+.li-notice svg{width:13px;height:13px;flex-shrink:0;color:#185fa5;margin-top:1px}
+.li-post-preview{border:0.5px solid var(--border);border-radius:var(--border-radius-md);padding:14px;margin-top:10px}
+.li-avatar{width:32px;height:32px;border-radius:50%;border:0.5px solid var(--border);background:var(--gold-bg);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--gold);font-weight:500;flex-shrink:0}
+.li-post-text{font-size:12px;color:var(--muted);line-height:1.6;margin-top:8px}
+.li-post-date{font-size:10px;color:var(--muted2);margin-top:8px}
+
+/* HERO (Inicio) */
+.hero-wrap{background:var(--card);border:0.5px solid var(--border);border-radius:var(--border-radius-lg);overflow:hidden;margin-bottom:18px}
+.hero-inner{display:flex;gap:0;min-height:280px}
+.hero-img-col{width:200px;flex-shrink:0;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;border-right:0.5px solid var(--border);padding:20px}
+.hero-img-placeholder{width:100px;height:100px;border-radius:50%;border:2px dashed var(--border2);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px}
+.hero-img-placeholder svg{width:24px;height:24px;color:var(--muted2)}
+.hero-img-label{font-size:10px;color:var(--muted2);text-align:center;line-height:1.4}
+.hero-content{padding:32px 28px;flex:1}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:100px;border:0.5px solid rgba(201,168,76,0.35);background:var(--gold-bg);color:#8a6a1a;font-size:11px;font-weight:500;margin-bottom:14px}
+.hero-name{font-family:var(--font-serif);font-size:38px;font-weight:500;color:var(--text);line-height:1.05;margin-bottom:6px}
+.hero-name-gold{color:var(--gold)}
+.hero-role{font-size:15px;color:var(--muted);margin-bottom:4px}
+.hero-sub{font-size:12px;color:var(--muted2);margin-bottom:20px}
+.contact-pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.cpill{display:flex;align-items:center;gap:6px;padding:5px 11px;border-radius:var(--border-radius-md);border:0.5px solid var(--border);font-size:11px;color:var(--muted)}
+.cpill svg{width:12px;height:12px;color:var(--gold)}
+.cta-row{display:flex;gap:8px;flex-wrap:wrap}
+.btn{padding:8px 18px;border-radius:var(--border-radius-md);font-family:var(--font-sans);font-weight:500;font-size:12px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;text-decoration:none;border:0.5px solid var(--border2);background:transparent;color:var(--text)}
+.btn:hover{background:var(--color-background-secondary)}
+.btn-gold{background:var(--gold);border-color:var(--gold);color:#0d1117}
+.btn-gold:hover{background:var(--gold2)}
+
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.stat{background:var(--card);border:0.5px solid var(--border);border-radius:var(--border-radius-lg);padding:16px;display:flex;align-items:center;gap:12px}
+.stat-icon{width:38px;height:38px;border-radius:var(--border-radius-md);background:var(--gold-bg);border:0.5px solid rgba(201,168,76,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stat-icon svg{width:18px;height:18px;color:var(--gold)}
+.stat-val{font-family:var(--font-serif);font-size:26px;font-weight:500;color:var(--text);line-height:1}
+.stat-lbl{font-size:10px;color:var(--muted);margin-bottom:2px}
+
+/* EXPERIENCIA */
+.job-card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--border-radius-lg);overflow:hidden;display:flex;margin-bottom:14px;transition:all .2s}
+.job-card:hover{border-color:var(--border2)}
+.job-img{width:38%;position:relative;min-height:200px;flex-shrink:0;background:var(--color-background-secondary)}
+.job-img-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:200px}
+.job-img-placeholder svg{width:28px;height:28px;color:var(--muted2)}
+.job-img-label{font-size:10px;color:var(--muted2);text-align:center;line-height:1.4;padding:0 12px}
+.job-body{padding:24px;flex:1}
+.job-title{font-family:var(--font-serif);font-size:18px;font-weight:500;color:var(--text);margin-bottom:3px}
+.job-company{color:var(--gold);font-size:13px;font-weight:500;margin-bottom:5px}
+.job-loc{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:4px;margin-bottom:12px}
+.job-loc svg{width:10px;height:10px;color:var(--gold)}
+.tasks{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.task-item{display:flex;align-items:flex-start;gap:6px;font-size:11px;color:var(--muted)}
+.task-item svg{width:12px;height:12px;color:var(--green);flex-shrink:0;margin-top:1px}
+.others-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+.other-card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--border-radius-lg);overflow:hidden;transition:all .2s}
+.other-card:hover{border-color:var(--border2)}
+.other-img{height:120px;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;position:relative}
+.other-img svg{width:22px;height:22px;color:var(--muted2)}
+.other-body{padding:12px}
+.other-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:3px}
+.other-loc{font-size:10px;color:var(--muted);margin-bottom:4px;line-height:1.3}
+.other-period{font-size:10px;color:var(--muted2)}
+.star-chip{position:absolute;top:8px;right:8px;background:rgba(201,168,76,0.15);border:0.5px solid rgba(201,168,76,0.4);border-radius:100px;font-size:9px;font-weight:500;color:#8a6a1a;padding:2px 7px}
+
+/* FORMACION */
+.deg-card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--border-radius-lg);padding:22px;display:flex;align-items:center;gap:20px;margin-bottom:14px;transition:all .2s}
+.deg-card:hover{border-color:var(--border2)}
+.deg-icon{width:60px;height:60px;border-radius:var(--border-radius-lg);background:var(--gold-bg);border:0.5px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.deg-icon svg{width:28px;height:28px;color:var(--gold)}
+.cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.cert-grid{grid-template-columns:1fr}}
+.cert-card{background:var(--card);border:0.5px solid var(--border);border-radius:var(--border-radius-lg);padding:18px;transition:all .2s}
+.cert-card:hover{border-color:var(--border2)}
+.cert-hdr{display:flex;gap:12px;margin-bottom:12px}
+.cert-icon-wrap{width:42px;height:42px;border-radius:var(--border-radius-md);background:var(--gold-bg);border:0.5px solid rgba(201,168,76,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cert-icon-wrap svg{width:20px;height:20px;color:var(--gold)}
+.cert-code{font-size:11px;font-weight:500;color:var(--text);margin-bottom:2px}
+.cert-org{font-size:10px;color:var(--gold)}
+.cert-decree{font-size:10px;color:var(--muted2)}
+.cert-diploma{margin-top:10px;padding:8px 10px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);border:0.5px dashed var(--border2);font-size:10px;color:var(--muted2);display:flex;align-items:center;gap:6px;cursor:pointer}
+.cert-diploma svg{width:12px;height:12px;color:var(--muted2)}
+.cert-items{display:flex;flex-direction:column;gap:6px}
+.cert-item{display:flex;align-items:flex-start;gap:6px;font-size:11px;color:var(--muted)}
+.cert-item svg{width:12px;height:12px;color:var(--docencia);flex-shrink:0;margin-top:1px}
+</style>
+
+<div class="app">
+<header>
+  <div class="hdr-inner">
+    <div class="brand">
+      <div class="avatar-ring">
+        <span>FM</span>
+      </div>
+      <div class="brand-text">
+        <div class="brand-name">Francisco Javier Martínez Alba</div>
+        <div class="brand-role">Director de Hotel · Formador FP · Project Manager</div>
+      </div>
+    </div>
+    <nav id="nav"></nav>
+  </div>
+</header>
+
+<main id="content"></main>
+</div>
+
+<script>
+const TABS=[
+  {id:'inicio',label:'Inicio'},
+  {id:'experiencia',label:'Experiencia'},
+  {id:'formacion',label:'Formación'},
+  {id:'competencias',label:'Competencias'},
+  {id:'blog',label:'Blog'},
+];
+let active='inicio';
+
+function nav(){
+  document.getElementById('nav').innerHTML=TABS.map(t=>`<button class="nav-btn${active===t.id?' active':''}" onclick="go('${t.id}')">${t.label}</button>`).join('');
+}
+function go(id){active=id;nav();render();window.scrollTo({top:0,behavior:'smooth'});}
+
+const SVGS={
+  cap:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`,
+  award:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>`,
+  briefcase:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>`,
+  users:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>`,
+  shield:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+  check:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`,
+  mail:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>`,
+  phone:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11.5 19.79 19.79 0 01.14 3a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.37a16 16 0 006.72 6.72l1.74-1.74a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>`,
+  pin:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+  img:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`,
+  file:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`,
+  info:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
+  warn:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+  linkedin:`<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`,
+  rss:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 019 9"/><path d="M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg>`,
+  chat:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>`,
+  star:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+  hotel:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  layers:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
+  book:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>`,
+};
+
+function imgPlaceholder(label){return`<div class="job-img-placeholder">${SVGS.img}<span class="job-img-label">${label}<br><small style="opacity:.7">Añadir desde Drive</small></span></div>`;}
+
+function renderInicio(){return`
+<div class="notice notice-photo">${SVGS.warn}<span><strong>Tarea pendiente 1:</strong> Sube tu foto al Drive y autoriza acceso — la integraré en el avatar y la cabecera.</span></div>
+<div class="notice notice-drive">${SVGS.info}<span><strong>Tarea pendiente 2:</strong> Conecta Drive para leer tu CV/bio y regenerar el texto de presentación con tus propias palabras.</span></div>
+<div class="hero-wrap">
+  <div class="hero-inner">
+    <div class="hero-img-col">
+      <div class="hero-img-placeholder">${SVGS.img}</div>
+      <span class="hero-img-label">Tu foto aquí</span>
+      <button class="btn" style="font-size:10px;margin-top:8px" onclick="sendPrompt('Acceder a Drive y cargar mi foto de perfil')">Cargar desde Drive ↗</button>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">${SVGS.award} 25+ Años de Excelencia Hotelera</div>
+      <h1 class="hero-name">Francisco Javier<br><span class="hero-name-gold">Martínez Alba</span></h1>
+      <p class="hero-role">Director de Hotel · Formador FP · Project Manager</p>
+      <p class="hero-sub">Especialista en Dirección Hotelera · Docente habilitado SSCE0110 (Grados A, B y C)</p>
+      <div class="contact-pills">
+        <span class="cpill">${SVGS.pin}Algeciras (Cádiz)</span>
+        <span class="cpill">${SVGS.phone}635 493 853</span>
+        <span class="cpill">${SVGS.mail}pacozzy@hotmail.com</span>
+      </div>
+      <div class="cta-row">
+        <a href="mailto:pacozzy@hotmail.com" class="btn btn-gold">${SVGS.mail}Contactar</a>
+        <a href="https://www.linkedin.com/in/franciscojaviermartinezalba" target="_blank" class="btn">${SVGS.linkedin}LinkedIn</a>
+        <button class="btn" onclick="go('competencias')">${SVGS.cap}Docencia FP</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="stats-row">
+  ${[['briefcase','25+','Años de experiencia'],['hotel','10+','Hoteles dirigidos'],['cap','3','Certificados oficiales'],['users','50+','Equipos liderados']].map(([ico,v,l])=>`<div class="stat"><div class="stat-icon">${SVGS[ico]}</div><div><div class="stat-lbl">${l}</div><div class="stat-val">${v}</div></div></div>`).join('')}
+</div>
+<div class="card">
+  <div style="font-family:var(--font-serif);font-size:18px;font-weight:500;margin-bottom:14px;display:flex;align-items:center;gap:10px"><span style="width:4px;height:24px;background:var(--gold);border-radius:2px;display:block;flex-shrink:0"></span>Perfil Profesional</div>
+  <p style="color:var(--muted);font-size:13px;line-height:1.8;margin-bottom:12px">Director de hotel con más de <strong style="color:var(--text)">25 años de experiencia</strong> en dirección integral de establecimientos hoteleros (3★ a 5★), tanto urbanos como vacacionales, en España y el extranjero. Especializado en gestión operativa, liderazgo de equipos, control económico y cumplimiento normativo.</p>
+  <p style="color:var(--muted);font-size:13px;line-height:1.8">Perfil <strong style="color:var(--text)">híbrido y diferencial</strong>: combina la dirección hotelera con habilitación oficial para docencia en Formación Profesional (SSCE0110, Grados A, B y C) y certificados administrativos de nivel 3. Un profesional capaz de dirigir, enseñar y gestionar en entornos complejos.</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">
+    <span class="badge badge-hotel">${SVGS.hotel} Hostelería</span>
+    <span class="badge badge-docencia">${SVGS.cap} Docencia FP</span>
+    <span class="badge badge-admin">${SVGS.layers} Gestión documental</span>
+    <span class="badge badge-gold">${SVGS.pin} España + Internacional</span>
+  </div>
+</div>`;}
+
+function renderExperiencia(){
+  const main=[
+    {title:'Director / Project Manager',co:'Hotel Altos de Istán',loc:'Istán (Málaga) · Sierra de las Nieves · 14 km de Marbella',period:'Feb 2019 – Ene 2025',stars:'4★',tasks:['Dirección completa del establecimiento','Organización de procedimientos internos','Supervisión del cumplimiento normativo','Interlocución con organismos públicos','Coordinación de auditorías externas','Gestión contractual con proveedores']},
+    {title:'Director',co:'Hotel Reina Cristina – Hoteles Globales',loc:'Algeciras · Edificio histórico 1901 · Arquitectura colonial inglesa',period:'Ene 2015 – Jun 2018',stars:'4★',tasks:['Dirección operativa y administrativa','Negociación con proveedores estratégicos','Coordinación con asesorías jurídicas','Control documental y normativo']},
+  ];
+  const others=[
+    {name:'THB Flora',loc:'Puerto del Carmen, Lanzarote',period:'Jun 2013 – Ene 2015',stars:'3★'},
+    {name:'Aura Hotel Algeciras',loc:'Sercotel Hotels',period:'Feb 2011 – May 2013',stars:'3★'},
+    {name:'Dominican Bay',loc:'República Dominicana · All Inclusive',period:'2008 – 2011'},
+    {name:'Tamaimo Tropical',loc:'Tenerife · Globales Hotels',period:'2006 – 2008'},
+    {name:'Hilton London Gatwick',loc:'Reino Unido · Hilton International',period:'2003 – 2006'},
+    {name:'BelleVue Belsana',loc:'Porto Colom, Mallorca',period:'2000 – 2003'},
+    {name:'BelleVue Aquarius',loc:'Puerto del Carmen, Lanzarote',period:'1998 – 2000'},
+  ];
+  return`
+<div class="notice notice-drive">${SVGS.info}<span><strong>Tarea pendiente 3:</strong> Autoriza Drive para cargar las fotos de los hoteles directamente desde tus archivos.</span></div>
+<div class="sh"><h2 class="sh-title">Trayectoria Profesional</h2><div class="sh-line"></div></div>
+${main.map(j=>`<div class="job-card">
+  <div class="job-img">${imgPlaceholder('/images/hotels/'+j.co.toLowerCase().replace(/[^a-z]/g,'-')+'.jpg')}</div>
+  <div class="job-body">
+    <div class="job-title">${j.title}</div>
+    <div class="job-company">${j.co}</div>
+    <div class="job-loc">${SVGS.pin}${j.loc}</div>
+    <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+      <span class="badge badge-gold">${j.stars}</span>
+      <span class="badge badge-legal">${j.period}</span>
+    </div>
+    <div class="tasks">${j.tasks.map(t=>`<div class="task-item">${SVGS.check}<span>${t}</span></div>`).join('')}</div>
+  </div>
+</div>`).join('')}
+<div style="font-family:var(--font-serif);font-size:18px;font-weight:500;margin:24px 0 14px;display:flex;align-items:center;gap:10px">${SVGS.hotel}Otros Establecimientos</div>
+<div class="others-grid">${others.map(h=>`<div class="other-card">
+  <div class="other-img">${SVGS.img}${h.stars?`<span class="star-chip">${h.stars}</span>`:''}</div>
+  <div class="other-body">
+    <div class="other-name">${h.name}</div>
+    <div class="other-loc">${h.loc}</div>
+    <div class="other-period">${h.period}</div>
+  </div>
+</div>`).join('')}</div>`;}
+
+function renderFormacion(){
+  const certs=[
+    {code:'SSCE0110',title:'Habilitación Docencia FP Grados A, B y C',org:'Junta de Andalucía · 2025',decree:'Real Decreto 659/2023',items:['Habilitación oficial para impartir FP','Docencia en grados A, B y C','Programar, impartir, tutorizar y evaluar']},
+    {code:'ADGG0108',title:'Asistencia a la Dirección',org:'Junta de Andalucía · 2025',decree:'Real Decreto 1210/2009',items:['Gestión de comunicaciones de dirección','Organización directiva','Elaboración documentación profesional']},
+    {code:'ADGG0308',title:'Asistencia Documental y de Gestión',org:'Junta de Andalucía · 2025',decree:'Real Decreto 645/2011',items:['Gestión documental avanzada','Administración sistemas de información','Gestión ante Administraciones Públicas']},
+  ];
+  return`
+<div class="notice notice-drive">${SVGS.info}<span><strong>Tarea pendiente 4:</strong> Conecta Drive para cargar automáticamente los PDFs de diplomas y mostrarlos junto a cada título.</span></div>
+<div class="sh"><h2 class="sh-title">Formación y Certificaciones</h2><div class="sh-line"></div></div>
+<div class="deg-card">
+  <div class="deg-icon">${SVGS.cap}</div>
+  <div>
+    <div style="font-size:16px;font-weight:500;color:var(--text);margin-bottom:4px">Técnico en Empresas y Actividades Turísticas (TEAT)</div>
+    <div style="font-size:12px;color:var(--gold);font-weight:500;margin-bottom:8px">Escuela de Turismo de Jerez – Universidad de Cádiz</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <span class="badge badge-gold">${SVGS.check} Titulación oficial</span>
+      <span class="badge badge-hotel">${SVGS.check} Especialización hotelera</span>
+    </div>
+    <div class="cert-diploma" style="margin-top:12px">${SVGS.file}<span>Diploma PDF — pendiente de Drive</span></div>
+  </div>
+</div>
+<div style="font-family:var(--font-serif);font-size:18px;font-weight:500;margin:20px 0 14px">Certificados Profesionales Oficiales</div>
+<div class="cert-grid">
+  ${certs.map(c=>`<div class="cert-card">
+    <div class="cert-hdr">
+      <div class="cert-icon-wrap">${SVGS.award}</div>
+      <div><div class="cert-code">${c.code}</div><div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:2px">${c.title}</div><div class="cert-org">${c.org}</div><div class="cert-decree">${c.decree}</div></div>
+    </div>
+    <div class="cert-items">${c.items.map(i=>`<div class="cert-item">${SVGS.check}<span>${i}</span></div>`).join('')}</div>
+    <div class="cert-diploma">${SVGS.file}<span>Diploma PDF — pendiente de Drive</span></div>
+  </div>`).join('')}
+</div>
+<div style="font-family:var(--font-serif);font-size:18px;font-weight:500;margin:20px 0 14px">${SVGS.shield}Certificaciones Complementarias</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+  ${[['Prevención Legionelosis','Normativa sanitaria'],['Ciberseguridad Aplicada','SEPE'],['Gestión Ambiental','SEPE · Sostenibilidad'],['Protección de Datos','RGPD'],['Revenue Management','Gestión de ingresos'],['Primeros Auxilios + DEA','Emergencias']].map(([t,s])=>`<div style="background:var(--color-background-secondary);border:0.5px solid var(--border);border-radius:var(--border-radius-md);padding:12px"><div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:2px">${t}</div><div style="font-size:10px;color:var(--muted)">${s}</div></div>`).join('')}
+</div>`;}
+
+function renderCompetencias(){
+  const keys=['Dirección integral de hoteles','Liderazgo de equipos','Control presupuestario','Cumplimiento normativo','Auditorías e inspecciones','Negociación avanzada','Relaciones institucionales','Gestión documental','Revenue Management','Planificación estratégica','Gestión de crisis','Project Management'];
+  const langs=[{n:'Español',l:'Nativo',p:100},{n:'Inglés',l:'B1 acreditado (UC9999_3)',p:60},{n:'Alemán',l:'A2 acreditado (UC9996_2)',p:40},{n:'Francés / Italiano',l:'Básico',p:25}];
+  const fpModules=[
+    {code:'HOTI0108',name:'Recepción en alojamientos',meta:'Nivel 2 · Hostelería y Turismo · Área Alojamiento'},
+    {code:'HOTA0208',name:'Gestión de pisos y limpieza en alojamientos',meta:'Nivel 2 · Hostelería y Turismo'},
+    {code:'HOTA0308',name:'Alojamiento rural',meta:'Nivel 2 · Hostelería y Turismo'},
+    {code:'HOTR0110',name:'Información turística',meta:'Nivel 2 · Hostelería y Turismo · Área Turismo'},
+    {code:'ADGG0208',name:'Actividades administrativas en la relación con el cliente',meta:'Nivel 2 · Administración y Gestión'},
+    {code:'ADGG0108',name:'Operaciones de grabación y tratamiento de datos',meta:'Nivel 1 · Administración y Gestión'},
+  ];
+  const uc=[
+    {c:'UC0982_3',n:'Gestionar las comunicaciones de la dirección',lv:'3'},
+    {c:'UC0983_3',n:'Gestionar actividades de asistencia a la dirección',lv:'3'},
+    {c:'UC0986_3',n:'Elaborar documentación y presentaciones profesionales',lv:'3'},
+    {c:'UC0987_3',n:'Administrar sistemas de almacenamiento de la información',lv:'3'},
+    {c:'UC0988_3',n:'Gestionar expedientes y documentación ante Organismos y AAPP',lv:'3'},
+    {c:'UC9999_3',n:'Comunicarse en lengua inglesa con nivel B1',lv:'3'},
+    {c:'UC9996_2',n:'Comunicarse en segunda lengua extranjera con nivel A2',lv:'2'},
+    {c:'UC0233_2',n:'Manejar aplicaciones ofimáticas en la gestión de la información',lv:'2'},
+    {c:'UC0979_2',n:'Gestionar operaciones administrativas de tesorería',lv:'2'},
+    {c:'UC0980_2',n:'Gestionar operaciones administrativas de recursos humanos',lv:'2'},
+  ];
+  return`
+<div class="sh"><h2 class="sh-title">Competencias Profesionales</h2><div class="sh-line"></div></div>
+
+<div class="fp-hero">
+  <div class="fp-title">${SVGS.cap} Competencias Docentes — Formación Profesional</div>
+  <div class="fp-sub">Con la habilitación <strong>SSCE0110</strong> (Junta de Andalucía, 2025) y la titulación TEAT + 25 años de experiencia acreditada, puede impartir formación en los <strong>Grados A, B y C</strong> del Sistema de Formación Profesional en la familia de Hostelería y Turismo y Administración y Gestión.</div>
+  <div class="fp-legal">
+    <span class="badge badge-docencia">${SVGS.check} SSCE0110 habilitado</span>
+    <span class="badge badge-hotel">${SVGS.check} Familia Hostelería y Turismo</span>
+    <span class="badge badge-admin">${SVGS.check} Familia Administración y Gestión</span>
+    <span class="badge badge-legal">Grados A · B · C</span>
+    <span class="badge badge-legal">RD 659/2023</span>
+  </div>
+  <div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:10px">Módulos formativos que puede impartir:</div>
+  <div class="fp-modules">
+    ${fpModules.map(m=>`<div class="fp-module">
+      <div class="fp-module-code">${m.code}</div>
+      <div class="fp-module-name">${m.name}</div>
+      <div class="fp-module-meta">${m.meta}</div>
+    </div>`).join('')}
+  </div>
+  <div class="fp-warning">${SVGS.warn}<span><strong>Nota legal:</strong> El SSCE0110 habilita para Grados A, B y C — no para ciclos formativos de Grado Medio o Superior (Grado D/E). Para los módulos listados puede acreditar experiencia profesional equivalente según el Fichero de Especialidades del SEPE.</span></div>
+</div>
+
+<div class="comp-grid" style="margin-bottom:14px">
+  <div class="comp-card">
+    <div class="comp-card-title"><span class="comp-stripe"></span>Competencias clave</div>
+    <div class="tags">${keys.map(k=>`<span class="tag">${k}</span>`).join('')}</div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <div class="comp-card">
+      <div class="comp-card-title"><span class="comp-stripe"></span>Idiomas</div>
+      ${langs.map(l=>`<div class="lang-row"><div class="lang-hdr"><span class="lang-name">${l.n}</span><span class="lang-level">${l.l}</span></div><div class="lang-track"><div class="lang-fill" style="width:${l.p}%"></div></div></div>`).join('')}
+    </div>
+    <div class="comp-card">
+      <div class="comp-card-title"><span class="comp-stripe"></span>Herramientas</div>
+      <div class="tags"><span class="tag">Office avanzado</span><span class="tag">PMS hoteleros</span><span class="tag">Gestión documental</span><span class="tag">Redes sociales</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div style="font-size:13px;font-weight:500;margin-bottom:14px">Unidades de Competencia Acreditadas</div>
+  <div class="uc-wrap">
+    <table class="uc-table">
+      <thead><tr><th>Código</th><th>Denominación</th><th style="text-align:center">Nivel</th></tr></thead>
+      <tbody>${uc.map(u=>`<tr><td class="uc-code">${u.c}</td><td>${u.n}</td><td style="text-align:center"><span class="badge ${u.lv==='3'?'badge-gold':'badge-legal'}">${u.lv}</span></td></tr>`).join('')}</tbody>
+    </table>
+  </div>
+</div>`;}
+
+const LI_POSTS=[
+  {date:'28 abr 2026',text:'Tras 25 años dirigiendo hoteles en España, Canarias, Mallorca y el extranjero, acabo de completar mi habilitación como docente de FP. Una nueva etapa que combina todo lo aprendido con la vocación de transmitirlo. #HosteleríaYTurismo #FormaciónProfesional'},
+  {date:'15 abr 2026',text:'La clave de un hotel bien gestionado no está en los procesos — está en las personas. He liderado equipos de 5 a 80 personas. La motivación auténtica siempre supera al control. #Liderazgo #Dirección'},
+  {date:'3 abr 2026',text:'Revenue Management en hoteles de temporada: la diferencia entre sobrevivir y crecer está en anticipar, no en reaccionar. Algunos aprendizajes de mis 6 años en Altos de Istán.'},
+];
+
+function renderBlog(){
+  return`
+<div class="sh"><h2 class="sh-title">Blog & Publicaciones</h2><div class="sh-line"></div></div>
+
+<div class="linkedin-banner">
+  <div class="li-hdr">
+    <div class="li-icon" style="color:#0077b5">${SVGS.linkedin}</div>
+    <div>
+      <div class="li-title">Publicaciones de LinkedIn</div>
+      <div class="li-sub">linkedin.com/in/franciscojaviermartinezalba</div>
+    </div>
+    <a href="https://www.linkedin.com/in/franciscojaviermartinezalba" target="_blank" class="btn" style="margin-left:auto;font-size:11px">Ver perfil →</a>
+  </div>
+  <div class="li-notice">${SVGS.rss}<span>LinkedIn no ofrece RSS público. Estos posts se sincronizan manualmente o vía extensión de navegador. Pulsa "Actualizar posts" para añadir los más recientes.</span></div>
+  ${LI_POSTS.map(p=>`<div class="li-post-preview" style="margin-top:10px">
+    <div style="display:flex;align-items:center;gap:8px">
+      <div class="li-avatar">FM</div>
+      <div><div style="font-size:12px;font-weight:500;color:var(--text)">Francisco Javier Martínez Alba</div><div style="font-size:10px;color:var(--muted2)">Director de Hotel · Formador FP</div></div>
+    </div>
+    <div class="li-post-text">${p.text}</div>
+    <div class="li-post-date">${p.date}</div>
+  </div>`).join('')}
+  <button class="btn" style="width:100%;justify-content:center;margin-top:12px;font-size:12px" onclick="sendPrompt('Añadir nuevas publicaciones de LinkedIn al blog del portfolio')">+ Actualizar posts ↗</button>
+</div>
+
+<div style="font-family:var(--font-serif);font-size:18px;font-weight:500;margin-bottom:14px">Artículos y reflexiones</div>
+<div class="blog-grid">
+  ${[
+    {type:'Entrevista',title:'Voz del sector hotelero',excerpt:'Una conversación sobre liderazgo, filosofía de dirección y los aprendizajes de 25 años al frente de establecimientos en España y el extranjero.',date:'Hotel Reina Cristina · Algeciras'},
+    {type:'Artículo',title:'Revenue Management en hoteles de temporada',excerpt:'Anticipar la demanda es la diferencia entre sobrevivir y crecer. Reflexiones desde los 6 años al frente del Hotel Altos de Istán.',date:'Abr 2026'},
+    {type:'Reflexión',title:'Motivar sin controlar: mi filosofía de equipo',excerpt:'La palmadita sincera en la espalda vale más que cualquier KPI. Cómo construir cultura de equipo en hostelería.',date:'Mar 2026'},
+    {type:'Análisis',title:'La habilitación docente SSCE0110: oportunidad de sector',excerpt:'Por qué la experiencia profesional hotelera es el mejor aval para la docencia en FP de Hostelería y Turismo.',date:'Feb 2026'},
+  ].map(p=>`<div class="post-card" onclick="sendPrompt('Leer el artículo: ${p.title}')">
+    <div class="post-type">${p.type}</div>
+    <div class="post-title">${p.title}</div>
+    <div class="post-excerpt">${p.excerpt}</div>
+    <div class="post-meta"><span>${p.date}</span></div>
+  </div>`).join('')}
+</div>`;}
+
+function render(){
+  const c=document.getElementById('content');
+  if(active==='inicio') c.innerHTML=renderInicio();
+  else if(active==='experiencia') c.innerHTML=renderExperiencia();
+  else if(active==='formacion') c.innerHTML=renderFormacion();
+  else if(active==='competencias') c.innerHTML=renderCompetencias();
+  else if(active==='blog') c.innerHTML=renderBlog();
+}
+
+nav();render();
+</script>
