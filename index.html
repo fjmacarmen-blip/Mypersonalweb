@@ -19,7 +19,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 header{background:rgba(10,22,40,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.25);padding:0 24px;position:sticky;top:0;z-index:20}
 .hdr{display:flex;align-items:center;justify-content:space-between;height:58px;max-width:1100px;margin:0 auto}
 .brand{display:flex;align-items:center;gap:10px}
-.av{width:38px;height:38px;border-radius:50%;border:2px solid var(--gold-border);overflow:hidden;flex-shrink:0;background:var(--gold-bg);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--gold)}
+.av{width:38px;height:38px;border-radius:50%;border:2px solid var(--gold-border);overflow:hidden;flex-shrink:0;background:var(--gold-bg);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--gold);font-weight:600}
 .av img{width:100%;height:100%;object-fit:cover;object-position:top}
 .bn{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:700;line-height:1}
 .br{font-size:10px;color:var(--gold);letter-spacing:.3px}
@@ -27,7 +27,7 @@ nav{display:flex;align-items:center;gap:2px}
 .nb{background:none;border:none;cursor:pointer;padding:7px 11px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--muted);transition:all .2s}
 .nb:hover{color:var(--text);background:rgba(255,255,255,.05)}
 .nb.active{color:var(--text);background:rgba(255,255,255,.05);border-bottom:2px solid var(--gold)}
-.nb-emp{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a1628!important;border-radius:8px;font-weight:700;text-decoration:none;padding:7px 14px;display:inline-flex;align-items:center;gap:4px;font-size:12px}
+.nb-emp{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a1628!important;border-radius:8px;font-weight:700;text-decoration:none;padding:7px 14px;display:inline-flex;align-items:center;gap:5px;margin-left:8px;font-size:12px;font-family:'DM Sans',sans-serif;transition:all .2s}
 .nb-emp:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(201,168,76,.4)}
 main{max-width:1100px;margin:0 auto;padding:28px 24px}
 .tab{display:none}.tab.active{display:block;animation:fu .3s ease}
@@ -42,7 +42,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
 .bg-d{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.25);color:#22c55e}
 .bg-m{background:rgba(255,255,255,.05);border-color:var(--border);color:var(--muted)}
 .bg-ai{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.3);color:#f59e0b}
-.btn{padding:8px 18px;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:500;font-size:12px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;text-decoration:none;border:1px solid transparent}
+.btn{padding:8px 18px;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:500;font-size:12px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;text-decoration:none;border:1px solid var(--border2);background:transparent;color:var(--text)}
 .btn:hover{background:rgba(255,255,255,.07)}
 .btn-g{background:var(--gold);border-color:var(--gold);color:#0d1117}.btn-g:hover{background:var(--gold2)}
 .btn-bord{border-color:var(--gold-border);color:var(--gold)}
@@ -53,7 +53,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
 .hero-ph img{width:100%;height:100%;object-fit:cover;object-position:top center}
 .hero-ph-ph{width:100%;height:100%;min-height:280px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--card),var(--card2));font-size:48px}
 .hero-b{padding:32px 36px;flex:1}
-.hero-tag{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:100px;border:1px solid var(--gold-border);background:var(--gold-bg);color:#b8972a;font-size:10px;font-weight:500;margin-bottom:10px}
+.hero-tag{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:100px;border:1px solid var(--gold-border);background:var(--gold-bg);color:#b8972a;font-size:10px;font-weight:500;margin-bottom:14px}
 .hero-name{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:700;line-height:1.05;margin-bottom:6px}
 .hero-name em{color:var(--gold);font-style:normal}
 .hero-role{font-size:14px;color:var(--muted);margin-bottom:3px}
@@ -113,7 +113,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
 .cert-code{font-size:10px;color:var(--gold);font-weight:600;font-family:monospace;margin-bottom:3px}
 .cert-title{font-size:12px;font-weight:500;color:var(--text);margin-bottom:2px;line-height:1.4}
 .cert-org{font-size:10px;color:var(--muted);margin-bottom:8px}
-.cert-link{display:inline-flex;align-items:center;gap:5px;font-size:10px;color:var(--gold);border:1px solid var(--gold-border);background:var(--gold-bg);padding:3px 9px;border-radius:6px;text-decoration:none;cursor:pointer}
+.cert-link{display:inline-flex;align-items:center;gap:5px;font-size:10px;color:var(--gold);border:1px solid var(--gold-border);background:var(--gold-bg);padding:3px 9px;border-radius:6px;text-decoration:none;transition:all .2s}
 .cert-link:hover{background:rgba(201,168,76,.18)}
 .nc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
 @media(max-width:600px){.nc-grid{grid-template-columns:1fr}}
@@ -161,7 +161,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
 .li-post{border:1px solid var(--border);border-radius:10px;padding:12px;margin-top:10px}
 .li-post-text{font-size:11px;color:var(--muted);line-height:1.7;margin-top:7px}
 .li-post-date{font-size:9px;color:var(--muted2);margin-top:6px}
-.li-av{width:28px;height:28px;border-radius:50%;background:var(--gold-bg);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gold);font-weight:600}
+.li-av{width:28px;height:28px;border-radius:50%;background:var(--gold-bg);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gold);font-weight:500;flex-shrink:0;overflow:hidden}
 .li-av img{width:100%;height:100%;object-fit:cover}
 /* INTERVIEW BANNER */
 .interview-banner{background:linear-gradient(135deg,var(--card2),#0d2444);border:1px solid rgba(201,168,76,.3);border-radius:16px;padding:24px;margin-bottom:16px;position:relative;overflow:hidden}
@@ -193,12 +193,12 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
     <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;margin-bottom:6px">Entrevista completa</div>
     <div style="font-size:11px;color:var(--gold);margin-bottom:20px">Hotel Reina Cristina · Algeciras · 4★</div>
     <div style="font-size:12px;color:var(--muted);line-height:1.9">
-      <p style="margin-bottom:12px"><strong style="color:var(--text)">P: ¿Qué le llevó a dedicarse a la dirección hotelera?</strong><br/>Siempre digo que el hotel me eligió a mí. Empecé desde los dieciséis años, limpiando habitaciones.</p>
-      <p style="margin-bottom:12px"><strong style="color:var(--text)">P: 30 años de carrera. ¿Cuál es el hotel que más le ha enseñado?</strong><br/>Sin duda Altos de Istán. Una apertura desde cero en un entorno único.</p>
-      <p style="margin-bottom:12px"><strong style="color:var(--text)">P: ¿Y el más especial a nivel personal?</strong><br/>La Reina Cristina, sin duda. Un edificio de 1901, estilo colonial inglés.</p>
-      <p style="margin-bottom:12px"><strong style="color:var(--text)">P: ¿Cuál es su filosofía de gestión?</strong><br/>Mi visión se fundamenta en el equilibrio entre el legado arquitectónico y la vanguardia operativa.</p>
-      <p style="margin-bottom:12px"><strong style="color:var(--text)">P: ¿Qué le diferencia hoy de otros candidatos con su perfil?</strong><br/>Tres cosas: treinta años sin pausa, la decisión en 2026 de reconvertirme en docente, y mi dominio de IA aplicada.</p>
-      <p><strong style="color:var(--text)">P: ¿Qué busca ahora?</strong><br/>Un proyecto en el que el establecimiento tenga algo que decir. No me mueve el tamaño. Me mueve el reto.</p>
+      <p style="margin-bottom:12px"><strong style="color:var(--text)">P: ¿Qué le llevó a dedicarse a la dirección hotelera?</strong><br/>Siempre digo que el hotel me eligió a mí. Empecé desde los estratos más bajos y fui subiendo con la convicción de que entender cada departamento es lo que te hace director, no un título.</p>
+      <p style="margin-bottom:12px"><strong style="color:var(--text)">P: 30 años de carrera. ¿Cuál es el hotel que más le ha enseñado?</strong><br/>Sin duda Altos de Istán. Una apertura desde cero en plena Sierra de las Nieves. Sin procedimientos, sin historia, sin equipo formado. Tuve que construir los SOPs, contratar el equipo, obtener las licencias y hacer que el hotel funcionara mientras seguíamos construyendo. Es cuando descubres de qué estás hecho.</p>
+      <p style="margin-bottom:12px"><strong style="color:var(--text)">P: ¿Y el más especial a nivel personal?</strong><br/>La Reina Cristina, sin duda. Un edificio de 1901, estilo colonial inglés, con alma propia. Hay hoteles que te hablan si sabes escucharlos. Ese hotel me habló desde el primer día.</p>
+      <p style="margin-bottom:12px"><strong style="color:var(--text)">P: ¿Cuál es su filosofía de gestión?</strong><br/>Mi visión se fundamenta en el equilibrio entre el legado arquitectónico y la vanguardia operativa, utilizando la tecnología para devolver al hotelero su función primordial: la anfitrionía de excelencia y el cuidado del bienestar del huésped. No somos gestores de camas. Somos custodios de experiencias.</p>
+      <p style="margin-bottom:12px"><strong style="color:var(--text)">P: ¿Qué le diferencia hoy de otros candidatos con su perfil?</strong><br/>Tres cosas: treinta años sin pausa, la decisión en 2025 de habilitarme como Docente FP con nota 8,62 — porque creo que el conocimiento que no se transmite se pierde — y el diploma en Inteligencia Artificial aplicada a la gestión. No soy un directivo clásico que usa el email. Soy un Bridge Leader: tengo un pie en la hospitalidad más clásica y otro en la automatización del futuro.</p>
+      <p><strong style="color:var(--text)">P: ¿Qué busca ahora?</strong><br/>Un proyecto en el que el establecimiento tenga algo que decir. No me mueve el tamaño. Me mueve el reto: una apertura, una reconversión, un hotel con historia que necesita reposicionarse. Eso es donde estoy en mi mejor versión.</p>
     </div>
   </div>
 </div>
@@ -207,7 +207,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
   <div class="hdr">
     <div class="brand">
       <div class="av">
-        <img src="images/profile.jpg" alt="FJM" onerror="this.style.display='none'"/>
+        <img src="https://fjmacarmen-blip.github.io/Mypersonalweb/YOUR_PHOTO.png" alt="FJM" onerror="this.style.display='none'"/>
         FM
       </div>
       <div><div class="bn">Francisco Javier Martínez Alba</div><div class="br">Bridge Leader 4.0 · Hospitality 5.0 · Docente FP</div></div>
@@ -229,7 +229,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
   <div class="hero">
     <div class="hero-in">
       <div class="hero-ph">
-        <img src="images/profile.jpg" alt="Francisco Javier Martínez Alba" onerror="this.outerHTML='<div class=hero-ph-ph>👤</div>'"/>
+        <img src="https://fjmacarmen-blip.github.io/Mypersonalweb/YOUR_PHOTO.png" alt="Francisco Javier Martínez Alba" onerror="this.outerHTML='<div class=hero-ph-ph>👤</div>'"/>
       </div>
       <div class="hero-b">
         <div class="hero-tag">⭐ Bridge Leader 4.0 · 30 Años de Excelencia Hotelera Acreditada</div>
@@ -250,8 +250,8 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
     </div>
   </div>
   <div class="mil-grid">
-    <div class="mil"><div class="mil-label">🤖 Hito 2026 — IA Aplicada</div><div class="mil-val">Diploma IA Sector Administrativo</div><div class="mil-meta">Cámara de Comercio · 90h · Marzo 2026</div></div>
-    <div class="mil"><div class="mil-label">🌐 Hito 2026 — Inglés Ejecutivo</div><div class="mil-val">Business English C1 Operativo</div><div class="mil-meta">Cámara de Comercio · 60h · Abril 2026</div></div>
+    <div class="mil"><div class="mil-label">🤖 Hito 2026 — IA Aplicada</div><div class="mil-val">Diploma IA Sector Administrativo</div><div class="mil-meta">Cámara de Comercio · 90h · Marzo 2026 · Prompt Engineering &amp; Automatización</div></div>
+    <div class="mil"><div class="mil-label">🌐 Hito 2026 — Inglés Ejecutivo</div><div class="mil-val">Business English C1 Operativo</div><div class="mil-meta">Cámara de Comercio · 60h · Abril 2026 · Negociación internacional</div></div>
   </div>
   <div class="stats">
     <div class="stat"><div class="si">🏨</div><div><div class="sl">Años acreditados</div><div class="sv">30+</div></div></div>
@@ -260,9 +260,9 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
     <div class="stat"><div class="si">📜</div><div><div class="sl">UCs acreditadas</div><div class="sv">15</div></div></div>
   </div>
   <div class="card">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px"><span style="width:3px;height:22px;background:var(--gold)"></span>Resumen Ejecutivo</div>
-    <p style="font-size:12px;line-height:1.8;color:var(--muted);margin-bottom:10px">Director de Operaciones Senior con <strong style="color:var(--text)">30 años de experiencia acreditada</strong> en hoteles de lujo (4★-5★) España, Portugal, UK y Caribe. Especialización en aperuras, P&L, Revenue Management y estándares internacionales. Habilitación docente oficial SSCE0110 (Junta de Andalucía) y certificación IA Aplicada 2026.</p>
-    <div class="quote">"Mi visión se fundamenta en el equilibrio entre el legado arquitectónico y la vanguardia operativa, utilizando la tecnología para devolver al hotelero su función primordial: liderar con visión, no solo gestionar cifras."</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px"><span style="width:3px;height:22px;background:var(--gold);display:block;border-radius:2px;flex-shrink:0"></span>Perfil Profesional · Bridge Leader 4.0</div>
+    <p style="font-size:12px;line-height:1.8;color:var(--muted);margin-bottom:10px">Director de Operaciones Senior con <strong style="color:var(--text)">30 años de experiencia acreditada</strong> en gestión integral de activos hoteleros (3★ a 5★), resorts históricos y complejos internacionales. Especialista en <strong style="color:var(--text)">P&amp;L, CAPEX, GOPPAR</strong>, estándares <strong style="color:var(--text)">LQA y Forbes</strong>, y Project Management de aperturas desde cero.</p>
+    <div class="quote">"Mi visión se fundamenta en el equilibrio entre el legado arquitectónico y la vanguardia operativa, utilizando la tecnología para devolver al hotelero su función primordial: la anfitrionía de excelencia y el cuidado del bienestar del huésped."</div>
     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:12px">
       <span class="badge bg-h">🏨 Hostelería Lujo</span><span class="badge bg-ai">🤖 IA Aplicada 2026</span>
       <span class="badge bg-d">🎓 Docente FP · SSCE0110</span><span class="badge bg-g">🌍 España + Internacional</span><span class="badge bg-m">🌱 ESG · SEAG16</span>
@@ -274,12 +274,12 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
 <div id="t-experiencia" class="tab">
   <div class="sh"><h2 class="sh-t">Trayectoria · 30 Años</h2><div class="sh-l"></div></div>
   <div style="background:rgba(201,168,76,.06);border:1px solid var(--gold-border);border-radius:10px;padding:10px 14px;font-size:11px;color:var(--muted);margin-bottom:16px">
-    📌 Las fotos cargarán desde la carpeta <code>/images</code> del repositorio.
+    📌 Las fotos cargarán automáticamente una vez que la carpeta MEDIA de Drive esté configurada como pública (Compartir → Cualquier persona con el enlace).
   </div>
 
   <div class="job-card">
     <div class="job-img">
-      <img src="images/altos-de-istan.jpg" alt="Altos de Istán" onerror="this.outerHTML='<div class=job-img-ph>🏔️</div>'"/>
+      <img src="https://fjmacarmen-blip.github.io/Mypersonalweb/altos_de_istan.png" alt="Altos de Istán" onerror="this.outerHTML='<div class=job-img-ph>🏔️</div>'"/>
       <span class="sc">4★</span>
     </div>
     <div class="job-body">
@@ -288,7 +288,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
       <div class="job-loc">Istán, Málaga · Sierra de las Nieves · 14 km de Marbella</div>
       <span class="job-period">Mar 2019 – Ene 2025</span>
       <div class="tasks">
-        <div class="task"><div class="tdot"></div><span>Dirección integral y P&L del activo</span></div>
+        <div class="task"><div class="tdot"></div><span>Dirección integral y P&amp;L del activo</span></div>
         <div class="task"><div class="tdot"></div><span>Pre-opening · SOPs desde cero</span></div>
         <div class="task"><div class="tdot"></div><span>Normativa: Legionelosis, RGPD, Consumo</span></div>
         <div class="task"><div class="tdot"></div><span>Interlocución institucional con AAPP</span></div>
@@ -300,7 +300,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
 
   <div class="job-card">
     <div class="job-img">
-      <img src="images/reina-cristina.jpg" alt="Reina Cristina" onerror="this.outerHTML='<div class=job-img-ph>🏛️</div>'"/>
+      <img src="https://fjmacarmen-blip.github.io/Mypersonalweb/reina_cristina.png" alt="Reina Cristina" onerror="this.outerHTML='<div class=job-img-ph>🏛️</div>'"/>
       <span class="sc">4★</span>
     </div>
     <div class="job-body">
@@ -319,14 +319,14 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
 
   <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;margin:20px 0 14px">Otros Establecimientos</div>
   <div class="others">
-    <div class="oc"><div class="oc-img"><img src="images/airtours.jpg" alt="Airtours" onerror="this.outerHTML='⭐'"/></div><div class="oc-body"><div class="oc-name">Airtours</div><div class="oc-meta">Benalmádena · 3★ · Resort</div></div></div>
-    <div class="oc"><div class="oc-img"><img src="images/thb-flora.jpg" alt="THB Flora" onerror="this.outerHTML='🌺'"/></div><div class="oc-body"><div class="oc-name">THB Flora</div><div class="oc-meta">Marbella · 4★ · Boutique</div></div></div>
-    <div class="oc"><div class="oc-img"><img src="images/aura-hotel.jpg" alt="Aura Hotel" onerror="this.outerHTML='🏢'"/></div><div class="oc-body"><div class="oc-name">Aura Hotel</div><div class="oc-meta">Costa del Sol · 3★</div></div></div>
-    <div class="oc"><div class="oc-img"><img src="images/dominican-bay.jpg" alt="Dominican Bay" onerror="this.outerHTML='🌴'"/></div><div class="oc-body"><div class="oc-name">Dominican Bay</div><div class="oc-meta">Caribe · All-Inclusive</div></div></div>
-    <div class="oc"><div class="oc-img"><img src="images/tamaimo.jpg" alt="Tamaimo" onerror="this.outerHTML='☀️'"/></div><div class="oc-body"><div class="oc-name">Tamaimo</div><div class="oc-meta">Tenerife · Resort</div></div></div>
-    <div class="oc"><div class="oc-img"><img src="images/hilton-gatwick.jpg" alt="Hilton Gatwick" onerror="this.outerHTML='✈️'"/></div><div class="oc-body"><div class="oc-name">Hilton Gatwick</div><div class="oc-meta">Londres · 4★</div></div></div>
-    <div class="oc"><div class="oc-img"><img src="images/belsana.jpg" alt="Belsana" onerror="this.outerHTML='⛵'"/></div><div class="oc-body"><div class="oc-name">Belsana</div><div class="oc-meta">Cruceros · Buque</div></div></div>
-    <div class="oc"><div class="oc-img"><img src="images/aquarius.jpg" alt="Aquarius" onerror="this.outerHTML='🌊'"/></div><div class="oc-body"><div class="oc-name">Aquarius</div><div class="oc-meta">Caribeño · 4★</div></div></div>
+    <div class="oc"><div class="oc-img"><img src="https://fjmacarmen-blip.github.io/Mypersonalweb/aura_hotel.png" alt="Airtours" onerror="this.outerHTML='⭐'"/></div><div class="oc-body"><div class="oc-name">Airtours Beach Club</div><div class="oc-meta">Gran Canaria · 5★ · LQA · 2004</div></div></div>
+    <div class="oc"><div class="oc-img"><img src="https://fjmacarmen-blip.github.io/Mypersonalweb/thb_flora.png" alt="THB Flora" onerror="this.outerHTML='🌺'"/></div><div class="oc-body"><div class="oc-name">THB Flora</div><div class="oc-meta">Puerto del Carmen, Lanzarote · 3★</div></div></div>
+    <div class="oc"><div class="oc-img"><img src="https://fjmacarmen-blip.github.io/Mypersonalweb/aura_hotel.png" alt="Aura Hotel" onerror="this.outerHTML='🏢'"/></div><div class="oc-body"><div class="oc-name">Aura Hotel Algeciras</div><div class="oc-meta">Sercotel Hotels · 3★ · 2011–2013</div></div></div>
+    <div class="oc"><div class="oc-img"><img src="https://fjmacarmen-blip.github.io/Mypersonalweb/dominican_bay.png" alt="Dominican Bay" onerror="this.outerHTML='🌴'"/></div><div class="oc-body"><div class="oc-name">Dominican Bay</div><div class="oc-meta">Boca Chica, R. Dominicana · +400 hab.</div></div></div>
+    <div class="oc"><div class="oc-img"><img src="https://fjmacarmen-blip.github.io/Mypersonalweb/tamaimo_tropical.png" alt="Tamaimo" onerror="this.outerHTML='☀️'"/></div><div class="oc-body"><div class="oc-name">Tamaimo Tropical</div><div class="oc-meta">Tenerife Sur · Globales Hotels</div></div></div>
+    <div class="oc"><div class="oc-img"><img src="https://fjmacarmen-blip.github.io/Mypersonalweb/hilton_gatwick.png" alt="Hilton Gatwick" onerror="this.outerHTML='✈️'"/></div><div class="oc-body"><div class="oc-name">Hilton London Gatwick</div><div class="oc-meta">UK · Hilton International</div></div></div>
+    <div class="oc"><div class="oc-img"><img src="https://fjmacarmen-blip.github.io/Mypersonalweb/belsana.png" alt="Belsana" onerror="this.outerHTML='⛵'"/></div><div class="oc-body"><div class="oc-name">BelleVue Belsana</div><div class="oc-meta">Porto Colom, Mallorca</div></div></div>
+    <div class="oc"><div class="oc-img"><img src="https://fjmacarmen-blip.github.io/Mypersonalweb/aquarius.png" alt="Aquarius" onerror="this.outerHTML='🌊'"/></div><div class="oc-body"><div class="oc-name">BelleVue Aquarius</div><div class="oc-meta">Puerto del Carmen, Lanzarote</div></div></div>
   </div>
 </div>
 
@@ -334,7 +334,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
 <div id="t-formacion" class="tab">
   <div class="sh"><h2 class="sh-t">Formación y Certificaciones</h2><div class="sh-l"></div></div>
   <div style="background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);border-radius:10px;padding:10px 14px;font-size:11px;color:#4ade80;margin-bottom:16px">
-    📎 Los diplomas están enlazados desde esta web — pulsa "Ver diploma" para acceder.
+    📎 Los diplomas están enlazados directamente desde Drive — pulsa "Ver diploma" para abrirlos (requiere sesión Google activa).
   </div>
 
   <div class="card" style="margin-bottom:14px;display:flex;align-items:center;gap:18px">
@@ -345,7 +345,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
       <div style="display:flex;gap:6px;flex-wrap:wrap">
         <span class="badge bg-g">✅ Titulación oficial</span>
         <span class="badge bg-h">✅ Hostelería y Turismo</span>
-        <a href="documents/teat-solicitud.pdf" target="_blank" class="cert-link">📄 Ver solicitud título</a>
+        <a href="https://drive.google.com/file/d/12oLNK0GX_7mqwoYI57ASyVz7p8dKGnTz/view" target="_blank" class="cert-link">📄 Ver solicitud título</a>
       </div>
     </div>
   </div>
@@ -353,7 +353,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
   <div style="background:rgba(201,168,76,.07);border:1px solid rgba(201,168,76,.2);border-left:3px solid var(--gold);border-radius:14px;padding:18px;margin-bottom:14px">
     <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:12px">🤖 Hitos de Transformación Digital 2024–2026</div>
     <div class="nc-grid">
-      <div class="nc" onclick="window.open('documents/ia-aplicada.pdf','_blank')">
+      <div class="nc" onclick="window.open('https://drive.google.com/file/d/1l-Kh-ieWV79U0xPEMbQKqEkLo7TJswcx/view','_blank')">
         <div style="font-size:16px;margin-bottom:4px">🤖</div>
         <div style="font-size:11px;font-weight:500;color:var(--text);margin-bottom:2px">IA Aplicada al Sector Administrativo</div>
         <div style="font-size:9px;color:var(--muted);margin-bottom:6px">90h · Cámara de Comercio · Mar 2026 · Cofinanciado FSE+</div>
@@ -365,13 +365,13 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
         <div style="font-size:9px;color:var(--muted);margin-bottom:6px">60h · Cámara de Comercio · Abr 2026</div>
         <span class="cert-link" style="cursor:default;opacity:.5">📄 Pendiente</span>
       </div>
-      <div class="nc" onclick="window.open('documents/seag16.pdf','_blank')">
+      <div class="nc" onclick="window.open('https://drive.google.com/file/d/1JMw6-LMUTE-6QMys5h0QZz1k9Ixn27KO/view','_blank')">
         <div style="font-size:16px;margin-bottom:4px">🌿</div>
         <div style="font-size:11px;font-weight:500;color:var(--text);margin-bottom:2px">Desarrollo Sostenible y Gestión Ambiental</div>
         <div style="font-size:9px;color:var(--muted);margin-bottom:6px">SEAG16 · 100h · SEPE · 2024</div>
         <span class="cert-link">📄 Ver diploma</span>
       </div>
-      <div class="nc" onclick="window.open('documents/ciberseguridad.pdf','_blank')">
+      <div class="nc" onclick="window.open('https://drive.google.com/file/d/1VmJ-XOAL5SpbHCvM3ZBUi-BXjK8Lu7Wk/view','_blank')">
         <div style="font-size:16px;margin-bottom:4px">🔒</div>
         <div style="font-size:11px;font-weight:500;color:var(--text);margin-bottom:2px">Ciberseguridad: Prevención y Respuesta</div>
         <div style="font-size:9px;color:var(--muted);margin-bottom:6px">IFCT103 · 49h · SEPE · Jul 2024</div>
@@ -382,37 +382,37 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
 
   <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;margin-bottom:14px">Certificados Profesionales Oficiales</div>
   <div class="cert-grid" style="margin-bottom:14px">
-    <div class="cert-card" onclick="window.open('documents/ssce0110.pdf','_blank')">
+    <div class="cert-card" onclick="window.open('https://drive.google.com/file/d/1EA7PmuLXlzde5FwDvO2YIJEF5pV6b8W9/view','_blank')">
       <div class="cert-icon">🏆</div>
       <div class="cert-code">SSCE0110</div>
       <div class="cert-title">Habilitación Docencia FP Grados A, B y C</div>
       <div class="cert-org">Junta de Andalucía · 380h · Nota: <strong style="color:var(--gold)">8,62/10</strong> · 19 Nov 2025</div>
-      <a href="documents/ssce0110-formacion.pdf" target="_blank" class="cert-link" onclick="event.stopPropagation()">📄 Ver certificado formación</a>
+      <a href="https://drive.google.com/file/d/17UIaMr6UFIQid1WNOH-E6kNvc2bm7o9v/view" target="_blank" class="cert-link" onclick="event.stopPropagation()">📄 Ver certificado formación</a>
     </div>
-    <div class="cert-card" onclick="window.open('documents/adgg0108.pdf','_blank')">
+    <div class="cert-card" onclick="window.open('https://drive.google.com/file/d/1fIFUyAOokRUayskuOFAAyM6uSghv4YL9/view','_blank')">
       <div class="cert-icon">📋</div>
       <div class="cert-code">ADGG0108</div>
       <div class="cert-title">Asistencia a la Dirección (Nivel 3)</div>
       <div class="cert-org">Junta de Andalucía · RD 1210/2009 · 2025</div>
-      <a href="documents/adgg0108.pdf" target="_blank" class="cert-link" onclick="event.stopPropagation()">📄 Ver certificado</a>
+      <a href="https://drive.google.com/file/d/1fIFUyAOokRUayskuOFAAyM6uSghv4YL9/view" target="_blank" class="cert-link" onclick="event.stopPropagation()">📄 Ver certificado</a>
     </div>
-    <div class="cert-card" onclick="window.open('documents/adgg0308.pdf','_blank')">
+    <div class="cert-card" onclick="window.open('https://drive.google.com/file/d/1AvE-psShbz3Wef4R7QeLLOSVfmT_Dx91/view','_blank')">
       <div class="cert-icon">📁</div>
       <div class="cert-code">ADGG0308</div>
       <div class="cert-title">Asistencia Documental y de Gestión (Nivel 3)</div>
       <div class="cert-org">Junta de Andalucía · RD 645/2011 · 2025</div>
-      <a href="documents/adgg0308.pdf" target="_blank" class="cert-link" onclick="event.stopPropagation()">📄 Ver certificado</a>
+      <a href="https://drive.google.com/file/d/1AvE-psShbz3Wef4R7QeLLOSVfmT_Dx91/view" target="_blank" class="cert-link" onclick="event.stopPropagation()">📄 Ver certificado</a>
     </div>
   </div>
 
   <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;margin-bottom:12px">Acreditaciones parciales de UCs (IACP)</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-    <div class="cert-card" onclick="window.open('documents/iacp-adg309.pdf','_blank')">
+    <div class="cert-card" onclick="window.open('https://drive.google.com/file/d/1X0IADKBML-bocqYRJbF5rxr946Dud_L8/view','_blank')">
       <div style="font-size:11px;font-weight:600;color:var(--text);margin-bottom:4px">Acreditación IACP · ADG309</div>
       <div style="font-size:10px;color:var(--muted);margin-bottom:6px">UC0982_3 · UC0983_3 · UC0986_3 · UC9996_2 · UC9999_3</div>
       <a class="cert-link">📄 Ver acreditación</a>
     </div>
-    <div class="cert-card" onclick="window.open('documents/iacp-adg310.pdf','_blank')">
+    <div class="cert-card" onclick="window.open('https://drive.google.com/file/d/1ypIteJYNy_U9CEKieH2wEvnVBQ1QtQ-O/view','_blank')">
       <div style="font-size:11px;font-weight:600;color:var(--text);margin-bottom:4px">Acreditación IACP · ADG310</div>
       <div style="font-size:10px;color:var(--muted);margin-bottom:6px">UC0233_2 · UC0979_2 · UC0980_2 · UC0987_3 · UC0988_3</div>
       <a class="cert-link">📄 Ver acreditación</a>
@@ -426,7 +426,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
 
   <div class="fp-hero">
     <div style="font-size:13px;font-weight:600;margin-bottom:6px">🎓 Competencias Docentes · Formación Profesional (SSCE0110)</div>
-    <p style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.6">Habilitación oficial <strong style="color:var(--text)">SSCE0110</strong> (Junta de Andalucía, nota 8,62/10) que autoriza a impartir docencia en FPE, formación bonificada y certificados profesionales a nivel nacional.</p>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.6">Habilitación oficial <strong style="color:var(--text)">SSCE0110</strong> (Junta de Andalucía, nota <strong style="color:var(--text)">8,62/10</strong>, 380h) + TEAT + 30 años de experiencia. Puede impartir <strong style="color:var(--text)">Grados A, B y C</strong> en Hostelería y Turismo y Administración y Gestión.</p>
     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
       <span class="badge bg-d">✅ SSCE0110 habilitado</span>
       <span class="badge bg-h">✅ Hostelería y Turismo</span>
@@ -442,7 +442,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
       <div class="fm"><div class="fm-code">MP0353</div><div class="fm-name">Prácticas profesionales no laborales</div><div class="fm-meta">40h · Entorno real</div></div>
     </div>
     <div style="margin-top:12px;font-size:10px;color:var(--muted);padding:8px 12px;background:rgba(34,197,94,.05);border-radius:8px;border:1px solid rgba(34,197,94,.15)">
-      ⚠️ El SSCE0110 habilita para Grados A, B y C (FPE, formación bonificada, certificados profesionales) — no para Grados D/E (ciclos formativos reglados).
+      ⚠️ El SSCE0110 habilita para Grados A, B y C (FPE, formación bonificada, certificados profesionales) — no para Grados D/E (ciclos formativos reglados). Para módulos de Hostelería y Turismo puede acreditar también experiencia profesional equivalente según el Fichero de Especialidades del SEPE.
     </div>
   </div>
 
@@ -450,8 +450,8 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
     <div class="cc">
       <div class="cc-title"><div class="cc-bar"></div>Competencias Directivas · Hospitality 5.0</div>
       <div class="tags">
-        <span class="tag">P&L Management</span><span class="tag">CAPEX Planning</span><span class="tag">GOPPAR Optimisation</span>
-        <span class="tag">Revenue Management</span><span class="tag">LQA · Forbes Standards</span><span class="tag">Pre-opening & SOPs</span>
+        <span class="tag">P&amp;L Management</span><span class="tag">CAPEX Planning</span><span class="tag">GOPPAR Optimisation</span>
+        <span class="tag">Revenue Management</span><span class="tag">LQA · Forbes Standards</span><span class="tag">Pre-opening &amp; SOPs</span>
         <span class="tag">Crisis Management</span><span class="tag">ESG · SEAG16</span><span class="tag">IA Aplicada a Gestión</span>
         <span class="tag">Relaciones institucionales</span><span class="tag">Ciberseguridad</span><span class="tag">Project Management</span>
         <span class="tag">Legionelosis · RGPD</span><span class="tag">Auditorías sectoriales</span><span class="tag">Negociación avanzada</span>
@@ -461,13 +461,13 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
       <div class="cc">
         <div class="cc-title"><div class="cc-bar"></div>Idiomas</div>
         <div style="margin-bottom:10px"><div class="lr"><span class="ln">Español</span><span class="ll">Nativo</span></div><div class="lt"><div class="lf" style="width:100%"></div></div></div>
-        <div style="margin-bottom:10px"><div class="lr"><span class="ln">Inglés</span><span class="ll">C1 operativo · B1 certificado UC9999_3</span></div><div class="lt"><div class="lf" style="width:85%"></div></div></div>
-        <div style="margin-bottom:10px"><div class="lr"><span class="ln">Alemán</span><span class="ll">B1 operativo · A2 certificado UC9996_2</span></div><div class="lt"><div class="lf" style="width:70%"></div></div></div>
+        <div style="margin-bottom:10px"><div class="lr"><span class="ln">Inglés</span><span class="ll">C1 operativo · B1 certificado UC9999_3</span></div><div class="lt"><div class="lf" style="width:80%"></div></div></div>
+        <div style="margin-bottom:10px"><div class="lr"><span class="ln">Alemán</span><span class="ll">B1 operativo · A2 certificado UC9996_2</span></div><div class="lt"><div class="lf" style="width:50%"></div></div></div>
         <div><div class="lr"><span class="ln">Francés / Italiano</span><span class="ll">Básico</span></div><div class="lt"><div class="lf" style="width:20%"></div></div></div>
       </div>
       <div class="cc">
         <div class="cc-title"><div class="cc-bar"></div>Herramientas</div>
-        <div class="tags"><span class="tag">PMS Hoteleros</span><span class="tag">GDS Reporting</span><span class="tag">Office Avanzado</span><span class="tag">Gestión Documental</span><span class="tag">Google Workspace</span><span class="tag">IA Generativa</span></div>
+        <div class="tags"><span class="tag">PMS Hoteleros</span><span class="tag">GDS Reporting</span><span class="tag">Office Avanzado</span><span class="tag">Gestión Documental</span><span class="tag">IA · Prompt Eng.</span><span class="tag">Análisis predictivo</span></div>
       </div>
     </div>
   </div>
@@ -478,21 +478,21 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
       <table class="uc-t">
         <thead><tr><th>Código</th><th>Denominación</th><th>Certificado</th><th style="text-align:center">Niv.</th></tr></thead>
         <tbody>
-          <tr><td class="uc-code">UC0982_3</td><td>Gestionar las comunicaciones de la dirección</td><td style="font-size:9px;color:var(--muted)">ADGG0108</td><td style="text-align:center"><span class="badge bg-g" style="font-size:8px">3</span></td></tr>
-          <tr><td class="uc-code">UC0983_3</td><td>Gestionar actividades de asistencia a la dirección en materia de organización</td><td style="font-size:9px;color:var(--muted)">ADGG0108</td><td style="text-align:center"><span class="badge bg-g" style="font-size:8px">3</span></td></tr>
-          <tr><td class="uc-code">UC0986_3</td><td>Elaborar documentación y presentaciones profesionales</td><td style="font-size:9px;color:var(--muted)">ADGG0108</td><td style="text-align:center"><span class="badge bg-g" style="font-size:8px">3</span></td></tr>
-          <tr><td class="uc-code">UC0987_3</td><td>Administrar los sistemas de almacenamiento de la información</td><td style="font-size:9px;color:var(--muted)">ADGG0308</td><td style="text-align:center"><span class="badge bg-g" style="font-size:8px">3</span></td></tr>
-          <tr><td class="uc-code">UC0988_3</td><td>Gestionar expedientes y documentación jurídica y empresarial ante Organismos y AAPP</td><td style="font-size:9px;color:var(--muted)">ADGG0308</td><td style="text-align:center"><span class="badge bg-g" style="font-size:8px">3</span></td></tr>
-          <tr><td class="uc-code">UC9999_3</td><td>Comunicarse en lengua inglesa con nivel B1 (MCER) en el ámbito profesional</td><td style="font-size:9px;color:var(--muted)">ADGG0108</td><td style="text-align:center"><span class="badge bg-g" style="font-size:8px">3</span></td></tr>
-          <tr><td class="uc-code">UC1442_3</td><td>Programar acciones formativas para el empleo</td><td style="font-size:9px;color:var(--muted)">SSCE0110</td><td style="text-align:center"><span class="badge bg-g" style="font-size:8px">3</span></td></tr>
-          <tr><td class="uc-code">UC1443_3</td><td>Seleccionar, elaborar, adaptar y utilizar materiales, medios y recursos didácticos</td><td style="font-size:9px;color:var(--muted)">SSCE0110</td><td style="text-align:center"><span class="badge bg-g" style="font-size:8px">3</span></td></tr>
-          <tr><td class="uc-code">UC1444_3</td><td>Impartir y tutorizar acciones formativas para el empleo</td><td style="font-size:9px;color:var(--muted)">SSCE0110</td><td style="text-align:center"><span class="badge bg-g" style="font-size:8px">3</span></td></tr>
-          <tr><td class="uc-code">UC1445_3</td><td>Evaluar el proceso de enseñanza-aprendizaje en formación profesional para el empleo</td><td style="font-size:9px;color:var(--muted)">SSCE0110</td><td style="text-align:center"><span class="badge bg-g" style="font-size:8px">3</span></td></tr>
-          <tr><td class="uc-code">UC1446_3</td><td>Facilitar información y orientación laboral y promover la calidad en FPE</td><td style="font-size:9px;color:var(--muted)">SSCE0110</td><td style="text-align:center"><span class="badge bg-g" style="font-size:8px">3</span></td></tr>
-          <tr><td class="uc-code">UC9996_2</td><td>Comunicarse en segunda lengua extranjera (A2) en el ámbito profesional</td><td style="font-size:9px;color:var(--muted)">ADGG0108</td><td style="text-align:center"><span class="badge bg-h" style="font-size:8px">2</span></td></tr>
-          <tr><td class="uc-code">UC0979_2</td><td>Gestionar operaciones administrativas de tesorería</td><td style="font-size:9px;color:var(--muted)">ADGG0308</td><td style="text-align:center"><span class="badge bg-h" style="font-size:8px">2</span></td></tr>
-          <tr><td class="uc-code">UC0980_2</td><td>Gestionar operaciones administrativas de recursos humanos</td><td style="font-size:9px;color:var(--muted)">ADGG0308</td><td style="text-align:center"><span class="badge bg-h" style="font-size:8px">2</span></td></tr>
-          <tr><td class="uc-code">UC0233_2</td><td>Manejar aplicaciones ofimáticas en la gestión de la información y la documentación</td><td style="font-size:9px;color:var(--muted)">ADGG0308</td><td style="text-align:center"><span class="badge bg-h" style="font-size:8px">2</span></td></tr>
+          <tr><td class="uc-code">UC0982_3</td><td>Gestionar las comunicaciones de la dirección</td><td style="font-size:9px;color:var(--muted)">ADGG0108</td><td style="text-align:center"><span class="badge bg-g">3</span></td></tr>
+          <tr><td class="uc-code">UC0983_3</td><td>Gestionar actividades de asistencia a la dirección en materia de organización</td><td style="font-size:9px;color:var(--muted)">ADGG0108</td><td style="text-align:center"><span class="badge bg-g">3</span></td></tr>
+          <tr><td class="uc-code">UC0986_3</td><td>Elaborar documentación y presentaciones profesionales</td><td style="font-size:9px;color:var(--muted)">ADGG0108</td><td style="text-align:center"><span class="badge bg-g">3</span></td></tr>
+          <tr><td class="uc-code">UC0987_3</td><td>Administrar los sistemas de almacenamiento de la información</td><td style="font-size:9px;color:var(--muted)">ADGG0308</td><td style="text-align:center"><span class="badge bg-g">3</span></td></tr>
+          <tr><td class="uc-code">UC0988_3</td><td>Gestionar expedientes y documentación jurídica y empresarial ante Organismos y AAPP</td><td style="font-size:9px;color:var(--muted)">ADGG0308</td><td style="text-align:center"><span class="badge bg-g">3</span></td></tr>
+          <tr><td class="uc-code">UC9999_3</td><td>Comunicarse en lengua inglesa con nivel B1 (MCER) en el ámbito profesional</td><td style="font-size:9px;color:var(--muted)">ADGG0108</td><td style="text-align:center"><span class="badge bg-g">3</span></td></tr>
+          <tr><td class="uc-code">UC1442_3</td><td>Programar acciones formativas para el empleo</td><td style="font-size:9px;color:var(--muted)">SSCE0110</td><td style="text-align:center"><span class="badge bg-g">3</span></td></tr>
+          <tr><td class="uc-code">UC1443_3</td><td>Seleccionar, elaborar, adaptar y utilizar materiales, medios y recursos didácticos</td><td style="font-size:9px;color:var(--muted)">SSCE0110</td><td style="text-align:center"><span class="badge bg-g">3</span></td></tr>
+          <tr><td class="uc-code">UC1444_3</td><td>Impartir y tutorizar acciones formativas para el empleo</td><td style="font-size:9px;color:var(--muted)">SSCE0110</td><td style="text-align:center"><span class="badge bg-g">3</span></td></tr>
+          <tr><td class="uc-code">UC1445_3</td><td>Evaluar el proceso de enseñanza-aprendizaje en formación profesional para el empleo</td><td style="font-size:9px;color:var(--muted)">SSCE0110</td><td style="text-align:center"><span class="badge bg-g">3</span></td></tr>
+          <tr><td class="uc-code">UC1446_3</td><td>Facilitar información y orientación laboral y promover la calidad en FPE</td><td style="font-size:9px;color:var(--muted)">SSCE0110</td><td style="text-align:center"><span class="badge bg-g">3</span></td></tr>
+          <tr><td class="uc-code">UC9996_2</td><td>Comunicarse en segunda lengua extranjera (A2) en el ámbito profesional</td><td style="font-size:9px;color:var(--muted)">ADGG0108</td><td style="text-align:center"><span class="badge bg-m">2</span></td></tr>
+          <tr><td class="uc-code">UC0979_2</td><td>Gestionar operaciones administrativas de tesorería</td><td style="font-size:9px;color:var(--muted)">ADGG0308</td><td style="text-align:center"><span class="badge bg-m">2</span></td></tr>
+          <tr><td class="uc-code">UC0980_2</td><td>Gestionar operaciones administrativas de recursos humanos</td><td style="font-size:9px;color:var(--muted)">ADGG0308</td><td style="text-align:center"><span class="badge bg-m">2</span></td></tr>
+          <tr><td class="uc-code">UC0233_2</td><td>Manejar aplicaciones ofimáticas en la gestión de la información y la documentación</td><td style="font-size:9px;color:var(--muted)">ADGG0308</td><td style="text-align:center"><span class="badge bg-m">2</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -509,7 +509,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
     <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
       <div>
         <div class="interview-title">Voz del sector · Entrevista completa</div>
-        <div class="interview-sub">Una conversación sobre liderazgo, filosofía de dirección, el equilibrio entre legado y modernidad, y los aprendizajes de 30 años en primera línea hotelera.</div>
+        <div class="interview-sub">Una conversación sobre liderazgo, filosofía de dirección, el equilibrio entre legado y modernidad, y los aprendizajes de 30 años en primera línea hotelera. Hotel Reina Cristina · Algeciras.</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <button class="btn btn-g" onclick="document.getElementById('interview-modal').classList.add('open')">📖 Leer entrevista completa</button>
           <span class="badge bg-g">Hotel Reina Cristina · 4★</span>
@@ -523,46 +523,64 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
   <!-- LINKEDIN FEED -->
   <div class="li-banner">
     <div class="li-hdr">
-      <div class="li-icon"><svg viewBox="0 0 24 24" fill="#7dd3fc" width="18" height="18"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.309v-11.45h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555v-11.45h3.564v11.45zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z"/></svg></div>
+      <div class="li-icon"><svg viewBox="0 0 24 24" fill="#7dd3fc" width="18" height="18"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/></svg></div>
       <div><div style="font-size:13px;font-weight:500;color:var(--text)">Publicaciones LinkedIn</div><div style="font-size:10px;color:var(--muted)">linkedin.com/in/franciscojaviermartinezalba</div></div>
       <a href="https://www.linkedin.com/in/franciscojaviermartinezalba" target="_blank" class="btn" style="margin-left:auto;font-size:10px">Ver perfil →</a>
     </div>
     <div class="li-post">
       <div style="display:flex;align-items:center;gap:8px">
-        <div class="li-av"><img src="images/profile.jpg" alt="FM" onerror="this.outerHTML='FM'"/></div>
-        <div><div style="font-size:11px;font-weight:500;color:var(--text)">Francisco Javier Martínez Alba</div><div style="font-size:9px;color:var(--muted)">Bridge Leader 4.0 · Hospitality 5.0 · Docente</div></div>
+        <div class="li-av"><img src="https://fjmacarmen-blip.github.io/Mypersonalweb/YOUR_PHOTO.png" alt="FM" onerror="this.outerHTML='FM'"/></div>
+        <div><div style="font-size:11px;font-weight:500;color:var(--text)">Francisco Javier Martínez Alba</div><div style="font-size:9px;color:var(--muted)">Bridge Leader 4.0 · Hospitality 5.0 · Docente FP</div></div>
       </div>
-      <div class="li-post-text">Tras 30 años dirigiendo hoteles en cuatro países, acabo de completar mi habilitación como docente de FP con nota 8,62 y mi diploma en IA aplicada a la gestión. No es una jubilación, es una reconversión.</div>
+      <div class="li-post-text">Tras 30 años dirigiendo hoteles en cuatro países, acabo de completar mi habilitación como docente de FP con nota 8,62 y mi diploma en IA aplicada a la gestión. No es un cambio de carrera: es una expansión. El directivo del futuro dirige, forma y automatiza. #Hospitality5 #IA #FormaciónProfesional</div>
       <div class="li-post-date">28 abr 2026</div>
     </div>
     <div class="li-post">
       <div style="display:flex;align-items:center;gap:8px">
-        <div class="li-av"><img src="images/profile.jpg" alt="FM" onerror="this.outerHTML='FM'"/></div>
-        <div><div style="font-size:11px;font-weight:500;color:var(--text)">Francisco Javier Martínez Alba</div><div style="font-size:9px;color:var(--muted)">Bridge Leader 4.0 · Hospitality 5.0 · Docente</div></div>
+        <div class="li-av"><img src="https://fjmacarmen-blip.github.io/Mypersonalweb/YOUR_PHOTO.png" alt="FM" onerror="this.outerHTML='FM'"/></div>
+        <div><div style="font-size:11px;font-weight:500;color:var(--text)">Francisco Javier Martínez Alba</div><div style="font-size:9px;color:var(--muted)">Bridge Leader 4.0 · Hospitality 5.0 · Docente FP</div></div>
       </div>
-      <div class="li-post-text">La clave de un hotel bien gestionado no está en los KPIs — está en las personas. He liderado equipos de 5 a 115 colaboradores en tres continentes. La motivación auténtica vence la burnout.</div>
+      <div class="li-post-text">La clave de un hotel bien gestionado no está en los KPIs — está en las personas. He liderado equipos de 5 a 115 colaboradores en tres continentes. La motivación auténtica siempre supera al control. Una palmadita sincera en la espalda vale más que cualquier dashboard. #Liderazgo #DirectorDeHotel</div>
       <div class="li-post-date">15 abr 2026</div>
     </div>
     <div class="li-post">
       <div style="display:flex;align-items:center;gap:8px">
-        <div class="li-av"><img src="images/profile.jpg" alt="FM" onerror="this.outerHTML='FM'"/></div>
-        <div><div style="font-size:11px;font-weight:500;color:var(--text)">Francisco Javier Martínez Alba</div><div style="font-size:9px;color:var(--muted)">Bridge Leader 4.0 · Hospitality 5.0 · Docente</div></div>
+        <div class="li-av"><img src="https://fjmacarmen-blip.github.io/Mypersonalweb/YOUR_PHOTO.png" alt="FM" onerror="this.outerHTML='FM'"/></div>
+        <div><div style="font-size:11px;font-weight:500;color:var(--text)">Francisco Javier Martínez Alba</div><div style="font-size:9px;color:var(--muted)">Bridge Leader 4.0 · Hospitality 5.0 · Docente FP</div></div>
       </div>
-      <div class="li-post-text">Revenue Management en hoteles de temporada: la diferencia entre sobrevivir y crecer está en anticipar, no en reaccionar. Seis años en Altos de Istán me enseñaron eso.</div>
+      <div class="li-post-text">Revenue Management en hoteles de temporada: la diferencia entre sobrevivir y crecer está en anticipar, no en reaccionar. Seis años en Altos de Istán me enseñaron que el dato sin criterio no vale nada. El criterio sin dato es intuición. Necesitas los dos. #HotelManagement #RevenueManagement</div>
       <div class="li-post-date">3 abr 2026</div>
     </div>
     <div style="background:rgba(0,119,181,.06);border:1px solid rgba(0,119,181,.15);border-radius:8px;padding:8px 12px;margin-top:10px;font-size:10px;color:var(--muted);display:flex;align-items:center;gap:6px">
-      <span>ℹ️</span> Las publicaciones se sincronizan manualmente desde LinkedIn.
+      <span>ℹ️</span> LinkedIn no ofrece RSS público. Para sincronizar automáticamente: activa la integración Zapier + Save to Notion en las conexiones del Dashboard.
     </div>
+  </div>
+
+  <!-- UPLOAD BANNER -->
+  <div class="upload-banner" onclick="document.getElementById('upload-expanded').style.display=document.getElementById('upload-expanded').style.display==='none'?'block':'none'">
+    <div style="font-size:24px;margin-bottom:6px">📎</div>
+    <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px">Añadir material adicional</div>
+    <div style="font-size:11px;color:var(--muted)">Haz clic para añadir fotos, documentos, vídeos o certificaciones a cualquier apartado</div>
+  </div>
+  <div id="upload-expanded" style="display:none">
+    <div class="upload-sections">
+      <div class="upload-sec" onclick="document.getElementById('fupl').click()"><span>📸</span>Fotos personales<br/><span style="font-size:8px">Inicio / Experiencia</span></div>
+      <div class="upload-sec" onclick="document.getElementById('fupl').click()"><span>📄</span>Diplomas PDF<br/><span style="font-size:8px">Formación</span></div>
+      <div class="upload-sec" onclick="document.getElementById('fupl').click()"><span>🎥</span>Vídeos / Reels<br/><span style="font-size:8px">Blog y +</span></div>
+      <div class="upload-sec" onclick="document.getElementById('fupl').click()"><span>🏨</span>Fotos de hoteles<br/><span style="font-size:8px">Experiencia</span></div>
+    </div>
+    <input id="fupl" type="file" multiple style="display:none" onchange="handleUpload(this)"/>
+    <div id="upload-list" style="margin-top:10px"></div>
+    <div style="font-size:10px;color:var(--muted);margin-top:8px;text-align:center">Los archivos se añaden localmente — para subirlos a Drive, usa el botón "Volver a Miweb" del Dashboard</div>
   </div>
 
   <!-- ARTÍCULOS -->
   <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;margin:20px 0 14px">Artículos y Reflexiones</div>
   <div class="blog-grid">
-    <div class="post-card"><div class="post-type">Artículo</div><div class="post-title">Bridge Leader 4.0: cuando la IA potencia al directivo hotelero</div><div class="post-excerpt">Mi certificación en IA aplicada no es un gesto cosmético. Es la herramienta que necesita el director de 2026.</div></div>
-    <div class="post-card"><div class="post-type">Análisis</div><div class="post-title">Revenue Management en hoteles de temporada</div><div class="post-excerpt">Anticipar la demanda es la diferencia entre sobrevivir y crecer en establecimientos de temporada.</div></div>
-    <div class="post-card"><div class="post-type">Reflexión</div><div class="post-title">Mi filosofía de liderazgo: dirigir sin controlar</div><div class="post-excerpt">Trabajar más que mis empleados y confiar en su capacidad ha sido el secreto de mis 30 años sin quemar equipos.</div></div>
-    <div class="post-card"><div class="post-type">Docencia</div><div class="post-title">La habilitación SSCE0110: el directivo que también forma</div><div class="post-excerpt">Por qué 30 años de experiencia exigen ser compartidos. La transmisión del conocimiento es responsabilidad.</div></div>
+    <div class="post-card"><div class="post-type">Artículo</div><div class="post-title">Bridge Leader 4.0: cuando la IA potencia al directivo hotelero</div><div class="post-excerpt">Mi certificación en IA no es un adorno — es la llave para automatizar lo que no necesita criterio humano y liberar tiempo para lo que sí lo necesita.</div><div class="post-meta">May 2026</div></div>
+    <div class="post-card"><div class="post-type">Análisis</div><div class="post-title">Revenue Management en hoteles de temporada</div><div class="post-excerpt">Anticipar la demanda es la diferencia entre sobrevivir y crecer. Seis años al frente del Hotel Altos de Istán en la Sierra de las Nieves.</div><div class="post-meta">Abr 2026</div></div>
+    <div class="post-card"><div class="post-type">Reflexión</div><div class="post-title">Mi filosofía de liderazgo: dirigir sin controlar</div><div class="post-excerpt">Trabajar más que mis empleados y demostrar que mi trabajo rinde. La motivación sincera siempre supera al control.</div><div class="post-meta">Mar 2026</div></div>
+    <div class="post-card"><div class="post-type">Docencia</div><div class="post-title">La habilitación SSCE0110: el directivo que también forma</div><div class="post-excerpt">Por qué 30 años de experiencia hotelera son el mejor aval para transmitir conocimiento en la FP de Hostelería y Turismo.</div><div class="post-meta">Feb 2026</div></div>
   </div>
 </div>
 </main>
@@ -574,6 +592,11 @@ function go(id,el){
   document.querySelectorAll('.nb').forEach(b=>b.classList.remove('active'));
   if(el)el.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
+}
+function handleUpload(input){
+  const list=document.getElementById('upload-list');
+  const files=Array.from(input.files);
+  list.innerHTML=files.map(f=>`<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(255,255,255,.04);border-radius:8px;margin-bottom:5px;font-size:11px;color:var(--muted)"><span>📎</span><span>${f.name}</span><span style="margin-left:auto;font-size:9px">${(f.size/1024).toFixed(0)} KB</span></div>`).join('');
 }
 </script>
 </body>
