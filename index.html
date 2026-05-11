@@ -19,7 +19,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 header{background:rgba(10,22,40,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.25);padding:0 24px;position:sticky;top:0;z-index:20}
 .hdr{display:flex;align-items:center;justify-content:space-between;height:58px;max-width:1100px;margin:0 auto}
 .brand{display:flex;align-items:center;gap:10px}
-.av{width:38px;height:38px;border-radius:50%;border:2px solid var(--gold-border);overflow:hidden;flex-shrink:0;background:var(--gold-bg);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--gold);font-weight:600}
+.av{width:38px;height:38px;border-radius:50%;border:2px solid var(--gold-border);overflow:hidden;flex-shrink:0;background:var(--gold-bg);display:flex;align-items:center;justify-content:center}
 .av img{width:100%;height:100%;object-fit:cover;object-position:top}
 .bn{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:700;line-height:1}
 .br{font-size:10px;color:var(--gold);letter-spacing:.3px}
@@ -27,7 +27,7 @@ nav{display:flex;align-items:center;gap:2px}
 .nb{background:none;border:none;cursor:pointer;padding:7px 11px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--muted);transition:all .2s}
 .nb:hover{color:var(--text);background:rgba(255,255,255,.05)}
 .nb.active{color:var(--text);background:rgba(255,255,255,.05);border-bottom:2px solid var(--gold)}
-.nb-emp{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a1628!important;border-radius:8px;font-weight:700;text-decoration:none;padding:7px 14px;display:inline-flex;align-items:center;gap:5px;margin-left:8px;font-size:12px;font-family:'DM Sans',sans-serif;transition:all .2s}
+.nb-emp{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a1628!important;border-radius:8px;font-weight:700;text-decoration:none;padding:7px 14px;display:inline-flex;align-items:center;gap:6px}
 .nb-emp:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(201,168,76,.4)}
 main{max-width:1100px;margin:0 auto;padding:28px 24px}
 .tab{display:none}.tab.active{display:block;animation:fu .3s ease}
@@ -42,13 +42,10 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
 .bg-d{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.25);color:#22c55e}
 .bg-m{background:rgba(255,255,255,.05);border-color:var(--border);color:var(--muted)}
 .bg-ai{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.3);color:#f59e0b}
-.btn{padding:8px 18px;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:500;font-size:12px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;text-decoration:none;border:1px solid var(--border2);background:transparent;color:var(--text)}
+.btn{padding:8px 18px;border-radius:10px;font-family:'DM Sans',sans-serif;font-weight:500;font-size:12px;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
 .btn:hover{background:rgba(255,255,255,.07)}
 .btn-g{background:var(--gold);border-color:var(--gold);color:#0d1117}.btn-g:hover{background:var(--gold2)}
 .btn-bord{border-color:var(--gold-border);color:var(--gold)}
-/* Estilos para formularios */
-input, textarea { width: 100%; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 10px; color: var(--text); font-family: inherit; font-size: 13px; margin-bottom: 12px; }
-label { font-size: 11px; color: var(--muted); display: block; margin-bottom: 4px; }
 /* HERO */
 .hero{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:20px}
 .hero-in{display:flex;min-height:280px}
@@ -56,7 +53,7 @@ label { font-size: 11px; color: var(--muted); display: block; margin-bottom: 4px
 .hero-ph img{width:100%;height:100%;object-fit:cover;object-position:top center}
 .hero-ph-ph{width:100%;height:100%;min-height:280px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--card),var(--card2));font-size:48px}
 .hero-b{padding:32px 36px;flex:1}
-.hero-tag{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:100px;border:1px solid var(--gold-border);background:var(--gold-bg);color:#b8972a;font-size:10px;font-weight:500;margin-bottom:14px}
+.hero-tag{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:100px;border:1px solid var(--gold-border);background:var(--gold-bg);color:#b8972a;font-size:10px;font-weight:500}
 .hero-name{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:700;line-height:1.05;margin-bottom:6px}
 .hero-name em{color:var(--gold);font-style:normal}
 .hero-role{font-size:14px;color:var(--muted);margin-bottom:3px}
@@ -64,7 +61,7 @@ label { font-size: 11px; color: var(--muted); display: block; margin-bottom: 4px
 .cpills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
 .cpill{display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:8px;border:1px solid var(--border);font-size:11px;color:var(--muted)}
 .cta-row{display:flex;gap:8px;flex-wrap:wrap}
-@media(max-width:700px){.hero-in{flex-direction:column}.hero-ph{width:100%;height:220px;border-right:none;border-bottom:1px solid var(--border)}.hero-ph-ph{min-height:220px}.hero-b{padding:24px}.hero-name{font-size:32px}}
+@media(max-width:700px){.hero-in{flex-direction:column}.hero-ph{width:100%;height:220px;border-right:none;border-bottom:1px solid var(--border)}.hero-ph-ph{min-height:220px}.hero-b{padding:24px}}
 /* STATS */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
 @media(max-width:700px){.stats{grid-template-columns:1fr 1fr}}
@@ -86,6 +83,7 @@ label { font-size: 11px; color: var(--muted); display: block; margin-bottom: 4px
 .job-img{width:36%;position:relative;min-height:200px;flex-shrink:0;overflow:hidden;background:var(--card2);display:flex;align-items:center;justify-content:center}
 .job-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s;display:block}
 .job-card:hover .job-img img{transform:scale(1.05)}
+.job-img-ph{width:100%;height:100%;min-height:200px;display:flex;align-items:center;justify-content:center;font-size:40px}
 .sc{position:absolute;top:8px;left:8px;padding:2px 8px;border-radius:100px;background:rgba(201,168,76,.15);border:1px solid var(--gold-border);font-size:9px;font-weight:600;color:var(--gold)}
 .job-body{padding:22px;flex:1}
 .job-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;margin-bottom:3px}
@@ -96,36 +94,117 @@ label { font-size: 11px; color: var(--muted); display: block; margin-bottom: 4px
 .task{display:flex;gap:5px;font-size:11px;color:var(--muted)}
 .tdot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:4px}
 @media(max-width:600px){.job-card{flex-direction:column}.job-img{width:100%;min-height:180px}.tasks{grid-template-columns:1fr}}
-/* FORMACIÓN, COMPETENCIAS Y BLOG... similar CSS */
+.others{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}
+@media(max-width:700px){.others{grid-template-columns:repeat(2,1fr)}}
+.oc{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s;cursor:pointer}
+.oc:hover{border-color:var(--border2)}
+.oc-img{height:100px;background:var(--card2);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;font-size:28px}
+.oc-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.oc:hover .oc-img img{transform:scale(1.05)}
+.oc-body{padding:10px}
+.oc-name{font-size:11px;font-weight:500;color:var(--text);margin-bottom:2px}
+.oc-meta{font-size:9px;color:var(--muted);line-height:1.4}
+/* FORMACIÓN */
 .cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 @media(max-width:700px){.cert-grid{grid-template-columns:1fr}}
-.cert-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;}
+.cert-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;transition:border-color .2s;cursor:pointer}
+.cert-card:hover{border-color:var(--border2)}
 .cert-icon{width:40px;height:40px;border-radius:12px;background:var(--gold-bg);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:20px}
+.cert-code{font-size:10px;color:var(--gold);font-weight:600;font-family:monospace;margin-bottom:3px}
 .cert-title{font-size:12px;font-weight:500;color:var(--text);margin-bottom:2px;line-height:1.4}
-.cert-org{font-size:10px;color:var(--muted)}
+.cert-org{font-size:10px;color:var(--muted);margin-bottom:8px}
+.cert-link{display:inline-flex;align-items:center;gap:5px;font-size:10px;color:var(--gold);border:1px solid var(--gold-border);background:var(--gold-bg);padding:3px 9px;border-radius:6px;text-decoration:none}
+.cert-link:hover{background:rgba(201,168,76,.18)}
+.nc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+@media(max-width:600px){.nc-grid{grid-template-columns:1fr}}
+.nc{background:var(--card);border:1px solid rgba(201,168,76,.2);border-radius:9px;padding:12px;cursor:pointer;transition:border-color .2s}
+.nc:hover{border-color:rgba(201,168,76,.4)}
+/* COMPETENCIAS */
 .comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:700px){.comp-grid{grid-template-columns:1fr}}
 .cc{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
 .cc-title{font-size:12px;font-weight:600;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.cc-bar{width:3px;height:18px;border-radius:2px;background:var(--gold);flex-shrink:0}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{padding:5px 11px;border-radius:100px;border:1px solid var(--border);font-size:10px;color:var(--muted);transition:all .2s;cursor:default}
+.tag:hover{border-color:var(--gold-border);color:var(--gold)}
+.lr{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.ln{font-size:12px;font-weight:500;color:var(--text)}
+.ll{font-size:10px;color:var(--muted)}
 .lt{height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin-top:4px}
 .lf{height:100%;border-radius:3px;background:linear-gradient(to right,var(--gold),var(--gold2))}
-.post-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:14px}
-.post-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px}
-.post-excerpt{font-size:11px;color:var(--muted);line-height:1.6}
+.fp-hero{background:var(--card2);border:1px solid rgba(34,197,94,.2);border-left:3px solid #22c55e;border-radius:14px;padding:20px;margin-bottom:14px}
+.fp-mods{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+@media(max-width:600px){.fp-mods{grid-template-columns:1fr 1fr}}
+.fm{background:var(--card);border:1px solid var(--border);border-radius:9px;padding:10px}
+.fm-code{font-size:9px;color:var(--gold);font-family:monospace;margin-bottom:3px}
+.fm-name{font-size:11px;font-weight:500;color:var(--text);line-height:1.3;margin-bottom:2px}
+.fm-meta{font-size:9px;color:var(--muted)}
+.uc-wrap{overflow-x:auto;border-radius:9px;border:1px solid var(--border)}
+.uc-t{width:100%;border-collapse:collapse;font-size:10px}
+.uc-t th{text-align:left;padding:8px 12px;font-size:9px;color:var(--muted2);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);background:rgba(255,255,255,.03)}
+.uc-t td{padding:8px 12px;border-bottom:1px solid var(--border);color:var(--muted)}
+.uc-t tr:last-child td{border-bottom:none}
+.uc-code{font-family:monospace;color:var(--gold);font-size:9px}
+/* BLOG Y + */
+.blog-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+@media(max-width:600px){.blog-grid{grid-template-columns:1fr}}
+.post-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;transition:border-color .2s;cursor:pointer}
+.post-card:hover{border-color:var(--border2)}
+.post-type{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.6px;color:var(--muted2);margin-bottom:8px}
+.post-title{font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px;line-height:1.4}
+.post-excerpt{font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:10px}
+.post-meta{font-size:10px;color:var(--muted2)}
+.li-banner{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:16px}
+.li-hdr{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.li-icon{width:34px;height:34px;border-radius:9px;background:rgba(0,119,181,.1);border:1px solid rgba(0,119,181,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.li-post{border:1px solid var(--border);border-radius:10px;padding:12px;margin-top:10px}
+.li-post-text{font-size:11px;color:var(--muted);line-height:1.7;margin-top:7px}
+.li-post-date{font-size:9px;color:var(--muted2);margin-top:6px}
+.li-av{width:28px;height:28px;border-radius:50%;background:var(--gold-bg);border:1px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gold);font-weight:600}
+.li-av img{width:100%;height:100%;object-fit:cover}
+/* INTERVIEW BANNER */
+.interview-banner{background:linear-gradient(135deg,var(--card2),#0d2444);border:1px solid rgba(201,168,76,.3);border-radius:16px;padding:24px;margin-bottom:16px;position:relative;overflow:hidden}
+.interview-banner::before{content:'';position:absolute;top:0;right:0;width:200px;height:100%;background:radial-gradient(ellipse at right,rgba(201,168,76,.08),transparent 70%)}
+.interview-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--text);margin-bottom:6px}
+.interview-sub{font-size:11px;color:var(--muted);margin-bottom:14px;line-height:1.6}
 /* MODAL */
 .overlay{position:fixed;inset:0;background:rgba(5,10,20,.85);z-index:50;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);padding:20px}
 .overlay.open{display:flex}
 .modal-box{background:var(--card2);border:1px solid var(--border2);border-radius:20px;max-width:680px;width:100%;max-height:80vh;overflow-y:auto;padding:28px}
-.modal-close{float:right;background:rgba(255,255,255,.08);border:none;cursor:pointer;color:var(--muted);padding:5px 10px;border-radius:8px;font-size:14px}
+.modal-close{float:right;background:rgba(255,255,255,.08);border:none;cursor:pointer;color:var(--muted);padding:5px 10px;border-radius:8px;font-size:14px;margin-bottom:16px}
+/* UPLOAD BANNER */
+.upload-banner{background:var(--card);border:1px dashed var(--border2);border-radius:14px;padding:20px;text-align:center;margin-bottom:16px;cursor:pointer;transition:all .2s}
+.upload-banner:hover{border-color:var(--gold-border);background:var(--gold-bg)}
+.upload-sections{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+@media(max-width:600px){.upload-sections{grid-template-columns:1fr 1fr}}
+.upload-sec{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center;cursor:pointer;transition:all .2s;font-size:11px;color:var(--muted)}
+.upload-sec:hover{border-color:var(--gold-border);color:var(--gold)}
+.upload-sec span{display:block;font-size:20px;margin-bottom:5px}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
 </style>
 </head>
 <body>
+
+<!-- MODAL ENTREVISTA -->
+<div class="overlay" id="interview-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="document.getElementById('interview-modal').classList.remove('open')">✕ Cerrar</button>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;margin-bottom:6px">Entrevista completa</div>
+    <div style="font-size:11px;color:var(--gold);margin-bottom:20px">Hotel Reina Cristina · Algeciras · 4★</div>
+    <div style="font-size:12px;color:var(--muted);line-height:1.9">
+      <p style="margin-bottom:12px"><strong style="color:var(--text)">P: ¿Qué le llevó a dedicarse a la dirección hotelera?</strong><br/>Siempre digo que el hotel me eligió a mí. Empecé desde luego...</p>
+      <p style="margin-bottom:12px"><strong style="color:var(--text)">P: 30 años de carrera. ¿Cuál es el hotel que más le ha enseñado?</strong><br/>Sin duda Altos de Istán. Una apertura desde cero...</p>
+      <p style="margin-bottom:12px"><strong style="color:var(--text)">P: ¿Y el más especial a nivel personal?</strong><br/>La Reina Cristina, sin duda. Un edificio de 1901...</p>
+    </div>
+  </div>
+</div>
 
 <header>
   <div class="hdr">
     <div class="brand">
       <div class="av">
-        <img src="YOU-PHOTO.png" alt="FJM" onerror="this.style.display='none'"/>
+        <img src="YOUR_PHOTO.png" alt="FJM" onerror="this.style.display='none'"/>
         FM
       </div>
       <div><div class="bn">Francisco Javier Martínez Alba</div><div class="br">Bridge Leader 4.0 · Hospitality 5.0 · Docente FP</div></div>
@@ -142,11 +221,12 @@ label { font-size: 11px; color: var(--muted); display: block; margin-bottom: 4px
 </header>
 
 <main>
+<!-- ═══ INICIO ═══ -->
 <div id="t-inicio" class="tab active">
   <div class="hero">
     <div class="hero-in">
       <div class="hero-ph">
-        <img src="YOU-PHOTO.png" alt="Francisco Javier Martínez Alba" onerror="this.outerHTML='<div class=hero-ph-ph>👤</div>'"/>
+        <img src="YOUR_PHOTO.png" alt="Francisco Javier Martínez Alba" onerror="this.outerHTML='<div class=hero-ph-ph>👤</div>'"/>
       </div>
       <div class="hero-b">
         <div class="hero-tag">⭐ Bridge Leader 4.0 · 30 Años de Excelencia Hotelera Acreditada</div>
@@ -173,130 +253,143 @@ label { font-size: 11px; color: var(--muted); display: block; margin-bottom: 4px
     <div class="stat"><div class="si">📜</div><div><div class="sl">UCs acreditadas</div><div class="sv">15</div></div></div>
   </div>
   <div class="card">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px"><span style="width:3px;height:22px;background:var(--gold);display:block;border-radius:2px;flex-shrink:0"></span>Perfil Profesional</div>
-    <p style="font-size:12px;line-height:1.8;color:var(--muted)">Director de Operaciones Senior con 30 años de experiencia acreditada en gestión integral de activos hoteleros. Especialista en P&L, CAPEX, GOPPAR y estándares de lujo.</p>
-    <div class="quote">"Mi visión se fundamenta en el equilibrio entre el legado arquitectónico y la vanguardia operativa, utilizando la tecnología para devolver al hotelero su función primordial."</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px"><span style="width:3px;height:22px;background:var(--gold)"></span>Presentación</div>
+    <p style="font-size:12px;line-height:1.8;color:var(--muted);margin-bottom:10px">Director de Operaciones Senior con <strong style="color:var(--text)">30 años de experiencia acreditada</strong> en gestión integral de activos hoteleros.</p>
+    <div class="quote">"Mi visión se fundamenta en el equilibrio entre el legado arquitectónico y la vanguardia operativa, utilizando la tecnología para devolver al hotelero su función primordial: la anfitrionía."</div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:12px">
+      <span class="badge bg-h">🏨 Hostelería Lujo</span><span class="badge bg-ai">🤖 IA Aplicada 2026</span>
+      <span class="badge bg-d">🎓 Docente FP · SSCE0110</span><span class="badge bg-g">🌍 España + Internacional</span><span class="badge bg-m">🌱 ESG · SEAG16</span>
+    </div>
   </div>
 </div>
 
+<!-- ═══ EXPERIENCIA ═══ -->
 <div id="t-experiencia" class="tab">
-  <div class="sh"><h2 class="sh-t">Trayectoria Profesional</h2><div class="sh-l"></div></div>
-  
+  <div class="sh"><h2 class="sh-t">Trayectoria · 30 Años</h2><div class="sh-l"></div></div>
+
   <div class="job-card">
-    <div class="job-img"><img src="NH-HOTEL.jpg" alt="NH Hotels" onerror="this.src='https://via.placeholder.com/400x200?text=NH+Hotels'"/></div>
+    <div class="job-img">
+      <img src="altos_de_istan.png" alt="Altos de Istán" onerror="this.outerHTML='<div class=job-img-ph>🏔️</div>'"/>
+      <span class="sc">4★</span>
+    </div>
+    <div class="job-body">
+      <div class="job-title">Director / Project Manager</div>
+      <div class="job-co">Hotel Altos de Istán (Four Force Capital SL)</div>
+      <div class="job-loc">Istán, Málaga · Sierra de las Nieves · 14 km de Marbella</div>
+      <span class="job-period">Mar 2019 – Ene 2025</span>
+      <div class="tasks">
+        <div class="task"><div class="tdot"></div><span>Dirección integral y P&L del activo</span></div>
+        <div class="task"><div class="tdot"></div><span>Pre-opening · SOPs desde cero</span></div>
+        <div class="task"><div class="tdot"></div><span>Normativa: Legionelosis, RGPD, Consumo</span></div>
+        <div class="task"><div class="tdot"></div><span>Interlocución institucional con AAPP</span></div>
+        <div class="task"><div class="tdot"></div><span>Auditorías técnicas sin desviaciones</span></div>
+        <div class="task"><div class="tdot"></div><span>Estándares LQA y Forbes</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="job-card">
+    <div class="job-img">
+      <img src="reina_cristina.png" alt="Reina Cristina" onerror="this.outerHTML='<div class=job-img-ph>🏛️</div>'"/>
+      <span class="sc">4★</span>
+    </div>
     <div class="job-body">
       <div class="job-title">Director de Hotel</div>
-      <div class="job-co">NH Hotels</div>
-      <div class="job-period">2018 - 2023</div>
+      <div class="job-co">Hotel Reina Cristina — Hoteles Globales / AMLA Explotaciones</div>
+      <div class="job-loc">Algeciras · Edificio histórico 1901 · Arquitectura colonial inglesa</div>
+      <span class="job-period">Ene 2015 – Jun 2018</span>
       <div class="tasks">
-        <div class="task"><div class="tdot"></div>Gestión integral de P&L y equipos.</div>
-        <div class="task"><div class="tdot"></div>Implementación de estándares de calidad.</div>
+        <div class="task"><div class="tdot"></div><span>Dirección activo histórico emblemático</span></div>
+        <div class="task"><div class="tdot"></div><span>Optimización GOPPAR y proveedores</span></div>
+        <div class="task"><div class="tdot"></div><span>Coordinación multidepartamental</span></div>
+        <div class="task"><div class="tdot"></div><span>Gestión documental Nivel 3</span></div>
       </div>
     </div>
   </div>
 
-  <div class="job-card">
-    <div class="job-img"><img src="GLOBALES.jpg" alt="Globales Hotels" onerror="this.src='https://via.placeholder.com/400x200?text=Globales'"/></div>
-    <div class="job-body">
-      <div class="job-title">Subdirector / Jefe de Recepción</div>
-      <div class="job-co">Globales Hotels</div>
-      <div class="job-period">2010 - 2018</div>
-      <div class="tasks">
-        <div class="task"><div class="tdot"></div>Optimización de procesos operativos.</div>
-        <div class="task"><div class="tdot"></div>Control de costes y revenue management.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="job-card">
-    <div class="job-img"><img src="REINA-CRISTINA.jpg" alt="Hotel Reina Cristina" onerror="this.src='https://via.placeholder.com/400x200?text=Reina+Cristina'"/></div>
-    <div class="job-body">
-      <div class="job-title">Responsable de Departamento</div>
-      <div class="job-co">Hotel Reina Cristina</div>
-      <div class="job-period">2000 - 2010</div>
-      <div class="tasks">
-        <div class="task"><div class="tdot"></div>Gestión de anfitrionía y eventos.</div>
-        <div class="task"><div class="tdot"></div>Mantenimiento de estándares históricos.</div>
-      </div>
-    </div>
+  <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;margin:20px 0 14px">Otros Establecimientos</div>
+  <div class="others">
+    <div class="oc"><div class="oc-img"><img src="altos_de_istan.png" alt="Airtours" onerror="this.outerHTML='⭐'"/></div><div class="oc-body"><div class="oc-name">Airtours</div><div class="oc-meta">Gerente · Lanzarote</div></div></div>
+    <div class="oc"><div class="oc-img"><img src="thb_flora.png" alt="THB Flora" onerror="this.outerHTML='🌺'"/></div><div class="oc-body"><div class="oc-name">THB Flora</div><div class="oc-meta">Director · Gran Canaria</div></div></div>
+    <div class="oc"><div class="oc-img"><img src="aura_hotel.png" alt="Aura Hotel" onerror="this.outerHTML='🏢'"/></div><div class="oc-body"><div class="oc-name">Aura Hotel</div><div class="oc-meta">Jefe Recepción · Tenerife</div></div></div>
+    <div class="oc"><div class="oc-img"><img src="dominican_bay.png" alt="Dominican Bay" onerror="this.outerHTML='🌴'"/></div><div class="oc-body"><div class="oc-name">Dominican Bay</div><div class="oc-meta">Supervisor · Rep. Dominicana</div></div></div>
+    <div class="oc"><div class="oc-img"><img src="tamaimo_tropical.png" alt="Tamaimo" onerror="this.outerHTML='☀️'"/></div><div class="oc-body"><div class="oc-name">Tamaimo Tropical</div><div class="oc-meta">Gerente · Tenerife</div></div></div>
+    <div class="oc"><div class="oc-img"><img src="hilton_gatwick.png" alt="Hilton Gatwick" onerror="this.outerHTML='✈️'"/></div><div class="oc-body"><div class="oc-name">Hilton Gatwick</div><div class="oc-meta">Recepcionista · Londres</div></div></div>
+    <div class="oc"><div class="oc-img"><img src="belsana.png" alt="Belsana" onerror="this.outerHTML='⛵'"/></div><div class="oc-body"><div class="oc-name">Belsana</div><div class="oc-meta">Viajes de Incentivo · Europa</div></div></div>
+    <div class="oc"><div class="oc-img"><img src="aquarius.png" alt="Aquarius" onerror="this.outerHTML='🌊'"/></div><div class="oc-body"><div class="oc-name">Aquarius</div><div class="oc-meta">Coordinador · Canarias</div></div></div>
   </div>
 </div>
 
+<!-- ═══ FORMACIÓN ═══ -->
 <div id="t-formacion" class="tab">
-  <div class="sh"><h2 class="sh-t">Formación y Acreditaciones</h2><div class="sh-l"></div></div>
-  <div class="cert-grid">
+  <div class="sh"><h2 class="sh-t">Formación y Certificaciones</h2><div class="sh-l"></div></div>
+  <div class="cert-grid" style="margin-bottom:14px">
     <div class="cert-card">
-      <div class="cert-icon">🎓</div>
-      <div class="cert-title">Docente de Formación Profesional para el Empleo</div>
-      <div class="cert-org">Junta de Andalucía · 2025</div>
+      <div class="cert-icon">🏆</div>
+      <div class="cert-code">SSCE0110</div>
+      <div class="cert-title">Habilitación Docencia FP Grados A, B y C</div>
+      <div class="cert-org">Junta de Andalucía · 380h · Nota: <strong style="color:var(--gold)">8,62/10</strong> · 19 Nov 2025</div>
     </div>
     <div class="cert-card">
       <div class="cert-icon">🤖</div>
+      <div class="cert-code">IA 2026</div>
       <div class="cert-title">IA Aplicada al Sector Administrativo</div>
-      <div class="cert-org">Cámara de Comercio · 2026</div>
+      <div class="cert-org">Cámara de Comercio · 90h · Mar 2026</div>
     </div>
     <div class="cert-card">
       <div class="cert-icon">🌐</div>
-      <div class="cert-title">Business English C1</div>
-      <div class="cert-org">Cámara de Comercio · 2026</div>
+      <div class="cert-code">ENGLISH</div>
+      <div class="cert-title">Business English C1 Operativo</div>
+      <div class="cert-org">Cámara de Comercio · 60h · Abr 2026</div>
     </div>
   </div>
 </div>
 
+<!-- ═══ COMPETENCIAS ═══ -->
 <div id="t-competencias" class="tab">
-  <div class="sh"><h2 class="sh-t">Habilidades Clave</h2><div class="sh-l"></div></div>
+  <div class="sh"><h2 class="sh-t">Competencias Profesionales</h2><div class="sh-l"></div></div>
   <div class="comp-grid">
     <div class="cc">
-      <div class="cc-title"><div class="cc-bar"></div>Gestión Operativa</div>
-      <div class="lr"><span class="ln">P&L / Control Financiero</span><span class="ll">95%</span></div>
-      <div class="lt"><div class="lf" style="width:95%"></div></div>
-      <div class="lr" style="margin-top:10px"><span class="ln">LQA / Estándares de Lujo</span><span class="ll">90%</span></div>
-      <div class="lt"><div class="lf" style="width:90%"></div></div>
+      <div class="cc-title"><div class="cc-bar"></div>Competencias Directivas · Hospitality 5.0</div>
+      <div class="tags">
+        <span class="tag">P&L Management</span><span class="tag">CAPEX Planning</span><span class="tag">GOPPAR Optimisation</span>
+        <span class="tag">Revenue Management</span><span class="tag">LQA · Forbes Standards</span><span class="tag">Pre-opening & SOPs</span>
+        <span class="tag">Crisis Management</span><span class="tag">ESG · SEAG16</span><span class="tag">IA Aplicada a Gestión</span>
+        <span class="tag">Relaciones institucionales</span><span class="tag">Ciberseguridad</span><span class="tag">Project Management</span>
+      </div>
     </div>
     <div class="cc">
-      <div class="cc-title"><div class="cc-bar"></div>Tecnología e Innovación</div>
-      <div class="lr"><span class="ln">IA y Automatización</span><span class="ll">85%</span></div>
-      <div class="lt"><div class="lf" style="width:85%"></div></div>
-      <div class="lr" style="margin-top:10px"><span class="ln">Project Management</span><span class="ll">92%</span></div>
-      <div class="lt"><div class="lf" style="width:92%"></div></div>
+      <div class="cc-title"><div class="cc-bar"></div>Idiomas</div>
+      <div style="margin-bottom:10px"><div class="lr"><span class="ln">Español</span><span class="ll">Nativo</span></div><div class="lt"><div class="lf" style="width:100%"></div></div></div>
+      <div style="margin-bottom:10px"><div class="lr"><span class="ln">Inglés</span><span class="ll">C1 operativo</span></div><div class="lt"><div class="lf" style="width:85%"></div></div></div>
+      <div><div class="lr"><span class="ln">Alemán</span><span class="ll">B1 operativo</span></div><div class="lt"><div class="lf" style="width:70%"></div></div></div>
     </div>
   </div>
 </div>
 
+<!-- ═══ BLOG Y + ═══ -->
 <div id="t-blog" class="tab">
-  <div class="sh"><h2 class="sh-t">Contacto y Feedback</h2><div class="sh-l"></div></div>
-  <div class="card" style="max-width:600px; margin:0 auto;">
-    <p style="font-size:12px; color:var(--muted); margin-bottom:20px; text-align:center;">¿Tienes una propuesta o quieres charlar sobre un proyecto? Envíame un mensaje directo.</p>
-    
-    <form action="https://formsubmit.co/pacozzy@hotmail.com" method="POST">
-      <label>Nombre Completo</label>
-      <input type="text" name="name" placeholder="Ej. Juan Pérez" required>
-      
-      <label>Correo Electrónico</label>
-      <input type="email" name="email" placeholder="tu@email.com" required>
-      
-      <label>Mensaje</label>
-      <textarea name="message" rows="4" placeholder="¿En qué puedo ayudarte?" required></textarea>
-      
-      <input type="hidden" name="_subject" value="Nuevo contacto desde Miweb Portfolio">
-      <input type="hidden" name="_next" value="https://fjmartinezalba.github.io/miweb/">
-      <input type="hidden" name="_template" value="table">
-      
-      <button type="submit" class="btn btn-g" style="width:100%; justify-content:center;">Enviar Mensaje</button>
-    </form>
+  <div class="sh"><h2 class="sh-t">Blog y +</h2><div class="sh-l"></div></div>
+  <div class="interview-banner">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <div>
+        <div class="interview-title">Voz del sector · Entrevista completa</div>
+        <div class="interview-sub">Una conversación sobre liderazgo, filosofía de dirección, el equilibrio entre legado y modernidad, y los aprendizajes de 30 años en primera línea hotelera.</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn btn-g" onclick="document.getElementById('interview-modal').classList.add('open')">📖 Leer entrevista completa</button>
+          <span class="badge bg-g">Hotel Reina Cristina · 4★</span>
+        </div>
+      </div>
+      <div style="font-size:48px;flex-shrink:0">🎤</div>
+    </div>
   </div>
 
+  <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;margin:20px 0 14px">Artículos y Reflexiones</div>
   <div class="blog-grid">
-    <div class="post-card">
-      <div class="post-type">Liderazgo</div>
-      <div class="post-title">Mi filosofía: dirigir sin controlar</div>
-      <div class="post-excerpt">La motivación sincera siempre supera al control. Cómo 30 años me han enseñado a liderar equipos de alto rendimiento.</div>
-    </div>
-    <div class="post-card">
-      <div class="post-type">Tecnología</div>
-      <div class="post-title">El Bridge Leader: IA y Hospitalidad</div>
-      <div class="post-excerpt">Por qué la inteligencia artificial no reemplazará al hotelero, sino que le devolverá su tiempo para la anfitrionía.</div>
-    </div>
+    <div class="post-card"><div class="post-type">Artículo</div><div class="post-title">Bridge Leader 4.0: cuando la IA potencia al directivo hotelero</div><div class="post-excerpt">Mi certificación en IA aplicada me ha permitido entender cómo la automatización inteligente devuelve tiempo al gestor para lo que realmente importa: la dirección estratégica.</div></div>
+    <div class="post-card"><div class="post-type">Análisis</div><div class="post-title">Revenue Management en hoteles de temporada</div><div class="post-excerpt">Anticipar la demanda es la diferencia entre sobrevivir y crecer. Seis años en Altos de Istán me enseñaron a leer el mercado antes de que el mercado se mueva.</div></div>
+    <div class="post-card"><div class="post-type">Reflexión</div><div class="post-title">Mi filosofía de liderazgo: dirigir sin controlar</div><div class="post-excerpt">Trabajar más que mis empleados, confiar en sus criterios, celebrar sus logros. La motivación sincera es la base del rendimiento sostenido.</div></div>
+    <div class="post-card"><div class="post-type">Docencia</div><div class="post-title">La habilitación SSCE0110: el directivo que también forma</div><div class="post-excerpt">Por qué 30 años de experiencia operativa me han hecho comprender que enseñar es una responsabilidad de quien sabe.</div></div>
   </div>
 </div>
 </main>
@@ -310,6 +403,5 @@ function go(id,el){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
-
 </body>
 </html>
