@@ -234,47 +234,6 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .spinner{width:14px;height:14px;border:2px solid rgba(201,168,76,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
 .spb{border-color:rgba(0,119,181,.2);border-top-color:#7dd3fc}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* CHARTS & COUNTERS */
-.counter{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:700;line-height:1;transition:color .3s}
-.chart-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-.chart-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px}
-.chart-title{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:14px;display:flex;align-items:center;gap:6px}
-.donut-wrap{display:flex;align-items:center;gap:16px}
-.donut-legend{flex:1;display:flex;flex-direction:column;gap:7px}
-.dl-item{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted)}
-.dl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-right:6px}
-.bar-group{margin-bottom:9px}
-.bar-label{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:3px}
-.bar-track{height:7px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden}
-.bar-fill{height:100%;border-radius:4px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
-.kpi{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;text-align:center;position:relative;overflow:hidden;transition:border-color .2s}
-.kpi:hover{border-color:var(--border2)}
-.kpi::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px}
-.kpi.k-tot::after{background:var(--gold)}
-.kpi.k-int::after{background:var(--green)}
-.kpi.k-pend::after{background:var(--amber)}
-.kpi.k-emp::after{background:var(--blue)}
-.kpi-icon{font-size:20px;margin-bottom:8px;display:block}
-.kpi-val{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:700;line-height:1;display:block;margin-bottom:4px}
-.kpi-lbl{font-size:10px;color:var(--muted);font-weight:500}
-.kpi-sub{font-size:9px;color:var(--muted2);margin-top:2px}
-.pipeline-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.pipe-item{flex:1;min-width:80px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center;transition:all .2s}
-.pipe-item:hover{border-color:var(--border2);background:rgba(255,255,255,.07)}
-.pipe-num{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;line-height:1;margin-bottom:4px}
-.pipe-lbl{font-size:9px;color:var(--muted);white-space:nowrap}
-.trend-row{display:flex;align-items:flex-end;gap:3px;height:50px;margin-top:10px}
-.trend-bar{flex:1;border-radius:3px 3px 0 0;transition:height .8s ease;min-height:4px;cursor:default}
-.trend-bar:hover{opacity:.8}
-.activity-feed{max-height:200px;overflow-y:auto}
-.af-item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:11px}
-.af-item:last-child{border-bottom:none}
-.af-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:3px}
-.af-empresa{font-weight:600;color:var(--text)}
-.af-meta{color:var(--muted);font-size:10px;margin-top:1px}
-
 .empty{text-align:center;padding:44px 20px;color:var(--muted)}
 .empty svg{width:40px;height:40px;stroke:currentColor;fill:none;opacity:.35;margin-bottom:10px}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.09);border-radius:2px}
@@ -608,27 +567,6 @@ function saveC(){
 function delC(id){if(!confirm('¿Eliminar empresa?'))return;data.companies=data.companies.filter(c=>c.id!==id);save();rEmps();uCounts();toast('🗑️ Eliminada');}
 
 // DASHBOARD
-function animateCounter(el,target,suffix=''){
-  let start=0;const dur=1200;const step=16;const inc=target/(dur/step);
-  const timer=setInterval(()=>{start=Math.min(start+inc,target);el.textContent=Math.round(start)+(suffix||'');if(start>=target)clearInterval(timer);},step);
-}
-
-function buildDonut(el,data){
-  const total=data.reduce((a,b)=>a+b.v,0);if(!total){el.innerHTML='';return;}
-  const r=38,cx=50,cy=50,stroke=14;
-  let offset=0;const TAU=2*Math.PI;
-  let paths='';
-  data.forEach(d=>{
-    const pct=d.v/total;const arc=pct*TAU;
-    const x1=cx+r*Math.sin(offset),y1=cy-r*Math.cos(offset);
-    const x2=cx+r*Math.sin(offset+arc),y2=cy-r*Math.cos(offset+arc);
-    const lg=arc>Math.PI?1:0;
-    paths+=`<path d="M${cx} ${cy} L${x1} ${y1} A${r} ${r} 0 ${lg} 1 ${x2} ${y2} Z" fill="${d.c}" opacity=".9"/>`;
-    offset+=arc;
-  });
-  el.innerHTML=`<circle cx="${cx}" cy="${cy}" r="${r-stroke/2}" fill="var(--card)" stroke="var(--card)" stroke-width="${stroke}"/>${paths}<circle cx="${cx}" cy="${cy}" r="${r-stroke}" fill="var(--card)"/><text x="${cx}" y="${cy+4}" text-anchor="middle" font-size="14" font-weight="700" fill="var(--text)">${total}</text>`;
-}
-
 function rDash(){
   const tot=data.entries.length,intv=data.entries.filter(e=>e.estado==='Entrevista').length;
   const pend=data.entries.filter(e=>e.estado==='Sin respuesta').length,conv=tot?Math.round(intv/tot*100):0;
@@ -759,19 +697,11 @@ function rEmps(){
 // MÉTRICAS
 function rMet(){
   const tot=data.entries.length,intv=data.entries.filter(e=>e.estado==='Entrevista').length;
-  const pend=data.entries.filter(e=>(e.estado||'')==='Sin respuesta').length,rej=data.entries.filter(e=>(e.estado||'')==='Rechazada').length;
-  const conv2=tot?Math.round(intv/tot*100):0;
-  document.getElementById('mmet').innerHTML=[
-    ['k-tot','🎯',tot,'Total candidaturas',''],
-    ['k-int','✅',intv,'Entrevistas conseguidas',conv2+'% conversión'],
-    ['k-pend','⏳',pend,'Sin respuesta',''],
-    ['k-emp','❌',rej,'Rechazadas','']
-  ].map(([k,ic,v,l,s])=>`<div class="kpi ${k}"><span class="kpi-icon">${ic}</span><span class="kpi-val" id="mv-${k}">0</span><div class="kpi-lbl">${l}</div>${s?`<div class="kpi-sub">${s}</div>`:''}</div>`).join('');
-  setTimeout(()=>{[['mv-k-tot',tot],['mv-k-int',intv],['mv-k-pend',pend],['mv-k-emp',rej]].forEach(([id,v])=>{const el=document.getElementById(id);if(el)animateCounter(el,v);});},100);
+  const pend=data.entries.filter(e=>(e.estado||'')===('Sin respuesta')).length,rej=data.entries.filter(e=>(e.estado||'')==='Rechazada').length;
+  document.getElementById('mmet').innerHTML=[['m-tot','Total',tot,''],['m-int','Entrevistas',intv,tot?Math.round(intv/tot*100)+'% conv.':''],['m-pend','Sin respuesta',pend,''],['m-co','Rechazadas',rej,'']].map(([c,l,v,s])=>`<div class="mc ${c}"><div class="ml">${l}</div><div class="mv">${v}</div>${s?`<div class="ms">${s}</div>`:''}</div>`).join('');
   const bySec={};data.entries.forEach(e=>{const s=e.sector||'hotel';if(!bySec[s])bySec[s]={t:0,i:0};bySec[s].t++;if(e.estado==='Entrevista')bySec[s].i++;});
   const SC_C={hotel:'var(--hotel)',docencia:'var(--docencia)',admin:'var(--admin)'};
-  const SEC_C2={hotel:'#0ea5e9',docencia:'#22c55e',admin:'#8b5cf6'};
-  document.getElementById('msec').innerHTML=Object.entries(bySec).map(([s,st])=>{const p=Math.round(st.i/st.t*100);const lbl=SL[s]||(s==='hotel'?'🏨 Hostelería':s==='docencia'?'🎓 Docencia':s==='admin'?'📋 Admin':s||'Sin sector');const col=SEC_C2[s]||'#c9a84c';return`<div class="bar-group"><div class="bar-label"><span style="color:var(--text)">${lbl}</span><span>${st.t} · ${p}% conv.</span></div><div class="bar-track"><div class="bar-fill" style="width:${Math.max(p,2)}%;background:${col}"></div></div></div>`;}).join('')||'<p style="font-size:12px;color:var(--muted);text-align:center">Sin datos</p>';}).join('')||'<p style="font-size:12px;color:#94a3b8">Sin datos</p>';
+  document.getElementById('msec').innerHTML=Object.entries(bySec).map(([s,st])=>{const p=Math.round(st.i/st.t*100);const lbl=SL[s]||(s==='hotel'?'🏨 Hostelería':s==='docencia'?'🎓 Docencia':s==='admin'?'📋 Admin':s||'Sin sector');return`<div><div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;margin-bottom:3px"><span>${lbl}</span><span style="color:#94a3b8">${st.t} · ${p}%</span></div><div class="mbar"><div class="mbf" style="width:${Math.max(p,5)}%;background:${SC_C[s]||'#334155'}"></div></div></div>`;}).join('')||'<p style="font-size:12px;color:#94a3b8">Sin datos</p>';
   const bySt={};data.entries.forEach(e=>{const st=e.estado||'Sin respuesta';bySt[st]=(bySt[st]||0)+1;});
   document.getElementById('mest').innerHTML=Object.entries(bySt).map(([s,c])=>`<div class="lr">${sB(s)}<strong>${c}</strong></div>`).join('')||'<p style="font-size:12px;color:#94a3b8">Sin datos</p>';
   const byCan={};data.entries.forEach(e=>{const can=e.canal||'Otro';byCan[can]=(byCan[can]||0)+1;});
