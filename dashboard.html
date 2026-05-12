@@ -781,7 +781,7 @@ function rMet(){
   const bySec={};data.entries.forEach(e=>{const s=e.sector||'hotel';if(!bySec[s])bySec[s]={t:0,i:0};bySec[s].t++;if(e.estado==='Entrevista')bySec[s].i++;});
   const SC_C={hotel:'var(--hotel)',docencia:'var(--docencia)',admin:'var(--admin)'};
   const SEC_C2={hotel:'#0ea5e9',docencia:'#22c55e',admin:'#8b5cf6'};
-  document.getElementById('msec').innerHTML=Object.entries(bySec).map(([s,st])=>{const p=Math.round(st.i/st.t*100);const lbl=SL[s]||(s==='hotel'?'🏨 Hostelería':s==='docencia'?'🎓 Docencia':s==='admin'?'📋 Admin':s||'Sin sector');const col=SEC_C2[s]||'#c9a84c';return`<div class="bar-group"><div class="bar-label"><span style="color:var(--text)">${lbl}</span><span>${st.t} · ${p}% conv.</span></div><div class="bar-track"><div class="bar-fill" style="width:${Math.max(p,2)}%;background:${col}"></div></div></div>`;}).join('')||'<p style="font-size:12px;color:var(--muted);text-align:center">Sin datos</p>';}).join('')||'<p style="font-size:12px;color:#94a3b8">Sin datos</p>';
+  document.getElementById('msec').innerHTML=Object.entries(bySec).map(([s,st])=>{const p=Math.round(st.i/st.t*100);const lbl=SL[s]||(s==='hotel'?'🏨 Hostelería':s==='docencia'?'🎓 Docencia':s==='admin'?'📋 Admin':s||'Sin sector');const col=SEC_C2[s]||'#c9a84c';return`<div class="bar-group"><div class="bar-label"><span style="color:var(--text)">${lbl}</span><span>${st.t} · ${p}% conv.</span></div><div class="bar-track"><div class="bar-fill" style="width:${Math.max(p,2)}%;background:${col}"></div></div></div>`;}).join('')||'<p style="font-size:12px;color:var(--muted);text-align:center">Sin datos</p>';
   const bySt={};data.entries.forEach(e=>{const st=e.estado||'Sin respuesta';bySt[st]=(bySt[st]||0)+1;});
   document.getElementById('mest').innerHTML=Object.entries(bySt).map(([s,c])=>`<div class="lr">${sB(s)}<strong>${c}</strong></div>`).join('')||'<p style="font-size:12px;color:#94a3b8">Sin datos</p>';
   const byCan={};data.entries.forEach(e=>{const can=e.canal||'Otro';byCan[can]=(byCan[can]||0)+1;});
@@ -813,7 +813,7 @@ async function runSearch(){
   for(const sec of['hotel','docencia','admin']){
     setSSt(sec,'active');
     try{
-      const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,tools:[{type:'web_search_20250305',name:'web_search'}],messages:[{role:'user',content:`${SPROF}\n\n${SPRMP[sec]}`}]})});
+      const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':getAPIKey(),'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,tools:[{type:'web_search_20250305',name:'web_search'}],messages:[{role:'user',content:`${SPROF}\n\n${SPRMP[sec]}`}]})});
       const d=await res.json();if(!res.ok)throw new Error(d.error?.message||'API '+res.status);
       // Extract text from all content blocks (text + tool results)
       const allText=d.content.map(b=>{
@@ -1010,8 +1010,30 @@ function expJSON(){const b=new Blob([JSON.stringify(data,null,2)],{type:'applica
 function impJSON(input){const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{try{const d=JSON.parse(e.target.result);data={entries:d.entries||[],companies:d.companies||[],searchHistory:d.searchHistory||[],dossierHistory:d.dossierHistory||[]};save();rDash();rTrack();rBit();rEmps();uCounts();toast('✅ Datos restaurados');}catch{alert('❌ Error en el archivo');}};r.readAsText(f);}
 function clrAll(){if(!confirm('⚠️ ¿Borrar TODO?'))return;data={entries:[],companies:[],searchHistory:[],dossierHistory:[]};save();rDash();rTrack();rBit();rEmps();uCounts();toast('🗑️ Todo borrado');}
 
+// API STATUS
+function renderAPIStatus(){
+  const k=getAPIKey();
+  const el=document.getElementById('api-status-block');
+  if(!el)return;
+  if(k){
+    el.innerHTML=`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:8px;font-size:11px;color:#4ade80"><span>✅</span><span>API key configurada — termina en <strong>...${k.slice(-6)}</strong></span></div>`;
+  }else{
+    el.innerHTML=`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:8px;font-size:11px;color:#fbbf24"><span>⚠️</span><span>Sin API key — configúrala para usar búsqueda y dossier</span></div>`;
+  }
+}
+
 // INIT
 load();rDash();rTrack();rEmps();uCounts();renderAPIStatus();
+(function(){
+  const hash=window.location.hash.replace('#','');
+  if(hash==='bitacora'){
+    gT('candidaturas',document.querySelectorAll('.ni')[3]);
+    setCV('bitacora');
+  } else if(['dashboard','busqueda','dossier','candidaturas','empresas','metricas','config'].includes(hash)){
+    const idx={dashboard:0,busqueda:1,dossier:2,candidaturas:3,empresas:4,metricas:5,config:6}[hash];
+    gT(hash,document.querySelectorAll('.ni')[idx]);
+  }
+})();
 </script>
 
 <!-- API KEY MODAL -->
