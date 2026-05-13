@@ -814,7 +814,11 @@ const SPRMP={
 
 function setSSt(id,s){const el=document.getElementById('ss-'+id);if(!el)return;el.className='sstep '+(s==='active'?'sa':s==='done'?'sd':s==='err'?'se':'');const ic={active:`<div class="spinner"></div>`,done:'✅',err:'❌'};el.querySelector('.sic').innerHTML=ic[s]||'';}
 
-const AQ={hotel:'director hotel general manager',docencia:'docente profesor hosteleria turismo fp',admin:'asistente direccion auxiliar administrativo'};
+const AQ={
+  hotel:['director hotel','general manager hotel','director operaciones hotel','hotel manager'],
+  docencia:['docente hosteleria','profesor hosteleria','formador hosteleria','fp hosteleria turismo'],
+  admin:['asistente direccion','secretaria direccion','auxiliar administrativo','office manager']
+};
 
 async function runSearch(){
   if(!checkAPIKey())return;
@@ -829,9 +833,18 @@ async function runSearch(){
   for(const sec of['hotel','docencia','admin']){
     setSSt(sec,'active');
     try{
-      const azRes=await fetch(`https://api.adzuna.com/v1/api/jobs/es/search/1?app_id=${getAdzunaId()}&app_key=${getAdzunaKey()}&results_per_page=5&what=${encodeURIComponent(AQ[sec])}&content-type=application/json`);
-      const azData=await azRes.json();
-      if(!azRes.ok)throw new Error(azData.exception||'Adzuna error '+azRes.status);
+      // Try queries in order until we get enough results
+      let azJobs=[];
+      for(const q of AQ[sec]){
+        if(azJobs.length>=6)break;
+        const azRes=await fetch(`https://api.adzuna.com/v1/api/jobs/es/search/1?app_id=${getAdzunaId()}&app_key=${getAdzunaKey()}&results_per_page=10&what=${encodeURIComponent(q)}&sort_by=date&max_days_old=60&content-type=application/json`);
+        const azD=await azRes.json();
+        if(azRes.ok&&azD.results?.length){
+          azJobs=[...azJobs,...azD.results].filter((j,i,a)=>a.findIndex(x=>x.id===j.id)===i);
+        }
+        await new Promise(r=>setTimeout(r,300));
+      }
+      const azData={results:azJobs.slice(0,8)};
       const jobs=(azData.results||[]).map(j=>({
         empresa:j.company?.display_name||'—',
         puesto:j.title||'—',
@@ -847,7 +860,6 @@ async function runSearch(){
       if(m){try{const p=JSON.parse(m[0]);results[sec]=(p.vacantes||[]).map((v,i)=>({...v,url:jobs[i]?.url||v.url||'',sector:sec}));}
       catch(e){results[sec]=jobs.map(j=>({...j,match:'Medio',motivo_match:'',accion:'Guardar',interacciones:[],portal:'Adzuna',sector:sec}));}}
       setSSt(sec,'done');
-      await new Promise(r=>setTimeout(r,1000));
     }catch(err){results[sec]=[{empresa:'Sin resultados',puesto:'Error: '+err.message,ubicacion:'—',salario:'—',portal:'—',url:'',match:'Bajo',motivo_match:'No se pudo completar',accion:'Descartar',sector:sec,interacciones:[]}];setSSt(sec,'err');}
   }
   setSSt('compile','active');await new Promise(r=>setTimeout(r,500));setSSt('compile','done');
@@ -1001,7 +1013,7 @@ async function cClaude(prompt){
   const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
     method:'POST',
     headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
-    body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:prompt}],max_tokens:800})
+    body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:prompt}],max_tokens:1500})
   });
   const d=await res.json();
   if(!res.ok){
