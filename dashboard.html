@@ -325,7 +325,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
     <div class="tc" id="tc-busqueda">
       <div class="sh-hero">
         <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;margin-bottom:5px">🔍 Búsqueda Diaria de Vacantes</div>
-        <div style="font-size:11px;color:var(--muted);margin-bottom:14px;line-height:1.5">Claude busca en LinkedIn, Infojobs, Indeed y portales de cadenas. Filtra por tu perfil y recomienda la acción óptima.</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:14px;line-height:1.5">Gemini busca en LinkedIn, Infojobs, Indeed y portales de cadenas. Filtra por tu perfil y recomienda la acción óptima.</div>
         <div style="margin-bottom:14px"><span class="shb shb-h">🏨 Director / GM</span><span class="shb shb-d">🎓 Docente FP</span><span class="shb shb-a">📋 Asistente Dir.</span><span class="shb shb-g">🌍 España + Internacional</span></div>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
           <div><div style="font-size:11px;color:var(--muted)" id="ls">Sin búsquedas previas</div><div style="font-size:11px;color:var(--gold);font-weight:600;margin-top:3px" id="ns2">Ejecuta tu primera búsqueda</div></div>
@@ -364,7 +364,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
           <div id="dos-empty" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:48px 24px;text-align:center">
             <div style="font-size:32px;margin-bottom:10px">✨</div>
             <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;margin-bottom:8px">Dossier Adaptativo con IA</div>
-            <p style="font-size:12px;color:var(--muted);line-height:1.6;max-width:260px;margin:0 auto 14px">Rellena el formulario, elige el tono y Claude generará carta + perfil + CV adaptado en segundos.</p>
+            <p style="font-size:12px;color:var(--muted);line-height:1.6;max-width:260px;margin:0 auto 14px">Rellena el formulario, elige el tono y Gemini generará carta + perfil + CV adaptado en segundos.</p>
             <div style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center">
               <span style="padding:3px 9px;border-radius:100px;border:1px solid var(--gold-border);background:var(--gold-bg);font-size:10px;color:var(--gold)">Q Hotels</span>
               <span style="padding:3px 9px;border-radius:100px;border:1px solid var(--gold-border);background:var(--gold-bg);font-size:10px;color:var(--gold)">Castilla Termal</span>
@@ -414,7 +414,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
               <button class="btn btn-dark btn-sm" onclick="genProto()">📋 Generar protocolo</button>
               <button class="btn btn-gold btn-sm" id="li-gen" onclick="genLI()"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>Generar con IA</button>
             </div>
-            <div id="li-load" style="display:none;align-items:center;gap:7px;padding:10px 0;font-size:11px;color:#7dd3fc"><div class="spinner spb"></div>Claude redactando tu post...</div>
+            <div id="li-load" style="display:none;align-items:center;gap:7px;padding:10px 0;font-size:11px;color:#7dd3fc"><div class="spinner spb"></div>Gemini redactando tu post...</div>
             <div class="apb" id="apb">
               <div class="apbh"><span>✍️ Borrador — edita y copia</span><span id="apb-c" style="font-size:9px;opacity:.5"></span></div>
               <div class="apbb"><textarea id="apb-t" oninput="uPC()"></textarea></div>
@@ -443,15 +443,15 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
     <div class="tc" id="tc-config">
       <div class="sh"><div class="sh-t">Configuración</div></div>
       <div style="display:flex;flex-direction:column;gap:12px">
-        <div class="dc"><div class="dch"><span class="dct">🔑 Claude API Key</span></div><div class="dcb">
+        <div class="dc"><div class="dch"><span class="dct">🔑 Gemini API Key</span></div><div class="dcb">
   <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">Tu API key se guarda en el navegador (localStorage). <strong style="color:var(--text)">Nunca se sube a GitHub.</strong></p>
   <div id="api-status-block"></div>
   <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap">
     <button class="btn btn-gold btn-sm" onclick="document.getElementById('api-modal').style.display='flex';document.getElementById('api-key-input').value=getAPIKey();document.getElementById('api-save-btn').style.opacity='1'">🔑 Configurar API key</button>
     <button class="btn btn-dark btn-sm" onclick="if(confirm('¿Borrar API key?')){localStorage.removeItem('fjm_api_key');renderAPIStatus();toast('🗑️ API key eliminada');}">Eliminar key</button>
-    <a href="https://console.anthropic.com" target="_blank" class="btn btn-dark btn-sm">Obtener key gratis →</a>
+    <a href="https://aistudio.google.com/apikey" target="_blank" class="btn btn-dark btn-sm">Obtener key gratis →</a>
   </div>
-  <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:10px;color:var(--muted)">Modelo: claude-sonnet-4-20250514 · Funciones: Búsqueda diaria · Dossier adaptativo · Generador LinkedIn</div>
+  <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:10px;color:var(--muted)">Modelo: gemini-2.0-flash · Funciones: Búsqueda diaria · Dossier adaptativo · Generador LinkedIn</div>
 </div></div>
         <div class="dc"><div class="dch"><span class="dct">💾 Datos</span></div><div class="dcb"><div style="display:flex;gap:7px;flex-wrap:wrap"><button class="btn btn-gold btn-sm" onclick="expJSON()">📥 Exportar JSON</button><label class="btn btn-dark btn-sm" style="cursor:pointer">📂 Importar JSON<input type="file" accept=".json" style="display:none" onchange="impJSON(this)"/></label><button class="btn btn-danger btn-sm" onclick="clrAll()">🗑️ Borrar todo</button></div></div></div>
         <div class="dc"><div class="dch"><span class="dct">🔗 GitHub Pages</span></div><div class="dcb"><p style="font-size:12px;color:var(--muted);margin-bottom:8px">Coloca <code style="background:rgba(255,255,255,.07);padding:1px 5px;border-radius:4px;font-size:11px">index.html</code> y <code style="background:rgba(255,255,255,.07);padding:1px 5px;border-radius:4px;font-size:11px">dashboard.html</code> en el mismo repo.</p><div style="padding:8px 12px;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);border-radius:8px;font-size:11px;color:var(--amber)">⏳ Pendiente de subir a GitHub Pages</div></div></div>
@@ -707,7 +707,7 @@ function tPub(id){const e=data.entries.find(x=>x.id===id);if(e){e.estado_post=e.
 
 async function genIP(id){
   const e=data.entries.find(x=>x.id===id);if(!e)return;
-  e.showDraft=true;e.li_draft='Generando con Claude...';rBit();
+  e.showDraft=true;e.li_draft='Generando con Gemini...';rBit();
   try{const d=await cClaude(buildPP([e]));e.li_draft=d;save();rBit();toast('✅ Borrador generado');}
   catch(err){e.li_draft='Error: '+err.message;rBit();}
 }
@@ -813,14 +813,9 @@ async function runSearch(){
   for(const sec of['hotel','docencia','admin']){
     setSSt(sec,'active');
     try{
-      const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':getAPIKey(),'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:2000,tools:[{type:'web_search_20250305',name:'web_search'}],messages:[{role:'user',content:`${SPROF}\n\n${SPRMP[sec]}`}]})});
+      const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${getAPIKey()}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{role:'user',parts:[{text:`${SPROF}\n\n${SPRMP[sec]}`}]}],tools:[{google_search:{}}],generationConfig:{maxOutputTokens:2000}})});
       const d=await res.json();if(!res.ok)throw new Error(d.error?.message||'API '+res.status);
-      // Extract text from all content blocks (text + tool results)
-      const allText=d.content.map(b=>{
-        if(b.type==='text')return b.text||'';
-        if(b.type==='tool_result'&&b.content)return Array.isArray(b.content)?b.content.map(x=>x.text||'').join(''):b.content||'';
-        return '';
-      }).join('\n');
+      const allText=d.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('\n')||'';
       const m=allText.match(/\{[\s\S]*?"vacantes"[\s\S]*?\}/);
       if(m){try{const p=JSON.parse(m[0]);results[sec]=(p.vacantes||[]).map(v=>({...v,sector:sec}));}catch(e){results[sec]=[];}}
       setSSt(sec,'done');
@@ -954,11 +949,11 @@ function lDH(i){
   showDOut(h.empresa,h.cargo,h.sector,h.docs,Object.keys(h.docs));toast('📂 Dossier cargado: '+h.empresa);
 }
 
-// CLAUDE API
+// GEMINI API
 function getAPIKey(){return localStorage.getItem('fjm_api_key')||'';}
 function saveAPIKey(){
   const k=document.getElementById('api-key-input').value.trim();
-  if(!k.startsWith('sk-ant')){alert('⚠️ La clave debe empezar por sk-ant-...');return;}
+  if(!k.startsWith('AIza')){alert('⚠️ La clave de Gemini debe empezar por AIza...');return;}
   localStorage.setItem('fjm_api_key',k);
   document.getElementById('api-modal').style.display='none';
   toast('✅ API key guardada — ya puedes usar la búsqueda y el dossier');
@@ -971,27 +966,20 @@ function checkAPIKey(){
   }
   return true;
 }
-async function cClaude(prompt,wSearch=false){
+async function cClaude(prompt){
   const apiKey=getAPIKey();
   if(!apiKey){checkAPIKey();throw new Error('API key no configurada. Ve a Config → API Key.');}
-  const body={model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:prompt}]};
-  if(wSearch)body.tools=[{type:'web_search_20250305',name:'web_search'}];
-  const res=await fetch('https://api.anthropic.com/v1/messages',{
+  const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,{
     method:'POST',
-    headers:{
-      'Content-Type':'application/json',
-      'x-api-key':apiKey,
-      'anthropic-version':'2023-06-01',
-      'anthropic-dangerous-direct-browser-access':'true'
-    },
-    body:JSON.stringify(body)
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:800}})
   });
   const d=await res.json();
   if(!res.ok){
-    if(res.status===401){localStorage.removeItem('fjm_api_key');checkAPIKey();throw new Error('API key inválida — vuelve a introducirla');}
+    if(res.status===400||res.status===403){localStorage.removeItem('fjm_api_key');checkAPIKey();throw new Error('API key inválida — vuelve a introducirla');}
     throw new Error(d.error?.message||'API error '+res.status);
   }
-  return d.content.filter(b=>b.type==='text').map(b=>b.text||'').join('');
+  return d.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('')||'';
 }
 
 const PPROF=`Francisco Javier Martínez Alba. Director Hotel 30 años, Bridge Leader 4.0. IA 2026. SSCE0110 Docente FP nota 8,62. Business English C1.`;
@@ -1039,16 +1027,16 @@ load();rDash();rTrack();rEmps();uCounts();renderAPIStatus();
 <!-- API KEY MODAL -->
 <div id="api-modal" style="position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px)">
   <div style="background:#0d1f3c;border:1px solid rgba(201,168,76,.35);border-radius:20px;padding:32px;max-width:440px;width:90%;box-shadow:0 24px 64px rgba(0,0,0,.6)">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;margin-bottom:6px;color:#e8eaf0">🔑 Configurar Claude API</div>
-    <p style="font-size:12px;color:#7a8499;line-height:1.7;margin-bottom:20px">Para usar la Búsqueda Diaria y el Dossier Adaptativo necesitas una API key de Anthropic.<br/><strong style="color:#e8eaf0">Es gratuita con créditos iniciales</strong> — te la generan en 2 minutos.</p>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;margin-bottom:6px;color:#e8eaf0">🔑 Configurar Gemini API</div>
+    <p style="font-size:12px;color:#7a8499;line-height:1.7;margin-bottom:20px">Para usar la Búsqueda Diaria y el Dossier Adaptativo necesitas una API key de Google Gemini.<br/><strong style="color:#e8eaf0">Es completamente gratuita</strong> — te la generan en 2 minutos.</p>
     <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:11px;color:#7a8499">
       <strong style="color:#c9a84c">Cómo obtener tu API key:</strong><br/>
-      1. Ve a <a href="https://console.anthropic.com" target="_blank" style="color:#c9a84c">console.anthropic.com</a><br/>
-      2. Crea cuenta gratuita (no requiere tarjeta)<br/>
-      3. API Keys → "Create Key"<br/>
-      4. Copia la clave que empieza por <code style="color:#e8c96a">sk-ant-...</code>
+      1. Ve a <a href="https://aistudio.google.com/apikey" target="_blank" style="color:#c9a84c">aistudio.google.com/apikey</a><br/>
+      2. Inicia sesión con tu cuenta de Google<br/>
+      3. Pulsa "Create API key"<br/>
+      4. Copia la clave que empieza por <code style="color:#e8c96a">AIza...</code>
     </div>
-    <input id="api-key-input" type="password" placeholder="sk-ant-api03-..." style="width:100%;padding:12px 14px;border:1px solid rgba(201,168,76,.35);border-radius:10px;background:rgba(255,255,255,.06);color:#e8eaf0;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-bottom:12px" oninput="document.getElementById('api-save-btn').style.opacity=this.value.startsWith('sk-ant')?'1':'.4'"/>
+    <input id="api-key-input" type="password" placeholder="AIzaSy..." style="width:100%;padding:12px 14px;border:1px solid rgba(201,168,76,.35);border-radius:10px;background:rgba(255,255,255,.06);color:#e8eaf0;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-bottom:12px" oninput="document.getElementById('api-save-btn').style.opacity=this.value.startsWith('AIza')?'1':'.4'"/>
     <div style="display:flex;gap:8px">
       <button id="api-save-btn" onclick="saveAPIKey()" style="flex:1;padding:12px;border-radius:10px;background:linear-gradient(135deg,#c9a84c,#e8c96a);color:#0a1628;border:none;font-family:'DM Sans',sans-serif;font-weight:700;font-size:13px;cursor:pointer;opacity:.4;transition:all .2s">Guardar y continuar</button>
       <button onclick="document.getElementById('api-modal').style.display='none'" style="padding:12px 18px;border-radius:10px;background:rgba(255,255,255,.07);color:#7a8499;border:1px solid rgba(255,255,255,.1);font-family:'DM Sans',sans-serif;cursor:pointer;font-size:12px">Ahora no</button>
