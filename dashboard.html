@@ -906,26 +906,129 @@ let dSec='hotel',dDocs=new Set(['carta','perfil','cv']);
 function setDS(s){dSec=s;document.querySelectorAll('.so').forEach(o=>o.classList.toggle('active',o.dataset.s===s));}
 function tdoc(d){const el=document.querySelector(`.do[data-d="${d}"]`);if(dDocs.has(d)){if(dDocs.size<=1)return;dDocs.delete(d);el.classList.remove('active');}else{dDocs.add(d);el.classList.add('active');}}
 
-const PM=`CANDIDATO: Francisco Javier Martínez Alba | 635 493 853 | pacozzy@hotmail.com | Algeciras (Cádiz) | linkedin.com/in/franciscojaviermartinezalba
-POSICIONAMIENTO: Bridge Leader 4.0 · Hospitality 5.0
-EXPERIENCIA (30 años): Director Altos de Istán 4★ 2019-2025 (pre-opening,SOPs,P&L,LQA,Forbes) · Reina Cristina 4★ Algeciras-Globales 2015-2018 (activo histórico 1901) · THB Flora 3★ Lanzarote 2013-2015 · Aura Algeciras 3★ Sercotel 2011-2013 · Airtours Beach Club 5★ Gran Canaria 2004 · Dominican Bay +400hab RD 2005-2007 · Hilton London Gatwick UK · BelleVue Belsana Mallorca · BelleVue Aquarius Lanzarote
-HITOS 2026: IA Aplicada 90h Cámara Comercio · Business English C1 60h · ESG/SEAG16 100h · Ciberseguridad IFCT103 49h
-FORMACIÓN: TEAT Univ.Cádiz · SSCE0110 Docente FP A,B,C Junta Andalucía 380h nota 8,62 · ADGG0108 N3 · ADGG0308 N3
-IDIOMAS: Español nativo · Inglés C1 op/B1 cert · Alemán B1 op/A2 cert
-COMPETENCIAS: P&L · CAPEX · GOPPAR · Revenue Mgmt · LQA · Forbes · Pre-opening · SOPs · ESG · IA aplicada · RGPD · Legionelosis · Relaciones inst.
-FRASE: "Mi visión se fundamenta en el equilibrio entre el legado arquitectónico y la vanguardia operativa, utilizando la tecnología para devolver al hotelero su función primordial."`;
+const PM=`CANDIDATO: Francisco Javier Martínez Alba | Tel: 635 493 853 | pacozzy@hotmail.com | Algeciras (Cádiz) | linkedin.com/in/franciscojaviermartinezalba
+MARCA PERSONAL: "Bridge Leader 4.0" — Senior Hospitality Executive & Hybrid Leader | Hospitality 5.0
+EXPERIENCIA: 30 años de veteranía acreditada (10.987+ días de vida laboral certificada)
+TRAYECTORIA DIRECTIVA (seleccionada):
+- Hotel Altos de Istán 4★ (Four Force Capital SL), Málaga | Director / Project Manager | Mar.2019–Ene.2025 | Pre-opening, licencias, SOPs, P&L, CAPEX/OPEX, LQA, Forbes, relaciones AAPP
+- Hotel Reina Cristina 4★ (Globales/AMLA Explotaciones Turísticas), Algeciras | Director | 2015–2018 (8 años acumulados) | Activo histórico 1901, Legacy Asset Modernization, negociación proveedores estratégicos
+- Hotel Dominican Bay, Boca Chica (Rep. Dominicana) | Director de Operaciones | 2005–2007 | Resort +400 habitaciones, brigadas internacionales, alta complejidad logística
+- Hilton International (Hilton London Gatwick), Reino Unido | Management & Operations | Consolidación internacional | Blue-chip hospitality, rigor procedimental de lujo
+- THB Flora 3★ / Tamaimo Tropical, Lanzarote (THB Hotels) | Director Operativo | 2013–2015 | LQA, alta ocupación vacacional
+- Airtours Beach Club 5★, Gran Canaria | Director | 2004 | Lujo internacional, estándares internacionales
+- Aura Hotel Algeciras 3★ (Sercotel) | Director | 2011–2013
+- BelleVue Belsana (Mallorca) y BelleVue Aquarius (Lanzarote) | Dirección operativa
+- Hotetur y Globales Groups | Ascenso directivo: Front Office → Assistant Director → Hotel Director
+ESPECIALIZACIONES 2026 (ventaja competitiva diferencial):
+- IA Aplicada al Sector Administrativo (90h, Cámara de Comercio, 11 Mar.2026) — prompt engineering, automatización procesos, análisis predictivo, ROI operativo
+- Inglés Comercial / Business English (60h, Cámara de Comercio, 10 Abr.2026) — negociaciones internacionales, nivel C1 funcional
+- Docencia FPE SSCE0110 (380h, Junta de Andalucía, Dic.2025) — NOTA 8,62 | Habilitado módulos A+B+C | Turismo+Hostelería+Administración | Presencial y teleformación
+- Sostenibilidad y Gestión Ambiental SEAG16 (100h, SEPE, 2024) — marcos ESG europeos, descarbonización
+- Ciberseguridad IFCT103 (49h, SEPE, 2024) — gestión incidentes digitales
+- Control Legionelosis (25h, RD 487/2022, 2023) — instalaciones de riesgo
+CERTIFICACIONES OFICIALES NIVEL 3 (IACP / Junta de Andalucía):
+- ADGG0108 Asistencia a la Dirección N3: UC0988_3 gestión expedientes/documentación jurídica ante Organismos Públicos · UC0980_2 RRHH · UC0979_2 Tesorería
+- ADGG0308 Asistencia Documental y Gestión N3: UC0987_3 Sistemas información y archivo digital
+FORMACIÓN ACADÉMICA: TEAT — Técnico Empresas y Actividades Turísticas, Universidad de Cádiz (Escuela de Turismo de Jerez)
+IDIOMAS: Español nativo | Inglés C1 funcional (B1 certificado UC9999_3; C1 contextual Hilton UK; B2 en acreditación 2026) | Alemán B1 operativo (A2 certificado UC9996_2) | Francés / Italiano nivel funcional
+COMPETENCIAS CORE: P&L · CAPEX/OPEX · GOP · GOPPAR · Revenue Management · Pricing · LQA · Forbes Standards · Pre-opening Project Manager · SOPs · ESG/SEAG16 · IA Aplicada · RGPD · Legionelosis RD487/2022 · Relaciones institucionales AAPP · Gestión jurídica UC0988_3 · Asset Digitization · SCADA
+DISPONIBILIDAD: Inmediata · Traslado total nacional e internacional · Sin restricciones geográficas
+FRASE PROPIA: "Mi visión se fundamenta en el equilibrio entre el legado arquitectónico y la vanguardia operativa, utilizando la tecnología para devolver al hotelero su función primordial."`;
 
-const TD={ejecutivo:'Ejecutivo senior maduro. Destaca P&L, CAPEX, GOPPAR, LQA/Forbes, liderazgo equipos. Voz directiva con calidez.',patrimonial:'Reverencial por patrimonio hotelero. Destaca Reina Cristina 1901, legado/modernidad. Cita frase propia del candidato.',docente:'Vocacional y pedagógico. Destaca SSCE0110 nota 8,62, transmitir 30 años de conocimiento, liderazgo formativo.',tecnico:'Técnico y riguroso. Destaca certificaciones normativas RGPD/Legionelosis/UC0988_3, gestión documental, cumplimiento legal.',internacional:'Cosmopolita. Destaca Hilton UK, Dominican Bay, movilidad total, Business English C1, Hospitality 5.0.'};
-const DCC={carta:{label:'Carta de Presentación',icon:'✉️',step:'Redactando carta...'},perfil:{label:'Perfil Ejecutivo',icon:'🎯',step:'Construyendo perfil...'},cv:{label:'CV Adaptado',icon:'📄',step:'Adaptando CV...'},email:{label:'Email / LinkedIn',icon:'📧',step:'Redactando email...'}};
-const SL2={hotel:'Hostelería/Dirección Hotelera',docencia:'Docencia FP Hostelería',admin:'Gestión Administrativa'};
+const TD={ejecutivo:'Ejecutivo senior maduro. Tono directivo con calidez. Destaca P&L, CAPEX, GOPPAR, LQA/Forbes, liderazgo equipos y cifras concretas.',patrimonial:'Reverencial con el patrimonio hotelero. Destaca Reina Cristina 1901, legado/modernidad, equilibrio entre historia y vanguardia. Cita la frase propia del candidato.',docente:'Vocacional y pedagógico. Destaca SSCE0110 nota 8,62, la vocación de transmitir 30 años de conocimiento, liderazgo formativo como multiplicador de talento.',tecnico:'Técnico y riguroso. Destaca UC0988_3, RGPD, Legionelosis RD487/2022, gestión documental N3, cumplimiento normativo y control de riesgos.',internacional:'Cosmopolita y global. Destaca Hilton UK, Dominican Bay +400hab, movilidad total, Business English C1, Hospitality 5.0, estándares internacionales de lujo.'};
+const DCC={carta:{label:'Carta de Presentación',icon:'✉️',step:'Redactando carta estratégica...'},perfil:{label:'Perfil Ejecutivo',icon:'🎯',step:'Construyendo perfil ejecutivo...'},cv:{label:'CV Adaptado',icon:'📄',step:'Adaptando CV...'},email:{label:'Email / LinkedIn',icon:'📧',step:'Redactando email...'}};
+const SL2={hotel:'Hostelería/Dirección Hotelera',docencia:'Docencia FP Hostelería y Turismo',admin:'Gestión Administrativa y Asistencia a la Dirección'};
 
 function bDP(doc,emp,cargo,sec,ctx,tono){
   const t=TD[tono]||TD.ejecutivo;const s=SL2[sec]||sec;
   const P={
-    carta:`Carta de presentación personalizada. CANDIDATO: ${PM} EMPRESA: ${emp} | CARGO: ${cargo} | SECTOR: ${s} | CONTEXTO: ${ctx||'N/E'} | TONO: ${t} ESTRUCTURA: 1)Saludo formal a "${emp}" 2)Por qué esta empresa específica 3)2-3 logros relevantes para "${cargo}" 4)Cierre con propuesta de valor y llamada a acción 5)Firma completa. Máx 350 palabras. Sin asteriscos.`,
-    perfil:`Perfil ejecutivo adaptado. CANDIDATO: ${PM} EMPRESA: ${emp} | CARGO: ${cargo} | SECTOR: ${s} | TONO: ${t} ESTRUCTURA: 1)Titular impacto 2)Propuesta de valor 2-3 frases 3)Competencias clave 5-6 puntos 4)Hitos relevantes 3-4 5)Frase cierre. Sin markdown. Máx 280 palabras.`,
-    cv:`CV adaptado para "${cargo}" en "${emp}". CANDIDATO: ${PM} SECTOR: ${s} | TONO: ${t} Prioriza experiencias relevantes. Incluye hitos 2026 si pertinentes. Máx 400 palabras. Texto plano, secciones en mayúsculas.`,
-    email:`Email/LinkedIn para "${cargo}" en "${emp}". PERFIL BREVE: Director Hotel 30 años, Bridge Leader 4.0, IA 2026, SSCE0110, tel 635493853, pacozzy@hotmail.com TONO: ${t} FORMATO: [Asunto]\n\n[Cuerpo máx 120 palabras. Directo, profesional. Propuesta entrevista + firma.] Sin markdown.`
+    carta:`Redacta una CARTA DE PRESENTACIÓN ESTRATÉGICA en español, formal y personalizada para la empresa específica.
+PERFIL COMPLETO DEL CANDIDATO:
+${PM}
+EMPRESA TARGET: "${emp}" | CARGO SOLICITADO: "${cargo}" | SECTOR: ${s} | CONTEXTO DE LA EMPRESA: ${ctx||'No especificado'} | TONO: ${t}
+
+ESTRUCTURA OBLIGATORIA (4-5 párrafos, 380-450 palabras):
+1. APERTURA — "A la atención del Departamento de Selección de ${emp}," + párrafo de apertura expresando por qué es un privilegio candidatarse a "${emp}" específicamente (usa el contexto dado sobre la empresa)
+2. TRAYECTORIA Y ARRAIGO — Vinculación del candidato con este tipo de empresa/sector + 2-3 logros concretos con datos reales (hoteles específicos, años, cifras como +400 hab., 30 años, 10.987 días)
+3. VENTAJA COMPETITIVA 2026 — El diferencial "Bridge Leader 4.0": cómo las especializaciones 2026 (IA, ESG, SSCE0110 nota 8,62) aportan valor concreto a "${emp}" para el cargo "${cargo}"
+4. PROPUESTA DE VALOR ESPECÍFICA — Qué aporta exactamente a "${emp}": eficiencia operativa, GOP, estándares, liderazgo de equipos, cumplimiento normativo
+5. CIERRE CON CTA — Agradecimiento + llamada explícita a entrevista personal + disponibilidad inmediata y traslado total
+
+FIRMA AL PIE: Francisco Javier Martínez Alba | 635 493 853 | pacozzy@hotmail.com
+
+REGLAS CRÍTICAS: Tono ${t}. Primera persona. Sin asteriscos ni markdown. Párrafos fluidos y bien construidos. Mencionar "${emp}" al menos 2 veces en el cuerpo. Usar cifras y nombres reales del candidato. Terminar siempre con "Atentamente," y firma completa.`,
+
+    perfil:`Redacta un PERFIL EJECUTIVO Y PROPUESTA DE VALOR en español.
+PERFIL COMPLETO DEL CANDIDATO:
+${PM}
+EMPRESA: "${emp}" | CARGO: "${cargo}" | SECTOR: ${s} | TONO: ${t}
+
+ESTRUCTURA OBLIGATORIA (máx 320 palabras):
+1. TITULAR DE IMPACTO — "Francisco Javier Martínez Alba es un estratega de la operación hotelera..." (una frase que posicione al candidato para "${cargo}" en "${emp}")
+2. PROPUESTA DE VALOR — 2-3 frases que resuman el diferencial para este cargo específico en esta empresa específica
+
+3. ÁREAS DE EXPERTISE (5-6 bullets, usar negrita en el concepto clave):
+• **Dirección Integral de Activos:** gestión 360° hoteles 3★ a 5★ y resorts internacionales, P&L, CAPEX, GOPPAR, LQA, Forbes
+• **Transformación Digital 2026:** IA aplicada al sector (90h, 2026), automatización procesos, análisis predictivo, prompt engineering
+• **Cumplimiento Legal y Administrativo:** UC0988_3 expedientes ante AAPP, RGPD, Legionelosis RD487/2022, gestión documental N3
+• **Sostenibilidad y ESG:** SEAG16 (100h), marcos de descarbonización europeos, alineación normativa
+• **Liderazgo Pedagógico:** SSCE0110 nota 8,62 (380h, Junta Andalucía), formación interna equipos alto rendimiento
+• [Sexto bullet relevante específicamente para "${cargo}" en "${emp}"]
+
+4. HITOS DIFERENCIALES — 3-4 logros concretos con datos: empresa, años, cifras reales del candidato
+5. DISPONIBILIDAD — Incorporación inmediata, traslado total nacional e internacional
+
+REGLAS: Tono ${t}. Negrita solo en conceptos clave de cada bullet. Texto plano en el resto.`,
+
+    cv:`Redacta un CV ADAPTADO en español para el cargo "${cargo}" en la empresa "${emp}".
+PERFIL COMPLETO DEL CANDIDATO:
+${PM}
+SECTOR: ${s} | TONO: ${t}
+
+ESTRUCTURA (texto plano, secciones en MAYÚSCULAS, máx 520 palabras):
+1. ENCABEZADO — Francisco Javier Martínez Alba | 635 493 853 | pacozzy@hotmail.com | Algeciras (Cádiz) | [Título adaptado al cargo]
+
+2. PERFIL EJECUTIVO — 3-4 líneas resumen ejecutivo orientado específicamente a "${cargo}" en "${emp}"
+
+3. TRAYECTORIA DIRECTIVA — Selecciona las 4-5 experiencias más relevantes para "${cargo}". Para cada una:
+   CARGO | EMPRESA | PERÍODO
+   · Bullet de logro concreto con cifra o resultado
+   · Bullet de responsabilidad o habilidad relevante para "${cargo}"
+
+4. ESPECIALIZACIONES 2026
+   · IA Aplicada al Sector Administrativo — 90h, Cámara Comercio, Mar.2026
+   · Inglés Comercial C1 — 60h, Cámara Comercio, Abr.2026
+   · Docencia FPE SSCE0110 — 380h, Junta Andalucía, Dic.2025 (nota 8,62)
+   · Sostenibilidad ESG/SEAG16 — 100h, SEPE, 2024
+   · Ciberseguridad IFCT103 — 49h, SEPE, 2024
+
+5. CERTIFICACIONES OFICIALES
+   · ADGG0108 Asistencia a la Dirección N3 (UC0988_3 · UC0980_2 · UC0979_2)
+   · ADGG0308 Asistencia Documental N3 (UC0987_3)
+   · TEAT — Universidad de Cádiz (Escuela de Turismo de Jerez)
+
+6. IDIOMAS — Inglés C1 funcional (B1 certificado) · Alemán B1 operativo (A2 certificado) · Francés/Italiano funcional
+
+7. DISPONIBILIDAD — Inmediata · Traslado total · Nacional e internacional`,
+
+    email:`Redacta un EMAIL / MENSAJE LINKEDIN en español para el cargo "${cargo}" en "${emp}".
+CANDIDATO: Bridge Leader 4.0 | 30 años dirección hotelera | IA 2026 | SSCE0110 nota 8,62 | 635 493 853 | pacozzy@hotmail.com
+TONO: ${t}
+
+FORMATO EXACTO — Respeta exactamente esta estructura:
+[ASUNTO]: [Asunto impactante, máx 65 caracteres, que mencione el cargo]
+
+[CUERPO]:
+Párrafo 1 (2 líneas): Por qué "${emp}" específicamente y el cargo que solicita
+Párrafo 2 (2-3 líneas): 2 logros cuantificados más relevantes para "${cargo}" (usa datos reales del candidato)
+Párrafo 3 (1-2 líneas): Propuesta de reunión o entrevista con apertura a contacto
+
+[FIRMA]:
+Francisco Javier Martínez Alba
+Senior Hospitality Executive · Bridge Leader 4.0
+Tel: 635 493 853 | pacozzy@hotmail.com
+
+REGLAS: Cuerpo máximo 120 palabras. Directo, ejecutivo, sin jerga. Sin markdown ni asteriscos.`
   };return P[doc]||'';}
 
 function setDStep(id,s){const el=document.getElementById('ds-'+id);if(!el)return;el.className='dstep '+(s==='active'?'sa':s==='done'?'sd':s==='err'?'se':'');const ic={active:`<div class="spinner"></div>`,done:'✅',err:'❌'};el.querySelector('.di').innerHTML=ic[s]||'';}
@@ -1013,7 +1116,7 @@ async function cClaude(prompt){
   const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
     method:'POST',
     headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
-    body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:prompt}],max_tokens:1500})
+    body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:prompt}],max_tokens:2048})
   });
   const d=await res.json();
   if(!res.ok){
