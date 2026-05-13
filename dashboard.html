@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Dashboard · Francisco Javier Martínez Alba</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 :root{
@@ -465,6 +467,22 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
     <a href="https://developer.adzuna.com" target="_blank" class="btn btn-dark btn-sm">Obtener gratis →</a>
   </div>
   <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:10px;color:var(--muted)">Registro en developer.adzuna.com → Create App → copia App ID y API Key</div>
+</div></div>
+        <div class="dc"><div class="dch"><span class="dct">📤 Google Drive — Subida automática PDF</span></div><div class="dcb">
+  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">Al generar un dossier aparecerá el botón <strong style="color:var(--text)">"Subir a Drive"</strong> que crea la carpeta y sube los PDFs automáticamente.</p>
+  <div id="g-status-block"></div>
+  <div class="df" style="margin-top:10px"><label>Google OAuth2 Client ID</label><input id="g-cid" type="text" placeholder="XXXXXXXX.apps.googleusercontent.com" style="width:100%;padding:8px 10px;border:1px solid var(--border2);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text);background:rgba(255,255,255,.05)"/></div>
+  <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px">
+    <button class="btn btn-gold btn-sm" onclick="saveGClientId()">💾 Guardar Client ID</button>
+    <a href="https://console.cloud.google.com/apis/credentials" target="_blank" class="btn btn-dark btn-sm">Obtener Client ID →</a>
+  </div>
+  <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:10px;color:var(--muted);line-height:1.7">
+    <strong style="color:var(--text)">Configuración (1 vez):</strong><br/>
+    1. console.cloud.google.com → APIs &amp; Services → Credentials<br/>
+    2. Create Credentials → OAuth 2.0 Client ID → Web application<br/>
+    3. Authorized JS origins: <code style="color:var(--gold)">https://fjmacarmen-blip.github.io</code><br/>
+    4. Copia el Client ID y pégalo arriba
+  </div>
 </div></div>
         <div class="dc"><div class="dch"><span class="dct">💾 Datos</span></div><div class="dcb"><div style="display:flex;gap:7px;flex-wrap:wrap"><button class="btn btn-gold btn-sm" onclick="expJSON()">📥 Exportar JSON</button><label class="btn btn-dark btn-sm" style="cursor:pointer">📂 Importar JSON<input type="file" accept=".json" style="display:none" onchange="impJSON(this)"/></label><button class="btn btn-danger btn-sm" onclick="clrAll()">🗑️ Borrar todo</button></div></div></div>
         <div class="dc"><div class="dch"><span class="dct">🔗 GitHub Pages</span></div><div class="dcb"><p style="font-size:12px;color:var(--muted);margin-bottom:8px">Coloca <code style="background:rgba(255,255,255,.07);padding:1px 5px;border-radius:4px;font-size:11px">index.html</code> y <code style="background:rgba(255,255,255,.07);padding:1px 5px;border-radius:4px;font-size:11px">dashboard.html</code> en el mismo repo.</p><div style="padding:8px 12px;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);border-radius:8px;font-size:11px;color:var(--amber)">⏳ Pendiente de subir a GitHub Pages</div></div></div>
@@ -1060,12 +1078,14 @@ function eH(t){return(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(
 function showDOut(emp,cargo,sec,results,docsArr){
   const sC={hotel:'rgba(14,165,233,.1)',docencia:'rgba(34,197,94,.08)',admin:'rgba(139,92,246,.08)'};
   const sBo={hotel:'rgba(14,165,233,.3)',docencia:'rgba(34,197,94,.25)',admin:'rgba(139,92,246,.25)'};
+  _driveCurrentDossier={emp,cargo,results};
   const sT={hotel:'#38bdf8',docencia:'#4ade80',admin:'#a78bfa'};
   const eS=emp.replace(/'/g,"\\'");const cS=cargo.replace(/'/g,"\\'");const seS=sec.replace(/'/g,"\\'");
   let html=`<div style="background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:12px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
     <div><div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700">${emp}</div><div style="font-size:11px;color:var(--gold)">${cargo}</div></div>
     <span style="margin-left:auto;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;background:${sC[sec]};border:1px solid ${sBo[sec]};color:${sT[sec]}">${SL[sec]||sec}</span>
     <button class="btn btn-green btn-sm" onclick="saveDT('${eS}','${cS}','${seS}')">+ Dashboard</button>
+    <button id="drive-btn" class="btn btn-dark btn-sm" onclick="uploadDossierToDrive()"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Subir a Drive</button>
   </div>`;
   html+=docsArr.filter(d=>results[d]).map(d=>`<div class="oc"><div class="och"><div class="ocl"><span style="font-size:18px">${DCC[d].icon}</span><div><div class="oct">${d.toUpperCase()}</div><div class="octt">${DCC[d].label}</div></div></div><div style="display:flex;gap:6px"><button class="btn btn-dark btn-sm" onclick="cpOC('oc-${d}')">📋 Copiar</button><button class="btn btn-dark btn-sm" onclick="dlOC('oc-${d}','${eS}_${d}')">↓ TXT</button></div></div><div class="ocb"><div class="oct-text" id="oc-${d}" contenteditable="true">${eH(results[d])}</div></div></div>`).join('');
   document.getElementById('dos-out').innerHTML=html;document.getElementById('dos-out').style.display='block';
@@ -1182,8 +1202,109 @@ function renderAdzunaStatus(){
     :`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:8px;font-size:11px;color:#fbbf24">⚠️ Sin credenciales Adzuna — configúralas para activar la búsqueda real</div>`;
 }
 
+// GOOGLE DRIVE
+let _gToken=null,_driveCurrentDossier={emp:'',cargo:'',results:{}};
+function getGClientId(){return localStorage.getItem('fjm_gclient_id')||'';}
+function saveGClientId(){
+  const id=document.getElementById('g-cid').value.trim();
+  if(!id){alert('⚠️ Introduce el Client ID de Google');return;}
+  localStorage.setItem('fjm_gclient_id',id);
+  renderGStatus();toast('✅ Google Client ID guardado');
+}
+function renderGStatus(){
+  const el=document.getElementById('g-status-block');if(!el)return;
+  const k=getGClientId();
+  el.innerHTML=k
+    ?`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:8px;font-size:11px;color:#4ade80">✅ Google OAuth2 configurado — botón "Subir a Drive" activo</div>`
+    :`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:8px;font-size:11px;color:#fbbf24">⚠️ Sin Client ID — configúralo para subir dossieres a Drive como PDF</div>`;
+}
+async function getGToken(){
+  return new Promise((resolve,reject)=>{
+    if(!getGClientId()){reject(new Error('Google Client ID no configurado. Ve a Config → Google Drive'));return;}
+    if(typeof google==='undefined'){reject(new Error('Librería Google no cargada — recarga la página'));return;}
+    const tc=google.accounts.oauth2.initTokenClient({
+      client_id:getGClientId(),
+      scope:'https://www.googleapis.com/auth/drive.file',
+      callback:(r)=>{if(r.error){reject(new Error(r.error_description||r.error));return;}_gToken=r.access_token;resolve(r.access_token);}
+    });
+    tc.requestAccessToken({prompt:_gToken?'':'consent'});
+  });
+}
+async function driveFetch(url,opts={}){
+  const r=await fetch(url,{...opts,headers:{...opts.headers||{},'Authorization':'Bearer '+_gToken}});
+  return r.json();
+}
+async function getOrCreateFolder(name,parentId){
+  const meta={name,mimeType:'application/vnd.google-apps.folder',...(parentId?{parents:[parentId]}:{})};
+  const d=await driveFetch('https://www.googleapis.com/drive/v3/files',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(meta)});
+  return d.id;
+}
+function buildPDF(titulo,empresa,cargo,contenido){
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:'mm',format:'a4'});
+  doc.setFont('helvetica','bold');doc.setFontSize(13);doc.setTextColor(30);
+  doc.text('Francisco Javier Martínez Alba',20,18);
+  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(120);
+  doc.text('635 493 853 · pacozzy@hotmail.com · Algeciras (Cádiz) · Bridge Leader 4.0',20,24);
+  doc.setDrawColor(201,168,76);doc.setLineWidth(0.5);doc.line(20,27,190,27);
+  doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(160,130,50);
+  doc.text(titulo,20,35);
+  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(100);
+  doc.text(`${empresa} · ${cargo}`,20,41);
+  doc.setTextColor(30);doc.setFontSize(10);
+  const lines=doc.splitTextToSize(contenido||'',170);
+  let y=50;
+  for(const l of lines){if(y>280){doc.addPage();y=20;}doc.text(l,20,y);y+=5.2;}
+  return doc.output('arraybuffer');
+}
+async function uploadPDF(name,buffer,folderId){
+  const boundary='fjm_'+Date.now();
+  const meta=JSON.stringify({name,parents:[folderId],mimeType:'application/pdf'});
+  const enc=new TextEncoder();
+  const p1=enc.encode(`--${boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n${meta}\r\n`);
+  const p2=enc.encode(`--${boundary}\r\nContent-Type: application/pdf\r\n\r\n`);
+  const p3=new Uint8Array(buffer);
+  const p4=enc.encode(`\r\n--${boundary}--`);
+  const body=new Uint8Array(p1.length+p2.length+p3.length+p4.length);
+  let off=0;[p1,p2,p3,p4].forEach(p=>{body.set(p,off);off+=p.length;});
+  const r=await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',{
+    method:'POST',headers:{'Authorization':'Bearer '+_gToken,'Content-Type':`multipart/related; boundary=${boundary}`},body});
+  return r.json();
+}
+async function uploadDossierToDrive(){
+  const {emp,cargo,results}=_driveCurrentDossier;
+  if(!emp){toast('⚠️ Genera primero un dossier');return;}
+  const btn=document.getElementById('drive-btn');
+  if(!getGClientId()){toast('⚠️ Configura el Google Client ID en Config');gT('config',document.querySelectorAll('.ni')[6]);return;}
+  try{
+    btn.disabled=true;btn.textContent='⏳ Autenticando con Google...';
+    await getGToken();
+    btn.textContent='📁 Creando carpeta BUSQUEDA EMPLEO...';
+    const parentId=await getOrCreateFolder('BUSQUEDA EMPLEO - Dashboard');
+    const subName=`${emp} — ${cargo} — ${today()}`;
+    btn.textContent='📁 Creando subcarpeta...';
+    const folderId=await getOrCreateFolder(subName,parentId);
+    const labels={carta:'Carta de Presentación',perfil:'Perfil Ejecutivo',cv:'CV Adaptado',email:'Email LinkedIn'};
+    const keys=Object.keys(results).filter(k=>results[k]&&!results[k].startsWith('Error:'));
+    let done=0;
+    for(const k of keys){
+      btn.textContent=`📄 Subiendo ${labels[k]||k}... (${done+1}/${keys.length})`;
+      const txt=document.getElementById('oc-'+k)?.innerText||results[k];
+      const pdf=buildPDF(labels[k]||k,emp,cargo,txt);
+      await uploadPDF(`${k}_${emp}_FJM.pdf`,pdf,folderId);
+      done++;
+    }
+    btn.textContent=`✅ ${done} PDFs en Drive`;
+    toast(`✅ Dossier subido: Drive / BUSQUEDA EMPLEO - Dashboard / ${subName}`);
+    setTimeout(()=>{btn.disabled=false;btn.innerHTML='<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Subir a Drive';},4000);
+  }catch(err){
+    toast('❌ Error Drive: '+err.message);
+    btn.disabled=false;btn.innerHTML='<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Subir a Drive';
+  }
+}
+
 // INIT
-load();rDash();rTrack();rEmps();uCounts();renderAPIStatus();renderAdzunaStatus();
+load();rDash();rTrack();rEmps();uCounts();renderAPIStatus();renderAdzunaStatus();renderGStatus();
 (function(){
   const hash=window.location.hash.replace('#','');
   if(hash==='bitacora'){
