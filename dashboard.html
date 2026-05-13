@@ -325,7 +325,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
     <div class="tc" id="tc-busqueda">
       <div class="sh-hero">
         <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;margin-bottom:5px">🔍 Búsqueda Diaria de Vacantes</div>
-        <div style="font-size:11px;color:var(--muted);margin-bottom:14px;line-height:1.5">Gemini busca en LinkedIn, Infojobs, Indeed y portales de cadenas. Filtra por tu perfil y recomienda la acción óptima.</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:14px;line-height:1.5">Adzuna extrae vacantes reales de Infojobs, Indeed, LinkedIn España. Gemini analiza el match y recomienda la acción óptima.</div>
         <div style="margin-bottom:14px"><span class="shb shb-h">🏨 Director / GM</span><span class="shb shb-d">🎓 Docente FP</span><span class="shb shb-a">📋 Asistente Dir.</span><span class="shb shb-g">🌍 España + Internacional</span></div>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
           <div><div style="font-size:11px;color:var(--muted)" id="ls">Sin búsquedas previas</div><div style="font-size:11px;color:var(--gold);font-weight:600;margin-top:3px" id="ns2">Ejecuta tu primera búsqueda</div></div>
@@ -452,6 +452,19 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
     <a href="https://aistudio.google.com/apikey" target="_blank" class="btn btn-dark btn-sm">Obtener key gratis →</a>
   </div>
   <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:10px;color:var(--muted)">Modelo: gemini-2.0-flash · Funciones: Búsqueda diaria · Dossier adaptativo · Generador LinkedIn</div>
+</div></div>
+        <div class="dc"><div class="dch"><span class="dct">🔍 Adzuna API — Vacantes reales</span></div><div class="dcb">
+  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">Adzuna agrega ofertas reales de Infojobs, Indeed, LinkedIn España. <strong style="color:var(--text)">250 búsquedas/mes gratis.</strong></p>
+  <div id="adzuna-status-block"></div>
+  <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div class="df" style="margin:0"><label>App ID</label><input id="azn-id" type="text" placeholder="xxxxxxxx" value="" style="width:100%;padding:8px 10px;border:1px solid var(--border2);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);background:rgba(255,255,255,.05)"/></div>
+    <div class="df" style="margin:0"><label>API Key</label><input id="azn-key" type="password" placeholder="xxxxxxxxxxxxxxxxxxxxxxxx" style="width:100%;padding:8px 10px;border:1px solid var(--border2);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);background:rgba(255,255,255,.05)"/></div>
+  </div>
+  <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap">
+    <button class="btn btn-gold btn-sm" onclick="saveAdzuna()">💾 Guardar credenciales</button>
+    <a href="https://developer.adzuna.com" target="_blank" class="btn btn-dark btn-sm">Obtener gratis →</a>
+  </div>
+  <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:10px;color:var(--muted)">Registro en developer.adzuna.com → Create App → copia App ID y API Key</div>
 </div></div>
         <div class="dc"><div class="dch"><span class="dct">💾 Datos</span></div><div class="dcb"><div style="display:flex;gap:7px;flex-wrap:wrap"><button class="btn btn-gold btn-sm" onclick="expJSON()">📥 Exportar JSON</button><label class="btn btn-dark btn-sm" style="cursor:pointer">📂 Importar JSON<input type="file" accept=".json" style="display:none" onchange="impJSON(this)"/></label><button class="btn btn-danger btn-sm" onclick="clrAll()">🗑️ Borrar todo</button></div></div></div>
         <div class="dc"><div class="dch"><span class="dct">🔗 GitHub Pages</span></div><div class="dcb"><p style="font-size:12px;color:var(--muted);margin-bottom:8px">Coloca <code style="background:rgba(255,255,255,.07);padding:1px 5px;border-radius:4px;font-size:11px">index.html</code> y <code style="background:rgba(255,255,255,.07);padding:1px 5px;border-radius:4px;font-size:11px">dashboard.html</code> en el mismo repo.</p><div style="padding:8px 12px;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);border-radius:8px;font-size:11px;color:var(--amber)">⏳ Pendiente de subir a GitHub Pages</div></div></div>
@@ -801,25 +814,44 @@ const SPRMP={
 
 function setSSt(id,s){const el=document.getElementById('ss-'+id);if(!el)return;el.className='sstep '+(s==='active'?'sa':s==='done'?'sd':s==='err'?'se':'');const ic={active:`<div class="spinner"></div>`,done:'✅',err:'❌'};el.querySelector('.sic').innerHTML=ic[s]||'';}
 
+const AQ={hotel:'director hotel general manager',docencia:'docente profesor hosteleria turismo fp',admin:'asistente direccion auxiliar administrativo'};
+
 async function runSearch(){
   if(!checkAPIKey())return;
+  if(!checkAdzuna())return;
   if(isSrch)return;isSrch=true;
   const btn=document.getElementById('bsrch');btn.disabled=true;btn.textContent='Buscando...';
   document.getElementById('srch-prog').style.display='block';
   document.getElementById('srch-res').innerHTML='';
   document.getElementById('srch-hist').style.display='none';
-  document.getElementById('srch-steps').innerHTML=['hotel','docencia','admin','compile'].map(s=>`<div class="sstep" id="ss-${s}"><div class="sic"></div><span>${{hotel:'Buscando Director Hotelero...',docencia:'Buscando Docente FP...',admin:'Buscando puestos administrativos...',compile:'Compilando resultados...'}[s]}</span></div>`).join('');
+  document.getElementById('srch-steps').innerHTML=['hotel','docencia','admin','compile'].map(s=>`<div class="sstep" id="ss-${s}"><div class="sic"></div><span>${{hotel:'Adzuna: Director Hotelero...',docencia:'Adzuna: Docente FP...',admin:'Adzuna: Puestos administrativos...',compile:'Gemini analizando match...'}[s]}</span></div>`).join('');
   const results={hotel:[],docencia:[],admin:[]};
   for(const sec of['hotel','docencia','admin']){
     setSSt(sec,'active');
     try{
-      const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${getAPIKey()}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{role:'user',parts:[{text:`${SPROF}\n\n${SPRMP[sec]}`}]}],generationConfig:{maxOutputTokens:2000}})});
-      const d=await res.json();if(!res.ok)throw new Error(d.error?.message||'API '+res.status);
-      const allText=d.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('\n')||'';
-      const m=allText.match(/\{[\s\S]*?"vacantes"[\s\S]*?\}/);
-      if(m){try{const p=JSON.parse(m[0]);results[sec]=(p.vacantes||[]).map(v=>({...v,sector:sec}));}catch(e){results[sec]=[];}}
+      const azRes=await fetch(`https://api.adzuna.com/v1/api/jobs/es/search/1?app_id=${getAdzunaId()}&app_key=${getAdzunaKey()}&results_per_page=5&what=${encodeURIComponent(AQ[sec])}&content-type=application/json`);
+      const azData=await azRes.json();
+      if(!azRes.ok)throw new Error(azData.exception||'Adzuna error '+azRes.status);
+      const jobs=(azData.results||[]).map(j=>({
+        empresa:j.company?.display_name||'—',
+        puesto:j.title||'—',
+        ubicacion:j.location?.display_name||'—',
+        salario:j.salary_min?`${Math.round(j.salary_min/1000)}k-${Math.round((j.salary_max||j.salary_min)/1000)}k€`:'No especificado',
+        url:j.redirect_url||'',
+        descripcion:(j.description||'').slice(0,200)
+      }));
+      if(!jobs.length){results[sec]=[];setSSt(sec,'done');continue;}
+      const prompt=`Candidato: ${SPROF}\nAnaliza estas vacantes reales de Adzuna (sector ${sec}):\n${JSON.stringify(jobs)}\nPara cada vacante devuelve SOLO JSON:\n{"vacantes":[{"empresa":"","puesto":"","ubicacion":"","salario":"","portal":"Adzuna","url":"","match":"Alto/Medio/Bajo","motivo_match":"","accion":"Aplicar hoy/Aplicar esta semana/Guardar/Descartar","interacciones":[]}]}`;
+      const gmRes=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${getAPIKey()}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{maxOutputTokens:1500}})});
+      const gmData=await gmRes.json();
+      if(!gmRes.ok)throw new Error(gmData.error?.message||'Gemini error '+gmRes.status);
+      const txt=gmData.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('')||'';
+      const m=txt.match(/\{[\s\S]*?"vacantes"[\s\S]*?\}/);
+      if(m){try{const p=JSON.parse(m[0]);results[sec]=(p.vacantes||[]).map((v,i)=>({...v,url:jobs[i]?.url||v.url||'',sector:sec}));}
+      catch(e){results[sec]=jobs.map(j=>({...j,match:'Medio',motivo_match:'',accion:'Guardar',interacciones:[],portal:'Adzuna',sector:sec}));}}
       setSSt(sec,'done');
-    }catch(err){results[sec]=[{empresa:'Sin resultados',puesto:'Error: '+err.message,ubicacion:'—',salario:'—',portal:'—',match:'Bajo',motivo_match:'No se pudo completar',accion:'Descartar',sector:sec,interacciones:[]}];setSSt(sec,'err');}
+      await new Promise(r=>setTimeout(r,1000));
+    }catch(err){results[sec]=[{empresa:'Sin resultados',puesto:'Error: '+err.message,ubicacion:'—',salario:'—',portal:'—',url:'',match:'Bajo',motivo_match:'No se pudo completar',accion:'Descartar',sector:sec,interacciones:[]}];setSSt(sec,'err');}
   }
   setSSt('compile','active');await new Promise(r=>setTimeout(r,500));setSSt('compile','done');
   const all=[...results.hotel,...results.docencia,...results.admin];
@@ -847,7 +879,7 @@ function rSRes(vs){
       <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:6px;font-size:10px;color:var(--muted)">${v.ubicacion?`<span>📍 ${v.ubicacion}</span>`:''}${v.salario&&v.salario!=='No especificado'?`<span>💶 ${v.salario}</span>`:''}${v.portal?`<span>🔗 ${v.portal}</span>`:''}</div>
       ${v.motivo_match?`<div style="font-size:10px;color:var(--muted);background:rgba(255,255,255,.03);border-radius:6px;padding:6px 8px;margin-bottom:6px;border-left:2px solid var(--gold)">💡 ${v.motivo_match}</div>`:''}
       ${inter.length?`<div style="margin-bottom:6px">${inter.map((a,i)=>`<div style="font-size:10px;color:var(--muted);display:flex;gap:5px;margin-bottom:2px"><span style="color:var(--gold);font-weight:700">${i+1}.</span>${a}</div>`).join('')}</div>`:''}
-      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span class="ab ${AC[v.accion]||'ab-d'}">${AE[v.accion]||''} ${v.accion||'—'}</span><button class="btn btn-green btn-sm" onclick='addV(${vS})'>+ Tracker</button></div></div>`;
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span class="ab ${AC[v.accion]||'ab-d'}">${AE[v.accion]||''} ${v.accion||'—'}</span>${v.url?`<a href="${v.url}" target="_blank" class="btn btn-outline btn-sm">Ver oferta →</a>`:''}<button class="btn btn-green btn-sm" onclick='addV(${vS})'>+ Tracker</button></div></div>`;
     }).join('');
     html+='</div></div>';
   }
@@ -1010,8 +1042,36 @@ function renderAPIStatus(){
   }
 }
 
+// ADZUNA API
+function getAdzunaId(){return localStorage.getItem('fjm_adzuna_id')||'';}
+function getAdzunaKey(){return localStorage.getItem('fjm_adzuna_key')||'';}
+function saveAdzuna(){
+  const id=document.getElementById('azn-id').value.trim();
+  const key=document.getElementById('azn-key').value.trim();
+  if(!id||!key){alert('⚠️ Introduce App ID y API Key de Adzuna');return;}
+  localStorage.setItem('fjm_adzuna_id',id);
+  localStorage.setItem('fjm_adzuna_key',key);
+  renderAdzunaStatus();
+  toast('✅ Credenciales Adzuna guardadas');
+}
+function checkAdzuna(){
+  if(!getAdzunaId()||!getAdzunaKey()){
+    toast('⚠️ Configura las credenciales de Adzuna en Config para buscar vacantes reales');
+    gT('config',document.querySelectorAll('.ni')[6]);
+    return false;
+  }
+  return true;
+}
+function renderAdzunaStatus(){
+  const el=document.getElementById('adzuna-status-block');if(!el)return;
+  const k=getAdzunaKey();
+  el.innerHTML=k
+    ?`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:8px;font-size:11px;color:#4ade80">✅ Adzuna configurado — búsqueda de vacantes reales activa</div>`
+    :`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:8px;font-size:11px;color:#fbbf24">⚠️ Sin credenciales Adzuna — configúralas para activar la búsqueda real</div>`;
+}
+
 // INIT
-load();rDash();rTrack();rEmps();uCounts();renderAPIStatus();
+load();rDash();rTrack();rEmps();uCounts();renderAPIStatus();renderAdzunaStatus();
 (function(){
   const hash=window.location.hash.replace('#','');
   if(hash==='bitacora'){
