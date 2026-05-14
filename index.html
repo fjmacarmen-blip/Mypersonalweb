@@ -19,7 +19,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 header{background:rgba(10,22,40,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.25);padding:0 24px;position:sticky;top:0;z-index:20}
 .hdr{display:flex;align-items:center;justify-content:space-between;height:58px;max-width:1100px;margin:0 auto}
 .brand{display:flex;align-items:center;gap:10px}
-.av{width:38px;height:38px;border-radius:50%;border:2px solid var(--gold-border);overflow:hidden;flex-shrink:0;background:var(--gold-bg);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--gold);font-weight:600}
+.av{width:38px;height:38px;border-radius:50%;border:2px solid var(--gold-border);overflow:hidden;flex-shrink:0;background:var(--gold-bg);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--gold);font-weight:700}
 .av img{width:100%;height:100%;object-fit:cover;object-position:top}
 .bn{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:700;line-height:1}
 .br{font-size:10px;color:var(--gold);letter-spacing:.3px}
@@ -147,6 +147,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
 .uc-t tr:last-child td{border-bottom:none}
 .uc-code{font-family:monospace;color:var(--gold);font-size:9px}
 /* BLOG */
+#cajon-drop.drag-over{border-color:var(--gold);background:var(--gold-bg)}
 .blog-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
 @media(max-width:600px){.blog-grid{grid-template-columns:1fr}}
 .post-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;transition:border-color .2s;cursor:pointer}
@@ -213,7 +214,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
       <button class="nb" onclick="go('formacion',this)">Formación</button>
       <button class="nb" onclick="go('competencias',this)">Competencias</button>
       <button class="nb" onclick="go('blog',this)">Blog y +</button>
-      <a href="dashboard.html" class="nb-emp">🔍 Buscando Empleo</a>
+      <a href="#" class="nb-emp" onclick="reqPass(event)">🔍 Buscando Empleo</a>
     </nav>
   </div>
 </header>
@@ -241,7 +242,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
         <div class="cta-row">
           <a href="mailto:pacozzy@hotmail.com" class="btn btn-g">✉️ Contactar</a>
           <a href="https://www.linkedin.com/in/franciscojaviermartinezalba" target="_blank" class="btn">LinkedIn</a>
-          <a href="dashboard.html" class="btn btn-bord">🔍 Dashboard</a>
+          <a href="#" class="btn btn-bord" onclick="reqPass(event)">🔍 Dashboard</a>
         </div>
       </div>
     </div>
@@ -294,13 +295,13 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
     <div class="job-img">
       <img src="IMAGES/altos_de_istan.png" alt="Altos de Istán"
         onerror="this.outerHTML='<div class=job-img-ph>🏔️</div>'"/>
-      <span class="sc">4★</span>
     </div>
     <div class="job-body">
       <div class="job-title">Director / Project Manager</div>
       <div class="job-co">Hotel Altos de Istán (Four Force Capital SL)</div>
       <div class="job-loc">Istán, Málaga · Sierra de las Nieves · 14 km de Marbella</div>
       <span class="job-period">Mar 2019 – Ene 2025</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:100px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);font-size:10px;color:#c9a84c;margin-bottom:10px">⭐ 4 Estrellas</span>
       <div class="tasks">
         <div class="task"><div class="tdot"></div><span>Dirección integral y P&amp;L del activo</span></div>
         <div class="task"><div class="tdot"></div><span>Pre-opening · SOPs desde cero</span></div>
@@ -316,13 +317,13 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
     <div class="job-img">
       <img src="IMAGES/reina_cristina.png" alt="Reina Cristina"
         onerror="this.outerHTML='<div class=job-img-ph>🏛️</div>'"/>
-      <span class="sc">4★</span>
     </div>
     <div class="job-body">
       <div class="job-title">Director de Hotel</div>
       <div class="job-co">Hotel Reina Cristina — Hoteles Globales / AMLA Explotaciones</div>
       <div class="job-loc">Algeciras · Edificio histórico 1901 · Arquitectura colonial inglesa</div>
       <span class="job-period">Ene 2015 – Jun 2018</span>
+      <span style="display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:100px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);font-size:10px;color:#c9a84c;margin-bottom:10px">⭐ 4 Estrellas</span>
       <div class="tasks">
         <div class="task"><div class="tdot"></div><span>Dirección activo histórico emblemático</span></div>
         <div class="task"><div class="tdot"></div><span>Optimización GOPPAR y proveedores</span></div>
@@ -336,7 +337,7 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
   <div class="others">
     <div class="oc">
       <div class="oc-img"><img src="IMAGES/aura_hotel.png" alt="Airtours" onerror="this.outerHTML='⭐'"/></div>
-      <div class="oc-body"><div class="oc-name">Airtours Beach Club</div><div class="oc-meta">Gran Canaria · 5★ · LQA · 2004</div></div>
+      <div class="oc-body"><div class="oc-name">BlueBay Beach Club</div><div class="oc-meta">Bahía Feliz, Gran Canaria · 5★ · LQA · 2004</div></div>
     </div>
     <div class="oc">
       <div class="oc-img"><img src="IMAGES/thb_flora.png" alt="THB Flora" onerror="this.outerHTML='🌺'"/></div>
@@ -418,12 +419,22 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
 
   <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;margin-bottom:14px">Certificados Profesionales Oficiales</div>
   <div class="cert-grid" style="margin-bottom:14px">
-    <div class="cert-card" onclick="window.open('IMAGES/diplomas/cert_SSCE0110_habilitacion_docente.pdf','_blank')">
-      <div class="cert-icon">🏆</div>
-      <div class="cert-code">SSCE0110</div>
-      <div class="cert-title">Habilitación Docencia FP Grados A, B y C</div>
-      <div class="cert-org">Junta de Andalucía · 380h · Nota: <strong style="color:var(--gold)">8,62/10</strong> · 19 Nov 2025</div>
-      <a href="IMAGES/diplomas/cert_SSCE0110_formacion.pdf" target="_blank" class="cert-link" onclick="event.stopPropagation()">📄 Ver certificado formación</a>
+    <div class="cert-card" onclick="window.open('IMAGES/diplomas/cert_SSCE0110_habilitacion_docente.pdf','_blank')" style="border:2px solid var(--gold);background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(201,168,76,.02));position:relative;grid-column:1/-1">
+      <div style="position:absolute;top:-10px;right:12px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a1628;font-size:9px;font-weight:800;padding:3px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.5px">⭐ Destacado</div>
+      <div style="display:flex;align-items:flex-start;gap:16px">
+        <div style="width:54px;height:54px;border-radius:14px;background:var(--gold-bg);border:2px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0">🏆</div>
+        <div style="flex:1">
+          <div class="cert-code" style="font-size:12px">SSCE0110</div>
+          <div class="cert-title" style="font-size:14px;font-weight:700">Habilitación Docencia FP — Grados A, B y C</div>
+          <div class="cert-org">Junta de Andalucía · 380h · Nota: <strong style="color:var(--gold);font-size:13px">8,62/10</strong> · 19 Nov 2025</div>
+          <div style="margin-top:8px;font-size:11px;color:var(--muted);line-height:1.6">Habilita para impartir Formación Profesional para el Empleo (FPE) en los grados A, B y C en las familias de Hostelería, Turismo y Administración.</div>
+          <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+            <span class="badge bg-d">✅ Habilitación oficial</span>
+            <span class="badge bg-h">Hostelería · Turismo · Admin</span>
+            <a href="IMAGES/diplomas/cert_SSCE0110_formacion.pdf" target="_blank" class="cert-link" onclick="event.stopPropagation()">📄 Ver certificado</a>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="cert-card" onclick="window.open('IMAGES/diplomas/cert_ADGG0108.pdf','_blank')">
       <div class="cert-icon">📋</div>
@@ -625,6 +636,15 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
     </div>
   </div>
 
+  <!-- POSTS DESDE DASHBOARD -->
+  <div id="blog-from-dash" style="display:none;margin-bottom:20px">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px">
+      <span style="width:3px;height:22px;background:var(--gold);display:block;border-radius:2px;flex-shrink:0"></span>
+      Bitácora de Búsqueda — Posts generados con IA
+    </div>
+    <div id="dash-posts-list"></div>
+  </div>
+
   <!-- ARTÍCULOS -->
   <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;margin:20px 0 14px">Artículos y Reflexiones</div>
   <div class="blog-grid">
@@ -653,9 +673,42 @@ main{max-width:1100px;margin:0 auto;padding:28px 24px}
       <div class="post-meta">Feb 2026</div>
     </div>
   </div>
+
+  <!-- CAJÓN DE SASTRE -->
+  <div style="margin-top:28px">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px">
+      <span style="width:3px;height:22px;background:var(--gold);display:block;border-radius:2px;flex-shrink:0"></span>
+      Cajón de Sastre
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Sube fotos, documentos y archivos directamente a tu Google Drive. Se almacenan en <code style="background:rgba(255,255,255,.07);padding:1px 5px;border-radius:4px">Documentos Personales / Cajón de Sastre</code>.</p>
+    <div id="cajon-drop" style="border:2px dashed rgba(201,168,76,.3);border-radius:16px;padding:32px;text-align:center;background:var(--card);cursor:pointer;transition:all .2s" ondragover="cajDO(event)" ondragleave="cajDL(event)" ondrop="cajDrop(event)" onclick="document.getElementById('cajon-file').click()">
+      <div style="font-size:36px;margin-bottom:10px">📂</div>
+      <div style="font-size:14px;font-weight:500;color:var(--text);margin-bottom:6px">Arrastra archivos aquí o haz clic para seleccionar</div>
+      <div style="font-size:11px;color:var(--muted)">Fotos, PDF, documentos, videos — cualquier archivo</div>
+      <input type="file" id="cajon-file" multiple style="display:none" onchange="cajFiles(this.files)"/>
+    </div>
+    <div id="cajon-status" style="display:none;margin-top:12px;padding:12px 16px;border-radius:10px;font-size:12px;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);color:var(--gold)"></div>
+    <div id="cajon-list" style="margin-top:14px"></div>
+    <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:10px;color:var(--muted)">⚠️ Para activar la subida a Drive configura el Google Client ID en el <a href="dashboard.html#config" style="color:var(--gold)">Dashboard → Config</a></div>
+  </div>
 </div>
 
 </main>
+
+<!-- PASSWORD MODAL -->
+<div id="pw-overlay" style="display:none;position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(8px)">
+  <div style="background:#0f2040;border:1px solid rgba(201,168,76,.35);border-radius:20px;padding:32px;max-width:380px;width:90%;text-align:center">
+    <div style="font-size:32px;margin-bottom:12px">🔐</div>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;margin-bottom:8px;color:#e8eaf0">Acceso Dashboard</div>
+    <p style="font-size:12px;color:#7a8499;margin-bottom:18px">Área privada · Introduce la contraseña para continuar</p>
+    <input id="pw-input" type="password" placeholder="Contraseña..." style="width:100%;padding:11px 14px;border:1px solid rgba(201,168,76,.35);border-radius:10px;background:rgba(255,255,255,.06);color:#e8eaf0;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-bottom:12px;text-align:center" onkeydown="if(event.key==='Enter')chkPw()"/>
+    <div style="display:flex;gap:8px">
+      <button onclick="chkPw()" style="flex:1;padding:11px;border-radius:10px;background:linear-gradient(135deg,#c9a84c,#e8c96a);color:#0a1628;border:none;font-family:'DM Sans',sans-serif;font-weight:700;font-size:13px;cursor:pointer">Entrar →</button>
+      <button onclick="document.getElementById('pw-overlay').style.display='none'" style="padding:11px 16px;border-radius:10px;background:rgba(255,255,255,.07);color:#7a8499;border:1px solid rgba(255,255,255,.1);font-family:'DM Sans',sans-serif;cursor:pointer">Cancelar</button>
+    </div>
+    <div id="pw-err" style="display:none;margin-top:10px;font-size:11px;color:#ef4444">❌ Contraseña incorrecta</div>
+  </div>
+</div>
 
 <script>
 const TABS = ['inicio','experiencia','formacion','competencias','blog'];
@@ -678,6 +731,89 @@ function go(id, el) {
     go(hash, btn);
   }
 })();
+
+// PASSWORD PROTECTION
+const DASH_PW='fjm2026'; // Change this password here
+function reqPass(e){
+  e.preventDefault();
+  document.getElementById('pw-input').value='';
+  document.getElementById('pw-err').style.display='none';
+  const ov=document.getElementById('pw-overlay');
+  ov.style.display='flex';
+  setTimeout(()=>document.getElementById('pw-input').focus(),100);
+}
+function chkPw(){
+  const v=document.getElementById('pw-input').value;
+  if(v===DASH_PW){
+    document.getElementById('pw-overlay').style.display='none';
+    window.location.href='dashboard.html';
+  } else {
+    document.getElementById('pw-err').style.display='block';
+    document.getElementById('pw-input').value='';
+    document.getElementById('pw-input').focus();
+  }
+}
+
+// BLOG INTEGRATION — Read posts published from Dashboard
+function loadDashPosts(){
+  try{
+    const posts=JSON.parse(localStorage.getItem('fjm_blog_posts')||'[]');
+    if(!posts.length)return;
+    const container=document.getElementById('blog-from-dash');
+    const list=document.getElementById('dash-posts-list');
+    if(!container||!list)return;
+    list.innerHTML=posts.slice(0,8).map(p=>{
+      const d=new Date(p.id);
+      const dateStr=d.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});
+      return`<div style="background:var(--card);border:1px solid var(--border);border-left:3px solid rgba(0,119,181,.5);border-radius:12px;padding:16px;margin-bottom:10px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <div style="width:28px;height:28px;border-radius:8px;background:rgba(0,119,181,.1);border:1px solid rgba(0,119,181,.25);display:flex;align-items:center;justify-content:center;font-size:12px">💼</div>
+          <div><div style="font-size:11px;font-weight:600;color:var(--text)">Bitácora de Empleo</div><div style="font-size:9px;color:var(--muted)">${dateStr}</div></div>
+          <span style="margin-left:auto;padding:2px 8px;border-radius:100px;font-size:9px;background:rgba(0,119,181,.1);border:1px solid rgba(0,119,181,.25);color:#7dd3fc">LinkedIn</span>
+        </div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.7;white-space:pre-wrap">${(p.text||'').slice(0,600)}${p.text&&p.text.length>600?'...':''}</div>
+      </div>`;
+    }).join('');
+    container.style.display='block';
+  }catch(e){}
+}
+// Call on blog tab open
+const origGo=window.go;
+window.go=function(id,el){
+  origGo(id,el);
+  if(id==='blog')loadDashPosts();
+};
+loadDashPosts();
+
+// CAJÓN DE SASTRE
+let cajFiles_list=[];
+function cajDO(e){e.preventDefault();document.getElementById('cajon-drop').classList.add('drag-over');}
+function cajDL(e){document.getElementById('cajon-drop').classList.remove('drag-over');}
+function cajDrop(e){e.preventDefault();cajDL(e);cajFiles(e.dataTransfer.files);}
+function cajFiles(files){
+  cajFiles_list=[...cajFiles_list,...Array.from(files)];
+  renderCajList();
+}
+function renderCajList(){
+  const el=document.getElementById('cajon-list');
+  if(!cajFiles_list.length){el.innerHTML='';return;}
+  el.innerHTML=`<div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:8px">${cajFiles_list.length} archivo(s) seleccionado(s):</div>`+
+  cajFiles_list.map((f,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--card);border:1px solid var(--border);border-radius:9px;margin-bottom:6px;font-size:11px">
+    <span style="font-size:18px">${f.type.startsWith('image/')?' 🖼️':f.type==='application/pdf'?'📄':f.type.startsWith('video/')?'🎥':'📁'}</span>
+    <div style="flex:1"><div style="color:var(--text);font-weight:500">${f.name}</div><div style="color:var(--muted);font-size:10px">${(f.size/1024/1024).toFixed(2)} MB</div></div>
+    <button onclick="cajFiles_list.splice(${i},1);renderCajList()" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:14px" title="Eliminar">✕</button>
+  </div>`).join('')+
+  `<button onclick="cajUpload()" style="margin-top:10px;width:100%;padding:11px;border-radius:10px;background:linear-gradient(135deg,#c9a84c,#e8c96a);color:#0a1628;border:none;font-family:'DM Sans',sans-serif;font-weight:700;font-size:13px;cursor:pointer">📤 Subir ${cajFiles_list.length} archivo(s) a Drive</button>`;
+}
+async function cajUpload(){
+  const gCid=localStorage.getItem('fjm_gclient_id')||'';
+  if(!gCid){alert('⚠️ Configura el Google Client ID en el Dashboard → Config antes de subir archivos a Drive.');return;}
+  const st=document.getElementById('cajon-status');
+  st.style.display='block';st.textContent='⏳ Conectando con Google Drive...';
+  // Note: Full upload requires same GIS OAuth as dashboard
+  // For now, show instructions
+  st.innerHTML='ℹ️ Para subir a Drive: abre el <a href="dashboard.html" style="color:var(--gold)">Dashboard</a>, y desde allí usa la función "Subir a Drive" del Dossier. El Cajón de Sastre completo requiere tener el Dashboard abierto o usar la extensión de Chrome de Google Drive.';
+}
 </script>
 </body>
 </html>

@@ -327,13 +327,12 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
     <div class="tc" id="tc-busqueda">
       <div class="sh-hero">
         <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;margin-bottom:5px">🔍 Búsqueda Diaria de Vacantes</div>
-        <div style="font-size:11px;color:var(--muted);margin-bottom:14px;line-height:1.5">Adzuna extrae vacantes reales de Infojobs, Indeed, LinkedIn España. Gemini analiza el match y recomienda la acción óptima.</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:14px;line-height:1.5">Adzuna extrae vacantes reales de Infojobs, Indeed, LinkedIn España y Turijobs. Groq (llama-3.3-70b) analiza el match y recomienda la acción óptima.</div>
         <div style="margin-bottom:14px"><span class="shb shb-h">🏨 Director / GM</span><span class="shb shb-d">🎓 Docente FP</span><span class="shb shb-a">📋 Asistente Dir.</span><span class="shb shb-g">🌍 España + Internacional</span></div>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
           <div><div style="font-size:11px;color:var(--muted)" id="ls">Sin búsquedas previas</div><div style="font-size:11px;color:var(--gold);font-weight:600;margin-top:3px" id="ns2">Ejecuta tu primera búsqueda</div></div>
           <div style="display:flex;gap:7px;flex-wrap:wrap">
             <button class="btn btn-gold" id="bsrch" onclick="runSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Buscar ahora</button>
-            <button class="btn btn-dark btn-sm" onclick="showSH()">Historial</button>
           </div>
         </div>
       </div>
@@ -387,13 +386,13 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
     <div class="tc" id="tc-candidaturas">
       <div style="display:flex;gap:8px;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap">
         <div class="ct-tabs" style="flex:1;max-width:380px">
-          <button class="ctb active" id="ct-tr" onclick="setCV('tracker')">📊 Seguimiento</button>
-          <button class="ctb" id="ct-bit" onclick="setCV('bitacora')">📓 Bitácora</button>
+          <button class="ctb active" id="ct-bit" onclick="setCV('bitacora')">📓 Bitácora</button>
+          <button class="ctb" id="ct-tr" onclick="setCV('tracker')">📊 Seguimiento</button>
           <button class="ctb" id="ct-li" onclick="setCV('linkedin')">📢 LinkedIn</button>
         </div>
         <button class="btn btn-gold btn-sm" onclick="openEM()">+ Nueva acción</button>
       </div>
-      <div id="v-tracker"><div class="fr" id="fr-track">
+      <div id="v-tracker" style="display:none"><div class="fr" id="fr-track">
         <span class="fc active" data-f="all" onclick="sCF('all',this)">Todos</span>
         <span class="fc fh" data-f="hotel" onclick="sCF('hotel',this)">🏨 Hostelería</span>
         <span class="fc fd" data-f="docencia" onclick="sCF('docencia',this)">🎓 Docencia</span>
@@ -401,7 +400,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
         <span class="fc" data-f="Entrevista" onclick="sCF('Entrevista',this)">✅ Entrevistas</span>
         <span class="fc" data-f="Sin respuesta" onclick="sCF('Sin respuesta',this)">⏳ Sin respuesta</span>
       </div><div id="track-list"></div></div>
-      <div id="v-bitacora" style="display:none"><div class="fr">
+      <div id="v-bitacora"><div class="fr">
         <span class="fc active" data-bf="all" onclick="sBF('all',this)">Todas</span>
         <span class="fc" data-bf="posteable" onclick="sBF('posteable',this)">📢 Posteables</span>
       </div><div id="bit-list"></div></div>
@@ -420,7 +419,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
             <div class="apb" id="apb">
               <div class="apbh"><span>✍️ Borrador — edita y copia</span><span id="apb-c" style="font-size:9px;opacity:.5"></span></div>
               <div class="apbb"><textarea id="apb-t" oninput="uPC()"></textarea></div>
-              <div class="apba"><button class="apba-btn apba-c" onclick="cpLI()">📋 Copiar post</button><button class="apba-btn apba-cl" onclick="clrLI()">✕ Limpiar</button></div>
+              <div class="apba"><button class="apba-btn apba-c" onclick="cpLI()">📋 Copiar post</button><button class="apba-btn lia-pub" onclick="pubToBlog()" style="background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#4ade80">📝 Blog</button><button class="apba-btn apba-cl" onclick="clrLI()">✕ Limpiar</button></div>
             </div>
           </div>
         </div>
@@ -434,11 +433,12 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
     <!-- MÉTRICAS TAB -->
     <div class="tc" id="tc-metricas">
       <div class="sh"><div class="sh-t">Métricas y Análisis</div></div>
-      <div style="background:#f0f2f5;padding:16px;border-radius:14px">
+      <div style="padding:16px;border-radius:14px">
         <div class="met-grid" id="mmet" style="margin-bottom:12px"></div>
         <div class="two-col"><div class="wc"><div class="wct">Por sector</div><div id="msec"></div></div><div class="wc"><div class="wct">Estados</div><div id="mest"></div></div></div>
         <div class="wc"><div class="wct">Canal de captación</div><div id="mcan" style="display:flex;gap:7px;flex-wrap:wrap;margin-top:8px"></div></div>
         <div class="wc"><div class="wct">📓 Resultados Bitácora</div><div id="mbit"></div></div>
+        <div class="wc" style="margin-top:14px"><div id="mml"><div style="font-size:11px;color:var(--muted);text-align:center;padding:8px">Sin datos de descarte aún</div></div></div>
       </div>
     </div>
     <!-- CONFIG TAB -->
@@ -518,6 +518,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
       <div class="fr2"><div class="mf"><label>Email RRHH</label><input type="email" id="c-eml" placeholder="rrhh@..."/></div><div class="mf"><label>Teléfono</label><input type="tel" id="c-tel" placeholder="+34 600..."/></div></div>
       <div class="fr2"><div class="mf"><label>Persona de contacto</label><input id="c-per" placeholder="Nombre"/></div><div class="mf"><label>Estado</label><select id="c-est"><option>Sin contactar</option><option>Contactada</option><option>En proceso</option><option>Entrevista</option><option>Descartada</option><option>Seguimiento</option></select></div></div>
       <div class="mf"><label>Web / URL</label><input type="url" id="c-url" placeholder="https://..."/></div>
+      <div class="mf"><label>Extraer datos de oferta (pega el texto de la oferta de empleo)</label><textarea id="c-oferta" placeholder="Pega aquí el texto de la oferta de empleo para extraer datos automáticamente..." style="min-height:60px"></textarea><button type="button" class="btn btn-dark btn-sm" style="margin-top:6px;width:100%" onclick="extractEmpData()">🤖 Extraer datos con IA</button></div>
       <div class="mf"><label>Notas</label><textarea id="c-not" placeholder="Contexto, próximos pasos..."></textarea></div>
     </div>
     <div class="shf"><button class="sfb sfb-g" onclick="saveC()">Guardar empresa</button><button class="sfb sfb-m" onclick="cM('c')">Cancelar</button></div>
@@ -556,7 +557,7 @@ function gT(id,el){
   cSB();
   if(id==='dashboard')rDash();
   if(id==='busqueda')rSearchTab();
-  if(id==='candidaturas'){rTrack();rBit();}
+  if(id==='candidaturas'){setCV('bitacora');rTrack();rBit();}
   if(id==='empresas')rEmps();
   if(id==='metricas')rMet();
   if(id==='dossier')rDH();
@@ -683,7 +684,7 @@ function rDash(){
 }
 
 // CANDIDATURAS / BITÁCORA
-let cFilt='all',bFilt='all',cView='tracker';
+let cFilt='all',bFilt='all',cView='bitacora';
 function setCV(v){
   cView=v;
   ['tracker','bitacora','linkedin'].forEach(x=>{document.getElementById('v-'+x).style.display=x===v?'block':'none';document.getElementById('ct-'+x.substring(0,x==='linkedin'?2:x==='bitacora'?3:2)).classList.toggle('active',x===v);});
@@ -739,7 +740,7 @@ function tPub(id){const e=data.entries.find(x=>x.id===id);if(e){e.estado_post=e.
 async function genIP(id){
   const e=data.entries.find(x=>x.id===id);if(!e)return;
   e.showDraft=true;e.li_draft='Generando con Gemini...';rBit();
-  try{const d=await cClaude(buildPP([e]));e.li_draft=d;save();rBit();toast('✅ Borrador generado');}
+  try{const d=await cClaude(buildPP([e]));e.li_draft=d;save();rBit();toast('✅ Borrador generado — usa "📝 Blog" para publicarlo en la web');}
   catch(err){e.li_draft='Error: '+err.message;rBit();}
 }
 
@@ -819,15 +820,46 @@ function rMet(){
   document.getElementById('mcan').innerHTML=Object.entries(byCan).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`<span style="padding:5px 11px;background:#f1f5f9;border-radius:7px;font-size:11px;font-weight:600;color:#334155">${c} <span style="color:var(--amber)">${n}</span></span>`).join('')||'<span style="font-size:12px;color:#94a3b8">Sin datos</span>';
   const byRes={};data.entries.forEach(e=>{const r=e.resultado||'Confirmacion_Bot';byRes[r]=(byRes[r]||0)+1;});
   document.getElementById('mbit').innerHTML=Object.entries(byRes).map(([r,c])=>`<div class="lr"><span style="display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:50%;background:${RC[r]||'#4a5568'};display:inline-block"></span><strong>${RL[r]||r}</strong></span><span>${c}</span></div>`).join('')||'<p style="font-size:12px;color:#94a3b8">Sin registros</p>';
+  // ML Discard stats
+  try{
+    const discards=JSON.parse(localStorage.getItem('fjm_discards')||'[]');
+    if(discards.length){
+      const reasons={};discards.forEach(d=>{reasons[d.reason]=(reasons[d.reason]||0)+1;});
+      const topEl=document.getElementById('mml');
+      if(topEl){
+        topEl.innerHTML='<div style="font-size:11px;font-weight:600;color:var(--text);margin-bottom:8px">🤖 Motivos de descarte (aprendizaje IA)</div>'+
+          Object.entries(reasons).sort((a,b)=>b[1]-a[1]).map(([r,c])=>`<div class="bar-group"><div class="bar-label"><span>${r}</span><span>${c}</span></div><div class="bar-track"><div class="bar-fill" style="width:${Math.round(c/discards.length*100)}%;background:#ef4444"></div></div></div>`).join('');
+      }
+    }
+  }catch(e){}
 }
 
 // BÚSQUEDA
 let isSrch=false;
+let dismissedSearchIds=new Set();
 const SPROF=`Francisco Javier Martínez Alba. Director Hotel 30 años, Bridge Leader 4.0, IA 2026, SSCE0110 Docente FP nota 8,62, Business English C1, LQA/Forbes. Disponible relocación.`;
 const SPRMP={
-  hotel:`Busca ofertas REALES 2026 Director Hotel/GM/Director Operaciones España+Internacional (LinkedIn,Infojobs,Indeed,cadenas). SOLO JSON: {"vacantes":[{"empresa":"","puesto":"","ubicacion":"","salario":"","portal":"","match":"Alto/Medio/Bajo","motivo_match":"","accion":"Aplicar hoy/Aplicar esta semana/Guardar/Descartar","interacciones":[]}]} 4-5 vacantes.`,
-  docencia:`Busca ofertas REALES 2026 Docente/Profesor FP Hostelería Turismo España (privados,academias). SOLO JSON: {"vacantes":[{"empresa":"","puesto":"","ubicacion":"","salario":"","portal":"","match":"Alto/Medio/Bajo","motivo_match":"","accion":"Aplicar hoy/Aplicar esta semana/Guardar/Descartar","interacciones":[]}]} 3-4 vacantes.`,
-  admin:`Busca ofertas REALES 2026 Asistente Dirección/Auxiliar Admin/Secretaria España. SOLO JSON: {"vacantes":[{"empresa":"","puesto":"","ubicacion":"","salario":"","portal":"","match":"Alto/Medio/Bajo","motivo_match":"","accion":"Aplicar hoy/Aplicar esta semana/Guardar/Descartar","interacciones":[]}]} 3-4 vacantes.`
+  hotel:`Candidato: Director de Hotel Senior, 30 años experiencia, Bridge Leader 4.0. Hoteles: Altos de Istán 4★, Reina Cristina 4★, Hilton Gatwick, Dominican Bay +400hab, BlueBay Beach Club 5★. Especialidades: Pre-opening, P&L, CAPEX, LQA, Forbes, GOPPAR, Revenue Management, ESG. IA Aplicada 2026. Disponibilidad total España e internacional.
+
+Busca vacantes REALES actuales en España (y opcionalmente Portugal/Internacional) para perfiles: Director General de Hotel / General Manager / Director de Operaciones / Hotel Manager / Director de Establecimiento / Resort Manager / Director Adjunto. Hoteles 3★ a 5★, resorts, cadenas hoteleras, activos independientes. No incluyas ofertas de recepcionista, jefe de recepción, supervisor u otros cargos operativos inferiores.
+
+Fuentes: Adzuna extrae de LinkedIn, Infojobs, Indeed, Turijobs, HospitalityJobs y webs directas de cadenas.
+
+SOLO JSON: {"vacantes":[{"empresa":"","puesto":"","ubicacion":"","salario":"","portal":"","match":"Alto/Medio/Bajo","motivo_match":"","accion":"Aplicar hoy/Aplicar esta semana/Guardar/Descartar","interacciones":[]}]} 5-6 vacantes.`,
+
+  docencia:`Candidato: Docente FP habilitado SSCE0110 (nota 8,62, 380h, Junta Andalucía), 30 años experiencia hotelera real. Puede impartir Grados A, B y C en Hostelería, Turismo y Administración. TEAT Universidad de Cádiz. IA Aplicada 2026.
+
+Busca vacantes REALES actuales para: Docente FP Hostelería y Turismo / Profesor Ciclos Formativos / Formador FPE / Docente Administración y Gestión / Formador externo / Tutor empresarial / Coordinador formativo. Centros privados, academias, entidades de formación bonificada, escuelas de hostelería, centros FP.
+
+Incluye también: ofertas de docente/formador en entidades como SEPE, Junta de Andalucía, CSIF, cámaras de comercio, formación bonificada FUNDAE.
+
+SOLO JSON: {"vacantes":[{"empresa":"","puesto":"","ubicacion":"","salario":"","portal":"","match":"Alto/Medio/Bajo","motivo_match":"","accion":"Aplicar hoy/Aplicar esta semana/Guardar/Descartar","interacciones":[]}]} 4-5 vacantes.`,
+
+  admin:`Candidato: Titulado ADGG0108+ADGG0308 (Asistencia a la Dirección N3, Junta Andalucía), UC0988_3 gestión documental ante AAPP, UC0987_3 sistemas información, UC0980_2 RRHH, UC0979_2 tesorería. IA Aplicada 2026. 30 años gestión directiva. Inglés C1.
+
+Busca vacantes REALES actuales para: Asistente de Dirección / Secretaria de Dirección / Auxiliar Administrativo / Office Manager / Coordinador Administrativo / Gestor Documental / Administrativo RRHH / Asistente Ejecutivo. Empresas en Cádiz, Sevilla, Málaga o teletrabajo. También multinacionales que requieran inglés.
+
+SOLO JSON: {"vacantes":[{"empresa":"","puesto":"","ubicacion":"","salario":"","portal":"","match":"Alto/Medio/Bajo","motivo_match":"","accion":"Aplicar hoy/Aplicar esta semana/Guardar/Descartar","interacciones":[]}]} 4-5 vacantes.`
 };
 
 function setSSt(id,s){const el=document.getElementById('ss-'+id);if(!el)return;el.className='sstep '+(s==='active'?'sa':s==='done'?'sd':s==='err'?'se':'');const ic={active:`<div class="spinner"></div>`,done:'✅',err:'❌'};el.querySelector('.sic').innerHTML=ic[s]||'';}
@@ -906,7 +938,7 @@ function rSRes(vs){
       <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:6px;font-size:10px;color:var(--muted)">${v.ubicacion?`<span>📍 ${v.ubicacion}</span>`:''}${v.salario&&v.salario!=='No especificado'?`<span>💶 ${v.salario}</span>`:''}${v.portal?`<span>🔗 ${v.portal}</span>`:''}</div>
       ${v.motivo_match?`<div style="font-size:10px;color:var(--muted);background:rgba(255,255,255,.03);border-radius:6px;padding:6px 8px;margin-bottom:6px;border-left:2px solid var(--gold)">💡 ${v.motivo_match}</div>`:''}
       ${inter.length?`<div style="margin-bottom:6px">${inter.map((a,i)=>`<div style="font-size:10px;color:var(--muted);display:flex;gap:5px;margin-bottom:2px"><span style="color:var(--gold);font-weight:700">${i+1}.</span>${a}</div>`).join('')}</div>`:''}
-      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span class="ab ${AC[v.accion]||'ab-d'}">${AE[v.accion]||''} ${v.accion||'—'}</span>${v.url?`<a href="${v.url}" target="_blank" class="btn btn-outline btn-sm">Ver oferta →</a>`:''}<button class="btn btn-green btn-sm" onclick='addV(${vS})'>+ Tracker</button></div></div>`;
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span class="ab ${AC[v.accion]||'ab-d'}">${AE[v.accion]||''} ${v.accion||'—'}</span>${v.url?`<a href="${v.url}" target="_blank" class="btn btn-outline btn-sm">Ver oferta →</a>`:''}<button class="btn btn-green btn-sm" onclick='addV(${vS})'>+ Tracker</button><button class="btn btn-danger btn-sm" onclick="dismissVWithReason(this)" title="Descartar esta oferta">🗑️ Eliminar</button></div></div>`;
     }).join('');
     html+='</div></div>';
   }
@@ -933,7 +965,7 @@ TRAYECTORIA DIRECTIVA (seleccionada):
 - Hotel Dominican Bay, Boca Chica (Rep. Dominicana) | Director de Operaciones | 2005–2007 | Resort +400 habitaciones, brigadas internacionales, alta complejidad logística
 - Hilton International (Hilton London Gatwick), Reino Unido | Management & Operations | Consolidación internacional | Blue-chip hospitality, rigor procedimental de lujo
 - THB Flora 3★ / Tamaimo Tropical, Lanzarote (THB Hotels) | Director Operativo | 2013–2015 | LQA, alta ocupación vacacional
-- Airtours Beach Club 5★, Gran Canaria | Director | 2004 | Lujo internacional, estándares internacionales
+- BlueBay Beach Club 5★ (Bahía Feliz, Gran Canaria) | Director | 2004 | Lujo internacional, estándares internacionales
 - Aura Hotel Algeciras 3★ (Sercotel) | Director | 2011–2013
 - BelleVue Belsana (Mallorca) y BelleVue Aquarius (Lanzarote) | Dirección operativa
 - Hotetur y Globales Groups | Ascenso directivo: Front Office → Assistant Director → Hotel Director
@@ -1301,6 +1333,75 @@ async function uploadDossierToDrive(){
     toast('❌ Error Drive: '+err.message);
     btn.disabled=false;btn.innerHTML='<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Subir a Drive';
   }
+}
+
+// PUBLISH TO BLOG
+function pubToBlog(){
+  const text=document.getElementById('apb-t').value.trim();
+  if(!text){toast('⚠️ Sin contenido para publicar');return;}
+  try{
+    const posts=JSON.parse(localStorage.getItem('fjm_blog_posts')||'[]');
+    posts.unshift({id:Date.now(),text,date:today(),source:'dashboard-linkedin'});
+    if(posts.length>50)posts.pop();
+    localStorage.setItem('fjm_blog_posts',JSON.stringify(posts));
+    toast('✅ Post publicado en Blog');
+  }catch(e){toast('❌ Error guardando en Blog');}
+}
+
+// EXTRACT COMPANY DATA FROM JOB OFFER
+async function extractEmpData(){
+  const oferta=document.getElementById('c-oferta').value.trim();
+  if(!oferta){toast('⚠️ Pega el texto de la oferta primero');return;}
+  if(!checkAPIKey())return;
+  toast('⏳ Extrayendo datos de la empresa...');
+  try{
+    const prompt=`Extrae los datos de la empresa de esta oferta de empleo. Devuelve SOLO JSON:
+{"nombre":"","sector":"hotel/docencia/admin/general","email":"","telefono":"","web":"","persona_contacto":"","notas":"descripcion breve del puesto y empresa"}
+Oferta:
+${oferta.slice(0,2000)}`;
+    const txt=await cClaude(prompt);
+    const m=txt.match(/\{[\s\S]*?\}/);
+    if(m){
+      const d=JSON.parse(m[0]);
+      if(d.nombre)document.getElementById('c-nom').value=d.nombre;
+      if(d.sector&&['hotel','docencia','admin'].includes(d.sector))document.getElementById('c-sec').value=d.sector;
+      if(d.email)document.getElementById('c-eml').value=d.email;
+      if(d.telefono)document.getElementById('c-tel').value=d.telefono;
+      if(d.web)document.getElementById('c-url').value=d.web;
+      if(d.persona_contacto)document.getElementById('c-per').value=d.persona_contacto;
+      if(d.notas)document.getElementById('c-not').value=d.notas;
+      toast('✅ Datos extraídos automáticamente');
+    } else {toast('⚠️ No se pudieron extraer los datos');}
+  }catch(err){toast('❌ Error: '+err.message);}
+}
+
+// DISMISS VACANCY
+function dismissV(btn){const card=btn.closest('.vc');if(card){card.style.transition='all .3s';card.style.opacity='0';card.style.transform='translateX(20px)';setTimeout(()=>card.remove(),300);}}
+
+// ML-LITE: Track discard reasons for learning
+function dismissVWithReason(btn){
+  const reasons=['Salario bajo','Ubicación','Experiencia insuficiente','Perfil no alineado','Empresa desconocida','Sector incorrecto','Ya aplicado'];
+  const card=btn.closest('.vc');
+  if(!card)return;
+  const emp=(card.querySelector('[style*="font-weight:700"]')||{}).textContent||'?';
+  const picker=document.createElement('div');
+  picker.style.cssText='position:absolute;background:#0d1f3c;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px;z-index:10;right:0;bottom:100%;display:flex;flex-direction:column;gap:4px;min-width:200px;box-shadow:0 8px 24px rgba(0,0,0,.4)';
+  picker.innerHTML='<div style="font-size:10px;color:#7a8499;margin-bottom:4px;font-weight:600">¿Por qué descartás?</div>'+
+    reasons.map((r,i)=>`<button onclick="doDiscard(this,'${r.replace(/'/g,"\\'")}','${emp.replace(/'/g,"\\'")}',${i})" style="padding:5px 9px;border:1px solid rgba(255,255,255,.1);border-radius:6px;background:rgba(255,255,255,.05);color:#e8eaf0;font-size:10px;cursor:pointer;text-align:left">${r}</button>`).join('');
+  card.style.position='relative';
+  card.appendChild(picker);
+  setTimeout(()=>document.addEventListener('click',function h(){picker.remove();document.removeEventListener('click',h);},100),50);
+}
+function doDiscard(btn,reason,emp,idx){
+  try{
+    const discards=JSON.parse(localStorage.getItem('fjm_discards')||'[]');
+    discards.push({ts:Date.now(),emp,reason});
+    if(discards.length>500)discards.shift();
+    localStorage.setItem('fjm_discards',JSON.stringify(discards));
+  }catch(e){}
+  const card=btn.closest('.vc');
+  if(card){card.style.transition='all .3s';card.style.opacity='0';card.style.maxHeight=card.offsetHeight+'px';setTimeout(()=>{card.style.maxHeight='0';card.style.padding='0';card.style.marginBottom='0';setTimeout(()=>card.remove(),200)},300);}
+  toast('🗑️ Oferta descartada · Motivo guardado');
 }
 
 // INIT
