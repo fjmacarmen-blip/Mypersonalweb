@@ -232,7 +232,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .sfb-g{background:var(--gold);color:#0a1628}.sfb-g:hover{background:var(--gold2)}
 .sfb-m{background:rgba(255,255,255,.07);border:1px solid var(--border);color:var(--muted)}
 #toast{position:fixed;top:66px;right:20px;background:rgba(12,28,52,.97);backdrop-filter:blur(12px);border:1px solid var(--border2);color:var(--text);padding:9px 16px;border-radius:11px;font-size:11px;font-weight:600;z-index:60;opacity:0;transition:all .3s;pointer-events:none;box-shadow:0 8px 28px rgba(0,0,0,.5);transform:translateY(-4px)}
-#toast.show{opacity:1;transform:translateY(0)}
+#toast.show{opacity:1;transform:translateY(0);pointer-events:auto}
 .spinner{width:14px;height:14px;border:2px solid rgba(201,168,76,.2);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
 .spb{border-color:rgba(0,119,181,.2);border-top-color:#7dd3fc}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -280,6 +280,11 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .empty{text-align:center;padding:44px 20px;color:var(--muted)}
 .empty svg{width:40px;height:40px;stroke:currentColor;fill:none;opacity:.35;margin-bottom:10px}
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.09);border-radius:2px}
+.dm-btn{display:flex;align-items:flex-start;gap:9px;width:100%;padding:9px 10px;border:none;border-radius:8px;background:transparent;color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;text-align:left;transition:background .15s}
+.dm-btn:hover{background:rgba(255,255,255,.07)}
+.dm-btn span{font-size:15px;flex-shrink:0;margin-top:-1px}
+.discard-menu{position:fixed;background:#0d1f3c;border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:8px;z-index:1000;min-width:230px;box-shadow:0 12px 40px rgba(0,0,0,.7)}
+.undo-link{cursor:pointer;color:var(--gold);text-decoration:underline;font-weight:700}
 </style>
 </head>
 <body>
@@ -333,6 +338,8 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
           <div><div style="font-size:11px;color:var(--muted)" id="ls">Sin búsquedas previas</div><div style="font-size:11px;color:var(--gold);font-weight:600;margin-top:3px" id="ns2">Ejecuta tu primera búsqueda</div></div>
           <div style="display:flex;gap:7px;flex-wrap:wrap">
             <button class="btn btn-gold" id="bsrch" onclick="runSearch()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>Buscar ahora</button>
+            <button class="btn btn-dark btn-sm" id="gmail-btn" onclick="syncGmail()" title="Importar ofertas de tus emails de LinkedIn, InfoJobs, Turijobs...">📧 Gmail</button>
+            <label class="btn btn-dark btn-sm" title="Importar CSV manual como fallback">📂 CSV<input type="file" accept=".csv,.eml" style="display:none" onchange="importJobCSV(this)"/></label>
           </div>
         </div>
       </div>
@@ -356,6 +363,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
               <div class="do active" data-d="perfil" onclick="tdoc('perfil')"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>Perfil</div>
               <div class="do active" data-d="cv" onclick="tdoc('cv')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>CV</div>
               <div class="do" data-d="email" onclick="tdoc('email')"><svg viewBox="0 0 24 24"><path d="M2 10l10-5 10 5-10 5z"/></svg>Email LI</div>
+              <div class="do" data-d="ats" onclick="tdoc('ats')"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><polyline points="21 21 16.65 16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>ATS+</div>
             </div></div>
           </div></div>
           <button class="gbtn" id="dos-btn" onclick="genDossier()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>Generar Dossier Completo</button>
@@ -365,7 +373,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
           <div id="dos-empty" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:48px 24px;text-align:center">
             <div style="font-size:32px;margin-bottom:10px">✨</div>
             <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;margin-bottom:8px">Dossier Adaptativo con IA</div>
-            <p style="font-size:12px;color:var(--muted);line-height:1.6;max-width:260px;margin:0 auto 14px">Rellena el formulario, elige el tono y Gemini generará carta + perfil + CV adaptado en segundos.</p>
+            <p style="font-size:12px;color:var(--muted);line-height:1.6;max-width:260px;margin:0 auto 14px">Rellena el formulario, elige el tono y Groq generará carta + perfil + CV + análisis ATS en segundos.</p>
             <div style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center">
               <span style="padding:3px 9px;border-radius:100px;border:1px solid var(--gold-border);background:var(--gold-bg);font-size:10px;color:var(--gold)">Q Hotels</span>
               <span style="padding:3px 9px;border-radius:100px;border:1px solid var(--gold-border);background:var(--gold-bg);font-size:10px;color:var(--gold)">Castilla Termal</span>
@@ -467,6 +475,22 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
     <a href="https://developer.adzuna.com" target="_blank" class="btn btn-dark btn-sm">Obtener gratis →</a>
   </div>
   <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:10px;color:var(--muted)">Registro en developer.adzuna.com → Create App → copia App ID y API Key</div>
+</div></div>
+        <div class="dc"><div class="dch"><span class="dct">📧 Gmail — Importación automática de ofertas</span></div><div class="dcb">
+  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">Sincroniza tu Gmail para importar automáticamente ofertas de <strong style="color:var(--text)">LinkedIn, InfoJobs, Turijobs, Indeed</strong>. Usa el mismo Client ID de Google Drive.</p>
+  <div id="gmail-status-block"></div>
+  <div style="margin-top:10px;padding:10px 13px;background:rgba(255,255,255,.03);border-radius:8px;font-size:10px;color:var(--muted);line-height:1.8">
+    <strong style="color:var(--text)">Configuración adicional en Google Cloud Console (1 vez):</strong><br/>
+    1. APIs &amp; Services → Library → Busca <strong style="color:var(--gold)">Gmail API</strong> → Enable<br/>
+    2. OAuth consent screen → Add scope: <code style="color:var(--gold)">gmail.readonly</code><br/>
+    3. Authorized JS origins: <code style="color:var(--gold)">https://fjmacarmen-blip.github.io</code><br/>
+    4. ⚠️ Google mostrará "App no verificada" — pulsa "Continuar" para seguir<br/>
+    5. En Búsqueda Diaria → botón <strong style="color:var(--gold)">📧 Gmail</strong> para sincronizar
+  </div>
+  <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap">
+    <button class="btn btn-gold btn-sm" onclick="syncGmail()">📧 Probar sincronización Gmail</button>
+    <a href="https://console.cloud.google.com/apis/library" target="_blank" class="btn btn-dark btn-sm">Activar Gmail API →</a>
+  </div>
 </div></div>
         <div class="dc"><div class="dch"><span class="dct">📤 Google Drive — Subida automática PDF</span></div><div class="dcb">
   <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">Al generar un dossier aparecerá el botón <strong style="color:var(--text)">"Subir a Drive"</strong> que crea la carpeta y sube los PDFs automáticamente.</p>
@@ -928,17 +952,19 @@ function rSRes(vs){
   let html='';
   for(const sec of['hotel','docencia','admin']){
     const list=vs.filter(v=>v.sector===sec);if(!list.length)continue;
-    const altas=list.filter(v=>v.match==='Alto').length;
-    html+=`<div class="sb-block"><div class="sbh"><div class="sbl"><span class="sdot" style="background:${sd[sec]}"></span>${sn[sec]}</div><span style="font-size:11px;color:var(--muted)">${list.length} vacantes · ${altas} alto</span></div><div class="sbb">`;
-    html+=list.map(v=>{
+    const filtList=list.filter(v=>!shouldFilterVacancy(v));
+    const hiddenCount=list.length-filtList.length;
+    const altas=filtList.filter(v=>v.match==='Alto').length;
+    html+=`<div class="sb-block"><div class="sbh"><div class="sbl"><span class="sdot" style="background:${sd[sec]}"></span>${sn[sec]}</div><span style="font-size:11px;color:var(--muted)">${filtList.length} vacantes · ${altas} alto</span></div><div class="sbb">${hiddenCount?`<div style="font-size:10px;color:var(--muted2);padding:6px 12px;border-bottom:1px solid var(--border)">🙈 ${hiddenCount} oferta(s) ocultadas por tus reglas de descarte · <span style="cursor:pointer;color:var(--gold);text-decoration:underline" onclick="clearDiscardRules()">Ver todas</span></div>`:''}`;
+    html+=filtList.map((v,vi)=>{
       const mc={Alto:'mb-a',Medio:'mb-m',Bajo:'mb-b'}[v.match]||'mb-b';
       const inter=Array.isArray(v.interacciones)?v.interacciones:[];
       const vS=JSON.stringify(v).replace(/"/g,'&quot;').replace(/'/g,"&#39;");
-      return`<div class="vc"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px"><div><div style="font-weight:700;font-size:13px">${v.empresa||'—'}</div><div style="font-size:11px;color:var(--muted)">${v.puesto||'—'}</div></div><span class="mb ${mc}">↑ ${v.match}</span></div>
+      return`<div class="vc" data-vac-id="${(v.empresa||'').replace(/"/g,'&quot;')}_${vi}_${sec}"><div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px"><div><div style="font-weight:700;font-size:13px">${v.empresa||'—'}</div><div style="font-size:11px;color:var(--muted)">${v.puesto||'—'}</div></div><span class="mb ${mc}">↑ ${v.match}</span></div>
       <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:6px;font-size:10px;color:var(--muted)">${v.ubicacion?`<span>📍 ${v.ubicacion}</span>`:''}${v.salario&&v.salario!=='No especificado'?`<span>💶 ${v.salario}</span>`:''}${v.portal?`<span>🔗 ${v.portal}</span>`:''}</div>
       ${v.motivo_match?`<div style="font-size:10px;color:var(--muted);background:rgba(255,255,255,.03);border-radius:6px;padding:6px 8px;margin-bottom:6px;border-left:2px solid var(--gold)">💡 ${v.motivo_match}</div>`:''}
       ${inter.length?`<div style="margin-bottom:6px">${inter.map((a,i)=>`<div style="font-size:10px;color:var(--muted);display:flex;gap:5px;margin-bottom:2px"><span style="color:var(--gold);font-weight:700">${i+1}.</span>${a}</div>`).join('')}</div>`:''}
-      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span class="ab ${AC[v.accion]||'ab-d'}">${AE[v.accion]||''} ${v.accion||'—'}</span>${v.url?`<a href="${v.url}" target="_blank" class="btn btn-outline btn-sm">Ver oferta →</a>`:''}<button class="btn btn-green btn-sm" onclick='addV(${vS})'>+ Tracker</button><button class="btn btn-danger btn-sm" onclick="dismissVWithReason(this)" title="Descartar esta oferta">🗑️ Eliminar</button></div></div>`;
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span class="ab ${AC[v.accion]||'ab-d'}">${AE[v.accion]||''} ${v.accion||'—'}</span>${v.url?`<a href="${v.url}" target="_blank" class="btn btn-outline btn-sm">Ver oferta →</a>`:''}<button class="btn btn-green btn-sm" onclick='addV(${vS})'>+ Tracker</button><button class="btn btn-danger btn-sm" onclick="showDiscardMenu(this,'${(v.empresa||'').replace(/'/g,"&#39;")}','${sec}')">🗑️ Eliminar</button></div></div>`;
     }).join('');
     html+='</div></div>';
   }
@@ -948,6 +974,143 @@ function rSRes(vs){
 function addV(v){data.entries.unshift({id:Date.now(),empresa:v.empresa,rol:v.puesto,sector:v.sector||'hotel',fecha:today(),estado:'Enviada',canal:'Búsqueda Automática',resultado:'Confirmacion_Bot',tiempo:0,detalle:v.motivo_match||'',anecdota:'',aprendizaje:'',posteable:false,estado_post:'Pendiente',li_draft:'',showDraft:false});save();uCounts();rDash();toast('✅ Añadida: '+v.empresa);}
 function uSMeta(){const last=data.searchHistory[0];if(!last)return;document.getElementById('ls').textContent='Última: '+fT(last.timestamp)+' · '+last.total+' vacantes';document.getElementById('ns2').textContent='Próxima: mañana al abrir la app';}
 function rSearchTab(){const last=data.searchHistory[0];uSMeta();if(last&&last.date===today()&&last.vacantes)rSRes(last.vacantes);}
+
+// ═══ GMAIL INTEGRATION ═══
+let _gmailToken=null;
+const GMAIL_PORTALS=['jobalerts-noreply@linkedin.com','jobs-listings@linkedin.com','noreply@infojobs.net','ofertas@infojobs.net','noreply@turijobs.com','alert@indeed.com','noreply@tecnoempleo.com','empleo@mibuzz.es'];
+
+async function getGmailToken(){
+  return new Promise((resolve,reject)=>{
+    if(!getGClientId()){reject(new Error('Configura el Google Client ID en Config'));return;}
+    if(typeof google==='undefined'){reject(new Error('Librería Google no cargada — recarga la página'));return;}
+    const tc=google.accounts.oauth2.initTokenClient({
+      client_id:getGClientId(),
+      scope:'https://www.googleapis.com/auth/gmail.readonly',
+      callback:(r)=>{if(r.error){reject(new Error(r.error_description||r.error));return;}_gmailToken=r.access_token;resolve(r.access_token);}
+    });
+    tc.requestAccessToken({prompt:_gmailToken?'':'consent'});
+  });
+}
+
+async function gmailFetch(url){
+  const r=await fetch(url,{headers:{'Authorization':'Bearer '+_gmailToken}});
+  if(!r.ok)throw new Error('Gmail API error '+r.status);
+  return r.json();
+}
+
+async function syncGmail(){
+  if(!checkAPIKey())return;
+  if(!getGClientId()){toast('⚠️ Configura el Google Client ID en Config → Google Drive');gT('config',document.querySelectorAll('.ni')[6]);return;}
+  const btn=document.getElementById('gmail-btn');
+  btn.disabled=true;btn.textContent='⏳ Conectando Gmail...';
+  try{
+    await getGmailToken();
+    btn.textContent='📧 Buscando emails empleo...';
+    const portQuery=GMAIL_PORTALS.map(s=>`from:${s}`).join(' OR ');
+    const q=encodeURIComponent(`(${portQuery} OR subject:oferta OR subject:vacancy OR subject:empleo) newer_than:30d`);
+    const list=await gmailFetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages?q=${q}&maxResults=30`);
+    if(!list.messages?.length){toast('📭 Sin emails de empleo recientes en Gmail');btn.disabled=false;btn.textContent='📧 Gmail';return;}
+    const alreadySeen=new Set((data.searchHistory.flatMap(h=>h.vacantes||[]).map(v=>v.gmailId)).filter(Boolean));
+    const toProcess=list.messages.filter(m=>!alreadySeen.has(m.id)).slice(0,15);
+    if(!toProcess.length){toast('✅ Gmail al día — sin nuevas ofertas');btn.disabled=false;btn.textContent='📧 Gmail';return;}
+    const newJobs=[];let done=0;
+    for(const msg of toProcess){
+      btn.textContent=`📧 Procesando ${++done}/${toProcess.length}...`;
+      try{
+        const full=await gmailFetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages/${msg.id}?format=full`);
+        const job=await parseEmailToJob(full,msg.id);
+        if(job)newJobs.push(job);
+      }catch(e){}
+      await new Promise(r=>setTimeout(r,250));
+    }
+    if(newJobs.length){
+      data.searchHistory.unshift({date:today(),timestamp:Date.now(),total:newJobs.length,byAlto:newJobs.filter(v=>v.match==='Alto').length,vacantes:newJobs,source:'gmail'});
+      if(data.searchHistory.length>30)data.searchHistory=data.searchHistory.slice(0,30);
+      save();uCounts();rSRes(newJobs);uSMeta();
+      toast('✅ '+newJobs.length+' ofertas importadas desde Gmail');
+    }else{toast('✅ Gmail procesado — sin ofertas válidas detectadas');}
+  }catch(err){toast('❌ Gmail: '+err.message);}
+  btn.disabled=false;btn.textContent='📧 Gmail';
+}
+
+function decodeB64(s){
+  try{return decodeURIComponent(escape(atob(s.replace(/-/g,'+').replace(/_/g,'/'))));}
+  catch(e){return atob(s.replace(/-/g,'+').replace(/_/g,'/'));}
+}
+
+function extractEmailBody(payload){
+  if(payload.mimeType==='text/plain'&&payload.body?.data)return decodeB64(payload.body.data);
+  if(payload.mimeType==='text/html'&&payload.body?.data){
+    const html=decodeB64(payload.body.data);
+    return html.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+  }
+  if(payload.parts){for(const p of payload.parts){const b=extractEmailBody(p);if(b&&b.length>50)return b;}}
+  return '';
+}
+
+async function parseEmailToJob(msg,gmailId){
+  const headers=msg.payload?.headers||[];
+  const subject=headers.find(h=>h.name==='Subject')?.value||'';
+  const from=headers.find(h=>h.name==='From')?.value||'';
+  const body=extractEmailBody(msg.payload||{});
+  if(!body||body.length<60)return null;
+  const kw=['oferta','empleo','trabajo','vacante','job','director','manager','docente','puesto'];
+  if(!kw.some(k=>(subject+body).toLowerCase().includes(k)))return null;
+  const cacheKey='gmail_'+gmailId;
+  const cached=sessionStorage.getItem(cacheKey);
+  if(cached){try{const j=JSON.parse(cached);j.gmailId=gmailId;return j;}catch(e){}}
+  try{
+    const prompt=`Eres un extractor de ofertas de empleo. Analiza este email y extrae la oferta.
+ASUNTO: ${subject}
+REMITENTE: ${from}
+CUERPO: ${body.slice(0,2000)}
+
+Si hay una oferta de empleo real, devuelve SOLO JSON (sin markdown ni texto extra):
+{"empresa":"nombre empresa","puesto":"titulo del puesto","ubicacion":"ciudad/provincia","salario":"rango o No especificado","portal":"LinkedIn|InfoJobs|Turijobs|Indeed|Directo","match":"Alto/Medio/Bajo","motivo_match":"por qué encaja o no con Director Hotel 30 años / Docente FP / Asistente Dirección","accion":"Aplicar hoy/Aplicar esta semana/Guardar/Descartar"}
+
+Si NO hay oferta real de empleo en este email, devuelve solo la palabra: null`;
+    const txt=await cClaude(prompt);
+    const clean=txt.trim();
+    if(clean==='null'||clean.startsWith('null'))return null;
+    const m=clean.match(/\{[\s\S]*?\}/);
+    if(!m)return null;
+    const job=JSON.parse(m[0]);
+    if(!job.empresa||!job.puesto)return null;
+    job.gmailId=gmailId;job.interacciones=[];
+    job.sector=job.puesto.toLowerCase().match(/docente|profesor|formador/)? 'docencia':job.puesto.toLowerCase().match(/admin|asistente|secretar/)? 'admin':'hotel';
+    job.url='';
+    sessionStorage.setItem(cacheKey,JSON.stringify(job));
+    return job;
+  }catch(e){return null;}
+}
+
+function importJobCSV(input){
+  const f=input.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=async(e)=>{
+    const text=e.target.result;
+    const lines=text.split('\n').filter(l=>l.trim());
+    if(!lines.length){toast('⚠️ CSV vacío');return;}
+    toast('⏳ Procesando CSV...');
+    const jobs=[];
+    const header=lines[0].toLowerCase();
+    const hasHeader=header.includes('empresa')||header.includes('company')||header.includes('puesto');
+    const dataLines=hasHeader?lines.slice(1):lines;
+    for(const line of dataLines.slice(0,50)){
+      const cols=line.split(/[,;|]/).map(c=>c.trim().replace(/^"|"$/g,''));
+      if(cols.length>=2){
+        jobs.push({empresa:cols[0]||'—',puesto:cols[1]||'—',ubicacion:cols[2]||'España',salario:'No especificado',portal:'CSV',match:'Medio',motivo_match:'Importado manualmente',accion:'Guardar',interacciones:[],sector:'hotel',url:cols[4]||''});
+      }
+    }
+    if(jobs.length){
+      data.searchHistory.unshift({date:today(),timestamp:Date.now(),total:jobs.length,byAlto:0,vacantes:jobs,source:'csv'});
+      save();uCounts();rSRes(jobs);uSMeta();
+      toast('✅ '+jobs.length+' ofertas importadas desde CSV');
+    }else{toast('⚠️ No se pudieron parsear filas del CSV');}
+  };
+  r.readAsText(f);
+  input.value='';
+}
 function showSH(){const p=document.getElementById('srch-hist');p.style.display=p.style.display==='none'?'block':'none';document.getElementById('srch-hist-list').innerHTML=data.searchHistory.length===0?'<p style="font-size:12px;color:var(--muted);text-align:center;padding:16px">Sin historial</p>':data.searchHistory.map((h,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:12px"><div><div style="font-weight:600">${fD(h.date)}</div><div style="font-size:10px;color:var(--muted)">${h.total} vacantes · ${h.byAlto} alto</div></div><button class="btn btn-dark btn-sm" onclick="lSH(${i})">Ver</button></div>`).join('');}
 function lSH(i){const h=data.searchHistory[i];if(h&&h.vacantes)rSRes(h.vacantes);document.getElementById('srch-hist').style.display='none';}
 
@@ -986,7 +1149,7 @@ DISPONIBILIDAD: Inmediata · Traslado total nacional e internacional · Sin rest
 FRASE PROPIA: "Mi visión se fundamenta en el equilibrio entre el legado arquitectónico y la vanguardia operativa, utilizando la tecnología para devolver al hotelero su función primordial."`;
 
 const TD={ejecutivo:'Ejecutivo senior maduro. Tono directivo con calidez. Destaca P&L, CAPEX, GOPPAR, LQA/Forbes, liderazgo equipos y cifras concretas.',patrimonial:'Reverencial con el patrimonio hotelero. Destaca Reina Cristina 1901, legado/modernidad, equilibrio entre historia y vanguardia. Cita la frase propia del candidato.',docente:'Vocacional y pedagógico. Destaca SSCE0110 nota 8,62, la vocación de transmitir 30 años de conocimiento, liderazgo formativo como multiplicador de talento.',tecnico:'Técnico y riguroso. Destaca UC0988_3, RGPD, Legionelosis RD487/2022, gestión documental N3, cumplimiento normativo y control de riesgos.',internacional:'Cosmopolita y global. Destaca Hilton UK, Dominican Bay +400hab, movilidad total, Business English C1, Hospitality 5.0, estándares internacionales de lujo.'};
-const DCC={carta:{label:'Carta de Presentación',icon:'✉️',step:'Redactando carta estratégica...'},perfil:{label:'Perfil Ejecutivo',icon:'🎯',step:'Construyendo perfil ejecutivo...'},cv:{label:'CV Adaptado',icon:'📄',step:'Adaptando CV...'},email:{label:'Email / LinkedIn',icon:'📧',step:'Redactando email...'}};
+const DCC={carta:{label:'Carta de Presentación',icon:'✉️',step:'Redactando carta estratégica...'},perfil:{label:'Perfil Ejecutivo',icon:'🎯',step:'Construyendo perfil ejecutivo...'},cv:{label:'CV Adaptado',icon:'📄',step:'Adaptando CV...'},email:{label:'Email / LinkedIn',icon:'📧',step:'Redactando email...'},ats:{label:'Análisis ATS + Entrevista',icon:'🤖',step:'Analizando compatibilidad ATS...'}};
 const SL2={hotel:'Hostelería/Dirección Hotelera',docencia:'Docencia FP Hostelería y Turismo',admin:'Gestión Administrativa y Asistencia a la Dirección'};
 
 function bDP(doc,emp,cargo,sec,ctx,tono){
@@ -1079,6 +1242,43 @@ Senior Hospitality Executive · Bridge Leader 4.0
 Tel: 635 493 853 | pacozzy@hotmail.com
 
 REGLAS: Cuerpo máximo 120 palabras. Directo, ejecutivo, sin jerga. Sin markdown ni asteriscos.`
+    ,ats:`Eres un experto en sistemas ATS (Applicant Tracking System) y selección de personal. Analiza la compatibilidad del candidato con el puesto y genera un informe completo.
+PERFIL COMPLETO DEL CANDIDATO:
+${PM}
+EMPRESA: "${emp}" | CARGO: "${cargo}" | SECTOR: ${s} | TONO: ${t}
+
+GENERA UN INFORME ATS COMPLETO con estas 4 secciones:
+
+══════════════════════════════════
+🤖 PUNTUACIÓN ATS ESTIMADA: [X/100]
+══════════════════════════════════
+Explicación breve de la puntuación (2-3 líneas).
+
+══════════════════════════════════
+🔑 PALABRAS CLAVE ATS CRÍTICAS
+══════════════════════════════════
+PRESENTES en el perfil del candidato (lista 8-10 keywords del puesto que ya tiene):
+• [keyword] — ✅ cubierta por [experiencia/certificación específica]
+
+AUSENTES o a reforzar (lista 3-5 keywords importantes que faltan o deben destacarse más):
+• [keyword] — ⚠️ Recomendación: mencionar explícitamente en CV/carta
+
+══════════════════════════════════
+✏️ CAMBIOS CLAVE PARA OPTIMIZAR EL CV
+══════════════════════════════════
+Lista 5-7 cambios concretos y accionables para mejorar el CV para este puesto específico:
+1. [Cambio específico con justificación]
+2. ...
+
+══════════════════════════════════
+🎯 RECOMENDACIONES PARA LA ENTREVISTA
+══════════════════════════════════
+3-4 recomendaciones específicas para la entrevista con "${emp}":
+• Pregunta probable: "[pregunta típica]" → Respuesta sugerida basada en el perfil del candidato
+• Argumento diferenciador: [qué destacar específicamente para "${emp}"]
+• Punto a gestionar: [posible objeción y cómo contrarrestarla]
+
+REGLAS: Texto plano, sin markdown. Usa los ══ como separadores visuales. Específico para "${emp}" y "${cargo}". Usa datos reales del candidato.`
   };return P[doc]||'';}
 
 function setDStep(id,s){const el=document.getElementById('ds-'+id);if(!el)return;el.className='dstep '+(s==='active'?'sa':s==='done'?'sd':s==='err'?'se':'');const ic={active:`<div class="spinner"></div>`,done:'✅',err:'❌'};el.querySelector('.di').innerHTML=ic[s]||'';}
@@ -1250,6 +1450,13 @@ function renderGStatus(){
     ?`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:8px;font-size:11px;color:#4ade80">✅ Google OAuth2 configurado — botón "Subir a Drive" activo</div>`
     :`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:8px;font-size:11px;color:#fbbf24">⚠️ Sin Client ID — configúralo para subir dossieres a Drive como PDF</div>`;
 }
+function renderGmailStatus(){
+  const el=document.getElementById('gmail-status-block');if(!el)return;
+  const k=getGClientId();
+  el.innerHTML=k
+    ?`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);border-radius:8px;font-size:11px;color:#4ade80">✅ Client ID configurado — botón 📧 Gmail disponible en Búsqueda Diaria</div>`
+    :`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:8px;font-size:11px;color:#fbbf24">⚠️ Configura el Google Client ID (sección de abajo) para activar Gmail</div>`;
+}
 async function getGToken(){
   return new Promise((resolve,reject)=>{
     if(!getGClientId()){reject(new Error('Google Client ID no configurado. Ve a Config → Google Drive'));return;}
@@ -1375,37 +1582,92 @@ ${oferta.slice(0,2000)}`;
   }catch(err){toast('❌ Error: '+err.message);}
 }
 
-// DISMISS VACANCY
-function dismissV(btn){const card=btn.closest('.vc');if(card){card.style.transition='all .3s';card.style.opacity='0';card.style.transform='translateX(20px)';setTimeout(()=>card.remove(),300);}}
+// ═══ ENHANCED DISCARD SYSTEM ═══
+function shouldFilterVacancy(v){
+  const rules=JSON.parse(localStorage.getItem('fjm_discard_rules')||'[]');
+  return rules.filter(r=>r.type==='ocultar_similares').some(r=>{
+    const empW=(r.emp||'').split(' ')[0].toLowerCase();
+    return empW&&(v.empresa||'').toLowerCase().includes(empW);
+  });
+}
 
-// ML-LITE: Track discard reasons for learning
-function dismissVWithReason(btn){
-  const reasons=['Salario bajo','Ubicación','Experiencia insuficiente','Perfil no alineado','Empresa desconocida','Sector incorrecto','Ya aplicado'];
-  const card=btn.closest('.vc');
-  if(!card)return;
-  const emp=(card.querySelector('[style*="font-weight:700"]')||{}).textContent||'?';
-  const picker=document.createElement('div');
-  picker.style.cssText='position:absolute;background:#0d1f3c;border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:10px;z-index:10;right:0;bottom:100%;display:flex;flex-direction:column;gap:4px;min-width:200px;box-shadow:0 8px 24px rgba(0,0,0,.4)';
-  picker.innerHTML='<div style="font-size:10px;color:#7a8499;margin-bottom:4px;font-weight:600">¿Por qué descartás?</div>'+
-    reasons.map((r,i)=>`<button onclick="doDiscard(this,'${r.replace(/'/g,"\\'")}','${emp.replace(/'/g,"\\'")}',${i})" style="padding:5px 9px;border:1px solid rgba(255,255,255,.1);border-radius:6px;background:rgba(255,255,255,.05);color:#e8eaf0;font-size:10px;cursor:pointer;text-align:left">${r}</button>`).join('');
-  card.style.position='relative';
-  card.appendChild(picker);
-  setTimeout(()=>document.addEventListener('click',function h(){picker.remove();document.removeEventListener('click',h);},100),50);
+function showDiscardMenu(btn,empNombre,sector){
+  document.querySelectorAll('.discard-menu').forEach(m=>m.remove());
+  const card=btn.closest('.vc');if(!card)return;
+  const menu=document.createElement('div');
+  menu.className='discard-menu';
+  const rect=btn.getBoundingClientRect();
+  menu.style.top=(rect.bottom+6)+'px';
+  menu.style.right=(window.innerWidth-rect.right)+'px';
+  const eS=empNombre.replace(/'/g,"\\'");const seS=sector.replace(/'/g,"\\'");
+  menu.innerHTML=`<div style="font-size:10px;color:#7a8499;padding:4px 8px 8px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:6px">Descartar oferta</div>
+  <button class="dm-btn" onclick="execDiscard(this,'no_relevante','${eS}','${seS}')"><span>🚫</span><div>No relevante<div style="font-size:10px;color:var(--muted)">Solo descarta esta</div></div></button>
+  <button class="dm-btn" onclick="execDiscard(this,'ocultar_similares','${eS}','${seS}')"><span>🙈</span><div>Ocultar similares<div style="font-size:10px;color:var(--muted)">Filtra futuras de ${empNombre.split(' ')[0]}...</div></div></button>
+  <button class="dm-btn" onclick="execDiscard(this,'archivar','${eS}','${seS}')"><span>📁</span><div>Archivar<div style="font-size:10px;color:var(--muted)">Guardar para revisar después</div></div></button>
+  <div style="height:1px;background:rgba(255,255,255,.07);margin:6px 0"></div>
+  <button class="dm-btn" style="color:#fca5a5" onclick="execDiscard(this,'eliminar','${eS}','${seS}')"><span>🗑️</span><div>Eliminar permanentemente</div></button>`;
+  document.body.appendChild(menu);
+  setTimeout(()=>{document.addEventListener('click',function cl(e){if(!menu.contains(e.target)){menu.remove();document.removeEventListener('click',cl);}});},50);
 }
-function doDiscard(btn,reason,emp,idx){
-  try{
-    const discards=JSON.parse(localStorage.getItem('fjm_discards')||'[]');
-    discards.push({ts:Date.now(),emp,reason});
-    if(discards.length>500)discards.shift();
-    localStorage.setItem('fjm_discards',JSON.stringify(discards));
-  }catch(e){}
-  const card=btn.closest('.vc');
-  if(card){card.style.transition='all .3s';card.style.opacity='0';card.style.maxHeight=card.offsetHeight+'px';setTimeout(()=>{card.style.maxHeight='0';card.style.padding='0';card.style.marginBottom='0';setTimeout(()=>card.remove(),200)},300);}
-  toast('🗑️ Oferta descartada · Motivo guardado');
+
+function execDiscard(btn,type,emp,sector){
+  document.querySelectorAll('.discard-menu').forEach(m=>m.remove());
+  let targetCard=null;
+  document.querySelectorAll('.vc').forEach(c=>{
+    const en=c.querySelector('[style*="font-weight:700"]');
+    if(en&&en.textContent.trim()===emp)targetCard=c;
+  });
+  if(!targetCard){toast('🗑️ Descartado');return;}
+  targetCard.style.transition='opacity .25s';targetCard.style.opacity='0.25';targetCard.style.pointerEvents='none';
+  // Save rule
+  const rules=JSON.parse(localStorage.getItem('fjm_discard_rules')||'[]');
+  rules.push({id:Date.now(),type,emp,sector,ts:Date.now()});
+  if(rules.length>300)rules.shift();
+  localStorage.setItem('fjm_discard_rules',JSON.stringify(rules));
+  // ML data
+  try{const d=JSON.parse(localStorage.getItem('fjm_discards')||'[]');d.push({ts:Date.now(),emp,reason:type});localStorage.setItem('fjm_discards',JSON.stringify(d));}catch(e){}
+  // Undo toast with countdown
+  const labels={no_relevante:'No relevante',ocultar_similares:'Similares ocultadas',archivar:'Archivado',eliminar:'Eliminado'};
+  let countdown=6;
+  const toastEl=document.getElementById('toast');
+  window._pendingDiscard={card:targetCard,emp,type,undone:false};
+  const tick=()=>{
+    countdown--;
+    if(window._pendingDiscard.undone||countdown<=0){
+      clearInterval(window._pendingDiscard.timer);
+      if(!window._pendingDiscard.undone){
+        const c=window._pendingDiscard.card;
+        c.style.maxHeight=c.offsetHeight+'px';c.style.overflow='hidden';
+        setTimeout(()=>{c.style.transition='all .25s';c.style.maxHeight='0';c.style.padding='0';c.style.marginBottom='0';c.style.border='none';setTimeout(()=>c.remove(),260);},30);
+      }
+      toastEl.classList.remove('show');
+    }else{
+      toastEl.innerHTML=`${labels[type]} — <span class="undo-link" onclick="undoLastDiscard()">Deshacer (${countdown}s)</span>`;
+      toastEl.classList.add('show');
+    }
+  };
+  toastEl.innerHTML=`${labels[type]} — <span class="undo-link" onclick="undoLastDiscard()">Deshacer (${countdown}s)</span>`;
+  toastEl.classList.add('show');
+  window._pendingDiscard.timer=setInterval(tick,1000);
 }
+
+function undoLastDiscard(){
+  if(!window._pendingDiscard)return;
+  window._pendingDiscard.undone=true;
+  clearInterval(window._pendingDiscard.timer);
+  const c=window._pendingDiscard.card;
+  c.style.opacity='1';c.style.pointerEvents='';
+  // Remove last rule
+  const rules=JSON.parse(localStorage.getItem('fjm_discard_rules')||'[]');
+  rules.pop();localStorage.setItem('fjm_discard_rules',JSON.stringify(rules));
+  document.getElementById('toast').classList.remove('show');
+  toast('↩️ Oferta restaurada');
+}
+
+function clearDiscardRules(){if(!confirm('¿Borrar todas las reglas de descarte?'))return;localStorage.removeItem('fjm_discard_rules');toast('✅ Reglas borradas — recarga la búsqueda');const last=data.searchHistory[0];if(last?.vacantes)rSRes(last.vacantes);}
 
 // INIT
-load();rDash();rTrack();rEmps();uCounts();renderAPIStatus();renderAdzunaStatus();renderGStatus();
+load();rDash();rTrack();rEmps();uCounts();renderAPIStatus();renderAdzunaStatus();renderGStatus();renderGmailStatus();
 (function(){
   const hash=window.location.hash.replace('#','');
   if(hash==='bitacora'){
