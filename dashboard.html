@@ -902,7 +902,7 @@ async function runSearch(){
   document.getElementById('srch-prog').style.display='block';
   document.getElementById('srch-res').innerHTML='';
   document.getElementById('srch-hist').style.display='none';
-  document.getElementById('srch-steps').innerHTML=['hotel','docencia','admin','compile'].map(s=>`<div class="sstep" id="ss-${s}"><div class="sic"></div><span>${{hotel:'Adzuna: Director Hotelero...',docencia:'Adzuna: Docente FP...',admin:'Adzuna: Puestos administrativos...',compile:'Gemini analizando match...'}[s]}</span></div>`).join('');
+  document.getElementById('srch-steps').innerHTML=['hotel','docencia','admin','gmail','compile'].map(s=>`<div class="sstep" id="ss-${s}"><div class="sic"></div><span>${{hotel:'Adzuna: Director Hotelero...',docencia:'Adzuna: Docente FP...',admin:'Adzuna: Puestos administrativos...',gmail:'Gmail: Ofertas en tu correo...',compile:'Groq analizando match...'}[s]}</span></div>`).join('');
   const results={hotel:[],docencia:[],admin:[]};
   for(const sec of['hotel','docencia','admin']){
     setSSt(sec,'active');
@@ -936,8 +936,34 @@ async function runSearch(){
       setSSt(sec,'done');
     }catch(err){results[sec]=[{empresa:'Sin resultados',puesto:'Error: '+err.message,ubicacion:'—',salario:'—',portal:'—',url:'',match:'Bajo',motivo_match:'No se pudo completar',accion:'Descartar',sector:sec,interacciones:[]}];setSSt(sec,'err');}
   }
+  // ── Gmail: merge if token already available (no new OAuth popup during search) ──
+  let gmailJobs=[];
+  if(_gmailToken&&getGClientId()){
+    setSSt('gmail','active');
+    try{
+      const portQuery=GMAIL_PORTALS.map(s=>`from:${s}`).join(' OR ');
+      const q=encodeURIComponent(`(${portQuery} OR subject:oferta OR subject:vacancy) newer_than:30d`);
+      const gList=await gmailFetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages?q=${q}&maxResults=20`);
+      if(gList.messages?.length){
+        const seen=new Set([...results.hotel,...results.docencia,...results.admin].map(v=>v.gmailId).filter(Boolean));
+        const toProc=gList.messages.filter(m=>!seen.has(m.id)).slice(0,8);
+        for(const msg of toProc){
+          try{
+            const full=await gmailFetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages/${msg.id}?format=full`);
+            const job=await parseEmailToJob(full,msg.id);
+            if(job)gmailJobs.push(job);
+          }catch(e){}
+          await new Promise(r=>setTimeout(r,200));
+        }
+      }
+      setSSt('gmail','done');
+    }catch(e){setSSt('gmail','err');}
+  }else{
+    setSSt('gmail',getGClientId()?'':'err');
+    if(getGClientId())document.querySelector('#ss-gmail span').textContent='Gmail: pulsa 📧 para autenticar primero';
+  }
   setSSt('compile','active');await new Promise(r=>setTimeout(r,500));setSSt('compile','done');
-  const all=[...results.hotel,...results.docencia,...results.admin];
+  const all=[...results.hotel,...results.docencia,...results.admin,...gmailJobs];
   data.searchHistory.unshift({date:today(),timestamp:Date.now(),total:all.length,byAlto:all.filter(v=>v.match==='Alto').length,vacantes:all});
   if(data.searchHistory.length>30)data.searchHistory=data.searchHistory.slice(0,30);
   save();uCounts();
@@ -964,7 +990,7 @@ function rSRes(vs){
       <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:6px;font-size:10px;color:var(--muted)">${v.ubicacion?`<span>📍 ${v.ubicacion}</span>`:''}${v.salario&&v.salario!=='No especificado'?`<span>💶 ${v.salario}</span>`:''}${v.portal?`<span>🔗 ${v.portal}</span>`:''}</div>
       ${v.motivo_match?`<div style="font-size:10px;color:var(--muted);background:rgba(255,255,255,.03);border-radius:6px;padding:6px 8px;margin-bottom:6px;border-left:2px solid var(--gold)">💡 ${v.motivo_match}</div>`:''}
       ${inter.length?`<div style="margin-bottom:6px">${inter.map((a,i)=>`<div style="font-size:10px;color:var(--muted);display:flex;gap:5px;margin-bottom:2px"><span style="color:var(--gold);font-weight:700">${i+1}.</span>${a}</div>`).join('')}</div>`:''}
-      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span class="ab ${AC[v.accion]||'ab-d'}">${AE[v.accion]||''} ${v.accion||'—'}</span>${v.url?`<a href="${v.url}" target="_blank" class="btn btn-outline btn-sm">Ver oferta →</a>`:''}<button class="btn btn-green btn-sm" onclick='addV(${vS})'>+ Tracker</button><button class="btn btn-danger btn-sm" onclick="showDiscardMenu(this,'${(v.empresa||'').replace(/'/g,"&#39;")}','${sec}')">🗑️ Eliminar</button></div></div>`;
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><span class="ab ${AC[v.accion]||'ab-d'}">${AE[v.accion]||''} ${v.accion||'—'}</span>${v.gmailId?`<span style="font-size:10px;background:rgba(66,133,244,.18);color:#4285f4;border:1px solid rgba(66,133,244,.35);border-radius:10px;padding:2px 7px;font-weight:600">📧 Gmail</span><a href="https://mail.google.com/mail/u/0/#inbox/${v.gmailId}" target="_blank" class="btn btn-outline btn-sm" style="border-color:#4285f4;color:#4285f4">📧 Ver email</a>`:v.url?`<a href="${v.url}" target="_blank" class="btn btn-outline btn-sm">Ver oferta →</a>`:''}<button class="btn btn-green btn-sm" onclick='addV(${vS})'>+ Tracker</button><button class="btn btn-danger btn-sm" onclick="showDiscardMenu(this,'${(v.empresa||'').replace(/'/g,"&#39;")}','${sec}')">🗑️ Eliminar</button></div></div>`;
     }).join('');
     html+='</div></div>';
   }
