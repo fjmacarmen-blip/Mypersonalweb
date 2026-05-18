@@ -902,7 +902,7 @@ async function runSearch(){
   document.getElementById('srch-prog').style.display='block';
   document.getElementById('srch-res').innerHTML='';
   document.getElementById('srch-hist').style.display='none';
-  document.getElementById('srch-steps').innerHTML=['hotel','docencia','admin','gmail','compile'].map(s=>`<div class="sstep" id="ss-${s}"><div class="sic"></div><span>${{hotel:'Adzuna: Director Hotelero...',docencia:'Adzuna: Docente FP...',admin:'Adzuna: Puestos administrativos...',gmail:'Gmail: Ofertas en tu correo...',compile:'Groq analizando match...'}[s]}</span></div>`).join('');
+  document.getElementById('srch-steps').innerHTML=['hotel','docencia','admin','gmail','compile'].map(s=>`<div class="sstep" id="ss-${s}"><div class="sic"></div><span>${{hotel:'Adzuna: Director Hotelero...',docencia:'Adzuna: Docente FP...',admin:'Adzuna: Puestos administrativos...',gmail:'Gmail: emails desde último acceso...',compile:'Groq analizando match...'}[s]}</span></div>`).join('');
   const results={hotel:[],docencia:[],admin:[]};
   for(const sec of['hotel','docencia','admin']){
     setSSt(sec,'active');
@@ -936,13 +936,16 @@ async function runSearch(){
       setSSt(sec,'done');
     }catch(err){results[sec]=[{empresa:'Sin resultados',puesto:'Error: '+err.message,ubicacion:'—',salario:'—',portal:'—',url:'',match:'Bajo',motivo_match:'No se pudo completar',accion:'Descartar',sector:sec,interacciones:[]}];setSSt(sec,'err');}
   }
-  // ── Gmail: merge if token already available (no new OAuth popup during search) ──
+  // ── Gmail: auto-authenticate if needed, query only since last sync ──
   let gmailJobs=[];
-  if(_gmailToken&&getGClientId()){
+  if(getGClientId()){
     setSSt('gmail','active');
     try{
+      if(!_gmailToken) await getGmailToken();
+      const lastSync=parseInt(localStorage.getItem('fjm_gmail_last_sync')||'0');
+      const afterTs=lastSync>0?Math.floor(lastSync/1000):Math.floor((Date.now()-30*24*3600*1000)/1000);
       const portQuery=GMAIL_PORTALS.map(s=>`from:${s}`).join(' OR ');
-      const q=encodeURIComponent(`(${portQuery} OR subject:oferta OR subject:vacancy) newer_than:30d`);
+      const q=encodeURIComponent(`(${portQuery} OR subject:oferta OR subject:vacancy) after:${afterTs}`);
       const gList=await gmailFetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages?q=${q}&maxResults=20`);
       if(gList.messages?.length){
         const seen=new Set([...results.hotel,...results.docencia,...results.admin].map(v=>v.gmailId).filter(Boolean));
@@ -956,11 +959,12 @@ async function runSearch(){
           await new Promise(r=>setTimeout(r,200));
         }
       }
+      localStorage.setItem('fjm_gmail_last_sync',Date.now().toString());
       setSSt('gmail','done');
-    }catch(e){setSSt('gmail','err');}
+    }catch(e){setSSt('gmail','err');console.error('Gmail search error:',e);}
   }else{
-    setSSt('gmail',getGClientId()?'':'err');
-    if(getGClientId())document.querySelector('#ss-gmail span').textContent='Gmail: pulsa 📧 para autenticar primero';
+    setSSt('gmail','err');
+    document.querySelector('#ss-gmail span').textContent='Gmail: configura Client ID en Config';
   }
   setSSt('compile','active');await new Promise(r=>setTimeout(r,500));setSSt('compile','done');
   const all=[...results.hotel,...results.docencia,...results.admin,...gmailJobs];
@@ -1032,8 +1036,10 @@ async function syncGmail(){
   try{
     await getGmailToken();
     btn.textContent='📧 Buscando emails empleo...';
+    const lastSync=parseInt(localStorage.getItem('fjm_gmail_last_sync')||'0');
+    const afterTs=lastSync>0?Math.floor(lastSync/1000):Math.floor((Date.now()-30*24*3600*1000)/1000);
     const portQuery=GMAIL_PORTALS.map(s=>`from:${s}`).join(' OR ');
-    const q=encodeURIComponent(`(${portQuery} OR subject:oferta OR subject:vacancy OR subject:empleo) newer_than:30d`);
+    const q=encodeURIComponent(`(${portQuery} OR subject:oferta OR subject:vacancy OR subject:empleo) after:${afterTs}`);
     const list=await gmailFetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages?q=${q}&maxResults=30`);
     if(!list.messages?.length){toast('📭 Sin emails de empleo recientes en Gmail');btn.disabled=false;btn.textContent='📧 Gmail';return;}
     const alreadySeen=new Set((data.searchHistory.flatMap(h=>h.vacantes||[]).map(v=>v.gmailId)).filter(Boolean));
@@ -1049,12 +1055,13 @@ async function syncGmail(){
       }catch(e){}
       await new Promise(r=>setTimeout(r,250));
     }
+    localStorage.setItem('fjm_gmail_last_sync',Date.now().toString());
     if(newJobs.length){
       data.searchHistory.unshift({date:today(),timestamp:Date.now(),total:newJobs.length,byAlto:newJobs.filter(v=>v.match==='Alto').length,vacantes:newJobs,source:'gmail'});
       if(data.searchHistory.length>30)data.searchHistory=data.searchHistory.slice(0,30);
       save();uCounts();rSRes(newJobs);uSMeta();
       toast('✅ '+newJobs.length+' ofertas importadas desde Gmail');
-    }else{toast('✅ Gmail procesado — sin ofertas válidas detectadas');}
+    }else{toast('✅ Gmail al día — sin nuevas ofertas desde el último acceso');}
   }catch(err){toast('❌ Gmail: '+err.message);}
   btn.disabled=false;btn.textContent='📧 Gmail';
 }
