@@ -1224,21 +1224,27 @@ const SL2={hotel:'Hostelería/Dirección Hotelera',docencia:'Docencia FP Hostele
 function bDP(doc,emp,cargo,sec,ctx,tono){
   const t=TD[tono]||TD.ejecutivo;const s=SL2[sec]||sec;
   const P={
-    carta:`Redacta una CARTA DE PRESENTACIÓN ESTRATÉGICA en español, formal y personalizada para la empresa específica.
+    carta:`Redacta una CARTA DE PRESENTACIÓN en español para el cargo "${cargo}" en "${emp}".
 PERFIL COMPLETO DEL CANDIDATO:
 ${PM}
-EMPRESA TARGET: "${emp}" | CARGO SOLICITADO: "${cargo}" | SECTOR: ${s} | CONTEXTO DE LA EMPRESA: ${ctx||'No especificado'} | TONO: ${t}
+EMPRESA: "${emp}" | CARGO: "${cargo}" | SECTOR: ${s} | CONTEXTO: ${ctx||'No especificado'} | TONO: ${t}
 
-ESTRUCTURA OBLIGATORIA (4-5 párrafos, 380-450 palabras):
-1. APERTURA — "A la atención del Departamento de Selección de ${emp}," + párrafo de apertura expresando por qué es un privilegio candidatarse a "${emp}" específicamente (usa el contexto dado sobre la empresa)
-2. TRAYECTORIA Y ARRAIGO — Vinculación del candidato con este tipo de empresa/sector + 2-3 logros concretos con datos reales (hoteles específicos, años, cifras como +400 hab., 30 años, 10.987 días)
-3. VENTAJA COMPETITIVA 2026 — El diferencial "Bridge Leader 4.0": cómo las especializaciones 2026 (IA, ESG, SSCE0110 nota 8,62) aportan valor concreto a "${emp}" para el cargo "${cargo}"
-4. PROPUESTA DE VALOR ESPECÍFICA — Qué aporta exactamente a "${emp}": eficiencia operativa, GOP, estándares, liderazgo de equipos, cumplimiento normativo
-5. CIERRE CON CTA — Agradecimiento + llamada explícita a entrevista personal + disponibilidad inmediata y traslado total
+ESTRUCTURA (4 parrafos, 300-370 palabras):
+1. APERTURA — "A la atencion del Departamento de Seleccion de ${emp}," + por que "${emp}" especificamente, referenciando algo concreto de la empresa o el cargo
+2. TRAYECTORIA — 2-3 logros concretos con datos reales (hoteles, anos, cifras como +400 hab., 30 anos, 10.987 dias) conectados directamente a lo que "${emp}" necesita para "${cargo}"
+3. DIFERENCIAL 2026 — Como IA aplicada (90h, 2026), ESG/SEAG16 y SSCE0110 (nota 8,62) aportan valor tangible a "${emp}" para "${cargo}" especificamente
+4. CIERRE — Solicitud directa de entrevista + disponibilidad inmediata y traslado total
 
-FIRMA AL PIE: Francisco Javier Martínez Alba | 635 493 853 | pacozzy@hotmail.com
+FIRMA: Francisco Javier Martinez Alba | 635 493 853 | pacozzy@hotmail.com
 
-REGLAS CRÍTICAS: Tono ${t}. Primera persona. Sin asteriscos ni markdown. Párrafos fluidos y bien construidos. Mencionar "${emp}" al menos 2 veces en el cuerpo. Usar cifras y nombres reales del candidato. Terminar siempre con "Atentamente," y firma completa.`,
+REGLAS DE ESCRITURA (CRITICAS):
+- Escribe como un profesional real, no como un AI. Frases cortas. Una idea por frase.
+- Cada logro menciona: que hizo + como + resultado medible
+- Menciona "${emp}" minimo 2 veces en el cuerpo
+- No usar: "me complace", "con el fin de", "en virtud de", "en el marco de", "contribuyendo a"
+- No usar gerundios encadenados: mal "gestionando equipos logrando resultados"; bien "Gestione X equipos. Resultado: Y"
+- Sin asteriscos, markdown, guiones dobles ni caracteres especiales
+- Terminar siempre con "Atentamente," + firma completa`,
 
     perfil:`Redacta un PERFIL EJECUTIVO Y PROPUESTA DE VALOR en español.
 PERFIL COMPLETO DEL CANDIDATO:
@@ -1262,36 +1268,45 @@ ESTRUCTURA OBLIGATORIA (máx 320 palabras):
 
 REGLAS: Tono ${t}. Negrita solo en conceptos clave de cada bullet. Texto plano en el resto.`,
 
-    cv:`Redacta un CV ADAPTADO en español para el cargo "${cargo}" en la empresa "${emp}".
+    cv:`Redacta un CV ADAPTADO en espanol para el cargo "${cargo}" en "${emp}".
 PERFIL COMPLETO DEL CANDIDATO:
 ${PM}
 SECTOR: ${s} | TONO: ${t}
 
-ESTRUCTURA (texto plano, secciones en MAYÚSCULAS, máx 520 palabras):
-1. ENCABEZADO — Francisco Javier Martínez Alba | 635 493 853 | pacozzy@hotmail.com | Algeciras (Cádiz) | [Título adaptado al cargo]
+ESTRUCTURA (texto plano, secciones en MAYUSCULAS, max 520 palabras):
+1. ENCABEZADO — Francisco Javier Martinez Alba | 635 493 853 | pacozzy@hotmail.com | Algeciras (Cadiz) | [Titulo adaptado exactamente a "${cargo}"]
 
-2. PERFIL EJECUTIVO — 3-4 líneas resumen ejecutivo orientado específicamente a "${cargo}" en "${emp}"
+2. PERFIL EJECUTIVO — 3 frases cortas (max 20 palabras cada una) orientadas a "${cargo}" en "${emp}". Sin listas de cualidades, sin comas encadenando 4 cosas. Una idea por frase.
 
-3. TRAYECTORIA DIRECTIVA — Selecciona las 4-5 experiencias más relevantes para "${cargo}". Para cada una:
-   CARGO | EMPRESA | PERÍODO
-   · Bullet de logro concreto con cifra o resultado
-   · Bullet de responsabilidad o habilidad relevante para "${cargo}"
+3. TRAYECTORIA DIRECTIVA — Las 4-5 experiencias MAS relevantes para "${cargo}". Para cada una:
+   CARGO | EMPRESA | PERIODO
+   - [Verbo accion fuerte en pasado] + [como lo hizo] + [resultado medible con cifra]
+   - [Verbo accion fuerte en pasado] + [responsabilidad relevante para "${cargo}"]
+   (Verbos buenos: Dirigi, Implante, Reduje, Incremente, Reestructure, Lideré, Negocié)
+   (Verbos malos: Siendo responsable de, Contribuyendo a, Apoyando, Colaborando en)
 
 4. ESPECIALIZACIONES 2026
-   · IA Aplicada al Sector Administrativo — 90h, Cámara Comercio, Mar.2026
-   · Inglés Comercial C1 — 60h, Cámara Comercio, Abr.2026
-   · Docencia FPE SSCE0110 — 380h, Junta Andalucía, Dic.2025 (nota 8,62)
-   · Sostenibilidad ESG/SEAG16 — 100h, SEPE, 2024
-   · Ciberseguridad IFCT103 — 49h, SEPE, 2024
+   - IA Aplicada al Sector Administrativo — 90h, Camara Comercio, Mar.2026
+   - Ingles Comercial C1 — 60h, Camara Comercio, Abr.2026
+   - Docencia FPE SSCE0110 — 380h, Junta Andalucia, Dic.2025 (nota 8,62)
+   - Sostenibilidad ESG/SEAG16 — 100h, SEPE, 2024
+   - Ciberseguridad IFCT103 — 49h, SEPE, 2024
 
 5. CERTIFICACIONES OFICIALES
-   · ADGG0108 Asistencia a la Dirección N3 (UC0988_3 · UC0980_2 · UC0979_2)
-   · ADGG0308 Asistencia Documental N3 (UC0987_3)
-   · TEAT — Universidad de Cádiz (Escuela de Turismo de Jerez)
+   - ADGG0108 Asistencia a la Direccion N3 (UC0988_3, UC0980_2, UC0979_2)
+   - ADGG0308 Asistencia Documental N3 (UC0987_3)
+   - TEAT — Universidad de Cadiz (Escuela de Turismo de Jerez)
 
-6. IDIOMAS — Inglés C1 funcional (B1 certificado) · Alemán B1 operativo (A2 certificado) · Francés/Italiano funcional
+6. IDIOMAS — Ingles C1 funcional (B1 certificado) | Aleman B1 operativo (A2 certificado) | Frances/Italiano funcional
 
-7. DISPONIBILIDAD — Inmediata · Traslado total · Nacional e internacional`,
+7. DISPONIBILIDAD — Inmediata | Traslado total | Nacional e internacional
+
+REGLAS DE ESCRITURA (CRITICAS):
+- Cada bullet: verbo en pasado + metodo + resultado con cifra cuando sea posible
+- Reordena los bullets poniendo primero los MAS relevantes para "${cargo}"
+- Espeja el lenguaje de "${cargo}": si el cargo dice "revenue management" usa ese termino
+- Sin asteriscos, markdown ni caracteres especiales. Solo guiones normales.
+- No usar: "demostrando capacidad de", "con amplia trayectoria en", "altamente cualificado"`,
 
     email:`Redacta un EMAIL / MENSAJE LINKEDIN en español para el cargo "${cargo}" en "${emp}".
 CANDIDATO: Bridge Leader 4.0 | 30 años dirección hotelera | IA 2026 | SSCE0110 nota 8,62 | 635 493 853 | pacozzy@hotmail.com
@@ -1311,43 +1326,35 @@ Senior Hospitality Executive · Bridge Leader 4.0
 Tel: 635 493 853 | pacozzy@hotmail.com
 
 REGLAS: Cuerpo máximo 120 palabras. Directo, ejecutivo, sin jerga. Sin markdown ni asteriscos.`
-    ,ats:`Eres un experto en sistemas ATS (Applicant Tracking System) y selección de personal. Analiza la compatibilidad del candidato con el puesto y genera un informe completo.
+    ,ats:`Eres un experto en sistemas ATS (Applicant Tracking System) y seleccion de personal. Analiza la compatibilidad del candidato con el puesto y genera un informe completo.
 PERFIL COMPLETO DEL CANDIDATO:
 ${PM}
 EMPRESA: "${emp}" | CARGO: "${cargo}" | SECTOR: ${s} | TONO: ${t}
 
-GENERA UN INFORME ATS COMPLETO con estas 4 secciones:
+GENERA UN INFORME ATS COMPLETO con estas 4 secciones. Usa === como separador:
 
-══════════════════════════════════
-🤖 PUNTUACIÓN ATS ESTIMADA: [X/100]
-══════════════════════════════════
-Explicación breve de la puntuación (2-3 líneas).
+=== PUNTUACION ATS ESTIMADA: [X/100] ===
+Explicacion breve de la puntuacion (2-3 lineas).
 
-══════════════════════════════════
-🔑 PALABRAS CLAVE ATS CRÍTICAS
-══════════════════════════════════
+=== PALABRAS CLAVE ATS CRITICAS ===
 PRESENTES en el perfil del candidato (lista 8-10 keywords del puesto que ya tiene):
-• [keyword] — ✅ cubierta por [experiencia/certificación específica]
+- [keyword]: cubierta por [experiencia/certificacion especifica]
 
-AUSENTES o a reforzar (lista 3-5 keywords importantes que faltan o deben destacarse más):
-• [keyword] — ⚠️ Recomendación: mencionar explícitamente en CV/carta
+AUSENTES o a reforzar (lista 3-5 keywords importantes que faltan o deben destacarse mas):
+- [keyword]: Recomendacion: mencionar explicitamente en CV/carta
 
-══════════════════════════════════
-✏️ CAMBIOS CLAVE PARA OPTIMIZAR EL CV
-══════════════════════════════════
-Lista 5-7 cambios concretos y accionables para mejorar el CV para este puesto específico:
-1. [Cambio específico con justificación]
+=== CAMBIOS CLAVE PARA OPTIMIZAR EL CV ===
+Lista 5-7 cambios concretos y accionables para mejorar el CV para este puesto especifico:
+1. [Cambio especifico con justificacion]
 2. ...
 
-══════════════════════════════════
-🎯 RECOMENDACIONES PARA LA ENTREVISTA
-══════════════════════════════════
-3-4 recomendaciones específicas para la entrevista con "${emp}":
-• Pregunta probable: "[pregunta típica]" → Respuesta sugerida basada en el perfil del candidato
-• Argumento diferenciador: [qué destacar específicamente para "${emp}"]
-• Punto a gestionar: [posible objeción y cómo contrarrestarla]
+=== RECOMENDACIONES PARA LA ENTREVISTA ===
+3-4 recomendaciones especificas para la entrevista con "${emp}":
+- Pregunta probable: "[pregunta tipica]" / Respuesta sugerida basada en el perfil del candidato
+- Argumento diferenciador: [que destacar especificamente para "${emp}"]
+- Punto a gestionar: [posible objecion y como contrarrestarla]
 
-REGLAS: Texto plano, sin markdown. Usa los ══ como separadores visuales. Específico para "${emp}" y "${cargo}". Usa datos reales del candidato.`,
+REGLAS: Solo texto plano y ASCII. Sin markdown, sin emojis, sin caracteres especiales. Especifico para "${emp}" y "${cargo}". Usa datos reales del candidato.`,
     resumen:`Genera un RESUMEN EJECUTIVO ULTRA-BREVE adaptado al cargo y empresa.
 CANDIDATO: Francisco Javier Martínez Alba | Bridge Leader 4.0 | 30 años dirección hotelera | IA 2026 | SSCE0110 nota 8,62 | C1 Inglés | A2 Alemán
 EMPRESA: "${emp}" | CARGO: "${cargo}" | TONO: ${t}
