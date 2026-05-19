@@ -372,6 +372,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
               <div class="do active" data-d="cv" onclick="tdoc('cv')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>CV</div>
               <div class="do" data-d="email" onclick="tdoc('email')"><svg viewBox="0 0 24 24"><path d="M2 10l10-5 10 5-10 5z"/></svg>Email LI</div>
               <div class="do" data-d="ats" onclick="tdoc('ats')"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><polyline points="21 21 16.65 16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>ATS+</div>
+              <div class="do" data-d="resumen" onclick="tdoc('resumen')"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="18" y2="18"/></svg>Resumen</div>
             </div></div>
           </div></div>
           <button class="gbtn" id="dos-btn" onclick="genDossier()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>Generar Dossier Completo</button>
@@ -1217,7 +1218,7 @@ DISPONIBILIDAD: Inmediata · Traslado total nacional e internacional · Sin rest
 FRASE PROPIA: "Mi visión se fundamenta en el equilibrio entre el legado arquitectónico y la vanguardia operativa, utilizando la tecnología para devolver al hotelero su función primordial."`;
 
 const TD={ejecutivo:'Ejecutivo senior maduro. Tono directivo con calidez. Destaca P&L, CAPEX, GOPPAR, LQA/Forbes, liderazgo equipos y cifras concretas.',patrimonial:'Reverencial con el patrimonio hotelero. Destaca Reina Cristina 1901, legado/modernidad, equilibrio entre historia y vanguardia. Cita la frase propia del candidato.',docente:'Vocacional y pedagógico. Destaca SSCE0110 nota 8,62, la vocación de transmitir 30 años de conocimiento, liderazgo formativo como multiplicador de talento.',tecnico:'Técnico y riguroso. Destaca UC0988_3, RGPD, Legionelosis RD487/2022, gestión documental N3, cumplimiento normativo y control de riesgos.',internacional:'Cosmopolita y global. Destaca Hilton UK, Dominican Bay +400hab, movilidad total, Business English C1, Hospitality 5.0, estándares internacionales de lujo.'};
-const DCC={carta:{label:'Carta de Presentación',icon:'✉️',step:'Redactando carta estratégica...'},perfil:{label:'Perfil Ejecutivo',icon:'🎯',step:'Construyendo perfil ejecutivo...'},cv:{label:'CV Adaptado',icon:'📄',step:'Adaptando CV...'},email:{label:'Email / LinkedIn',icon:'📧',step:'Redactando email...'},ats:{label:'Análisis ATS + Entrevista',icon:'🤖',step:'Analizando compatibilidad ATS...'}};
+const DCC={carta:{label:'Carta de Presentación',icon:'✉️',step:'Redactando carta estratégica...'},perfil:{label:'Perfil Ejecutivo',icon:'🎯',step:'Construyendo perfil ejecutivo...'},cv:{label:'CV Adaptado',icon:'📄',step:'Adaptando CV...'},email:{label:'Email / LinkedIn',icon:'📧',step:'Redactando email...'},ats:{label:'Análisis ATS + Entrevista',icon:'🤖',step:'Analizando compatibilidad ATS...'},resumen:{label:'Resumen Ejecutivo (100 car.)',icon:'📌',step:'Generando resumen ejecutivo...'}};
 const SL2={hotel:'Hostelería/Dirección Hotelera',docencia:'Docencia FP Hostelería y Turismo',admin:'Gestión Administrativa y Asistencia a la Dirección'};
 
 function bDP(doc,emp,cargo,sec,ctx,tono){
@@ -1346,7 +1347,18 @@ Lista 5-7 cambios concretos y accionables para mejorar el CV para este puesto es
 • Argumento diferenciador: [qué destacar específicamente para "${emp}"]
 • Punto a gestionar: [posible objeción y cómo contrarrestarla]
 
-REGLAS: Texto plano, sin markdown. Usa los ══ como separadores visuales. Específico para "${emp}" y "${cargo}". Usa datos reales del candidato.`
+REGLAS: Texto plano, sin markdown. Usa los ══ como separadores visuales. Específico para "${emp}" y "${cargo}". Usa datos reales del candidato.`,
+    resumen:`Genera un RESUMEN EJECUTIVO ULTRA-BREVE adaptado al cargo y empresa.
+CANDIDATO: Francisco Javier Martínez Alba | Bridge Leader 4.0 | 30 años dirección hotelera | IA 2026 | SSCE0110 nota 8,62 | C1 Inglés | A2 Alemán
+EMPRESA: "${emp}" | CARGO: "${cargo}" | TONO: ${t}
+
+INSTRUCCIÓN EXACTA: Escribe UNA SOLA LÍNEA de MÁXIMO 100 CARACTERES que sirva como tagline ejecutivo o pitch de titular para este cargo en esta empresa.
+
+EJEMPLOS DE FORMATO (no copies, adapta al cargo y empresa):
+"Director hotelero 30 años · Bridge Leader 4.0 · IA 2026 · Disponible"
+"30 años ops hoteleras · C1 inglés · IA aplicada · Traslado inmediato"
+
+REGLAS CRÍTICAS: Solo el texto del resumen, sin etiquetas ni prefijos. Máximo 100 caracteres — cuenta los caracteres antes de responder. Sin puntuación final. Sin markdown.`
   };return P[doc]||'';}
 
 function setDStep(id,s){const el=document.getElementById('ds-'+id);if(!el)return;el.className='dstep '+(s==='active'?'sa':s==='done'?'sd':s==='err'?'se':'');const ic={active:`<div class="spinner"></div>`,done:'✅',err:'❌'};el.querySelector('.di').innerHTML=ic[s]||'';}
@@ -1387,7 +1399,7 @@ function showDOut(emp,cargo,sec,results,docsArr){
     <button class="btn btn-green btn-sm" onclick="saveDT('${eS}','${cS}','${seS}')">+ Dashboard</button>
     <button id="drive-btn" class="btn btn-dark btn-sm" onclick="uploadDossierToDrive()"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Subir a Drive</button>
   </div>`;
-  html+=docsArr.filter(d=>results[d]).map(d=>`<div class="oc"><div class="och"><div class="ocl"><span style="font-size:18px">${DCC[d].icon}</span><div><div class="oct">${d.toUpperCase()}</div><div class="octt">${DCC[d].label}</div></div></div><div style="display:flex;gap:6px"><button class="btn btn-dark btn-sm" onclick="cpOC('oc-${d}')">📋 Copiar</button><button class="btn btn-dark btn-sm" onclick="dlOC('oc-${d}','${eS}_${d}')">↓ TXT</button></div></div><div class="ocb"><div class="oct-text" id="oc-${d}" contenteditable="true">${eH(results[d])}</div></div></div>`).join('');
+  html+=docsArr.filter(d=>results[d]).map(d=>`<div class="oc"><div class="och"><div class="ocl"><span style="font-size:18px">${DCC[d].icon}</span><div><div class="oct">${d.toUpperCase()}</div><div class="octt">${DCC[d].label}</div></div></div><div style="display:flex;gap:6px"><button class="btn btn-dark btn-sm" onclick="cpOC('oc-${d}')">📋 Copiar</button><button class="btn btn-dark btn-sm" onclick="dlOC('oc-${d}','${eS}_${d}')">↓ TXT</button><button class="btn btn-dark btn-sm" onclick="uploadSingleToDrive('${d}',this)"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Drive</button></div></div><div class="ocb"><div class="oct-text" id="oc-${d}" contenteditable="true">${eH(results[d])}</div></div></div>`).join('');
   document.getElementById('dos-out').innerHTML=html;document.getElementById('dos-out').style.display='block';
 }
 
@@ -1837,7 +1849,7 @@ async function uploadDossierToDrive(){
     const subName=`${emp} — ${cargo} — ${today()}`;
     btn.textContent='📁 Creando subcarpeta...';
     const folderId=await getOrCreateFolder(subName,parentId);
-    const labels={carta:'Carta de Presentación',perfil:'Perfil Ejecutivo',cv:'CV Adaptado',email:'Email LinkedIn'};
+    const labels={carta:'Carta de Presentación',perfil:'Perfil Ejecutivo',cv:'CV Adaptado',email:'Email LinkedIn',resumen:'Resumen Ejecutivo',ats:'Análisis ATS'};
     const keys=Object.keys(results).filter(k=>results[k]&&!results[k].startsWith('Error:'));
     let done=0;
     for(const k of keys){
@@ -1853,6 +1865,29 @@ async function uploadDossierToDrive(){
   }catch(err){
     toast('❌ Error Drive: '+err.message);
     btn.disabled=false;btn.innerHTML='<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Subir a Drive';
+  }
+}
+async function uploadSingleToDrive(k,btn){
+  const {emp,cargo,results}=_driveCurrentDossier;
+  if(!emp){toast('⚠️ Genera primero un dossier');return;}
+  if(!getGClientId()){toast('⚠️ Configura el Google Client ID en Config');gT('config',document.querySelectorAll('.ni')[6]);return;}
+  const labels={carta:'Carta de Presentación',perfil:'Perfil Ejecutivo',cv:'CV Adaptado',email:'Email LinkedIn',resumen:'Resumen Ejecutivo',ats:'Análisis ATS'};
+  const origHTML=btn.innerHTML;
+  try{
+    btn.disabled=true;btn.textContent='⏳...';
+    if(!_gToken)await gAuth();
+    const parentId=await getOrCreateFolder('BUSQUEDA EMPLEO - Dashboard');
+    const subName=`${emp} — ${cargo} — ${today()}`;
+    const folderId=await getOrCreateFolder(subName,parentId);
+    const txt=document.getElementById('oc-'+k)?.innerText||results[k];
+    const pdf=buildPDF(labels[k]||k,emp,cargo,txt,k);
+    await uploadPDF(`${k}_${emp}_FJM.pdf`,pdf,folderId);
+    btn.textContent='✅';
+    toast(`✅ ${labels[k]||k} subido a Drive`);
+    setTimeout(()=>{btn.disabled=false;btn.innerHTML=origHTML;},3000);
+  }catch(err){
+    toast('❌ Error Drive: '+err.message);
+    btn.disabled=false;btn.innerHTML=origHTML;
   }
 }
 
