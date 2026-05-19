@@ -340,7 +340,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
     <div class="tc" id="tc-busqueda">
       <div class="sh-hero">
         <div style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;margin-bottom:5px">🔍 Búsqueda Diaria de Vacantes</div>
-        <div style="font-size:11px;color:var(--muted);margin-bottom:14px;line-height:1.5">Adzuna extrae vacantes reales de Infojobs, Indeed, LinkedIn España y Turijobs. Groq (llama-3.3-70b) analiza el match y recomienda la acción óptima.</div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:14px;line-height:1.5">Adzuna extrae vacantes reales de Infojobs, Indeed, LinkedIn España y Turijobs. Claude (Haiku) analiza el match y recomienda la acción óptima.</div>
         <div style="margin-bottom:14px"><span class="shb shb-h">🏨 Director / GM</span><span class="shb shb-d">🎓 Docente FP</span><span class="shb shb-a">📋 Asistente Dir.</span><span class="shb shb-g">🌍 España + Internacional</span></div>
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
           <div><div style="font-size:11px;color:var(--muted)" id="ls">Sin búsquedas previas</div><div style="font-size:11px;color:var(--gold);font-weight:600;margin-top:3px" id="ns2">Ejecuta tu primera búsqueda</div></div>
@@ -381,7 +381,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
           <div id="dos-empty" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:48px 24px;text-align:center">
             <div style="font-size:32px;margin-bottom:10px">✨</div>
             <div style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:700;margin-bottom:8px">Dossier Adaptativo con IA</div>
-            <p style="font-size:12px;color:var(--muted);line-height:1.6;max-width:260px;margin:0 auto 14px">Rellena el formulario, elige el tono y Groq generará carta + perfil + CV + análisis ATS en segundos.</p>
+            <p style="font-size:12px;color:var(--muted);line-height:1.6;max-width:260px;margin:0 auto 14px">Rellena el formulario, elige el tono y Claude generará carta + perfil + CV + análisis ATS con diseño profesional.</p>
             <div style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center">
               <span style="padding:3px 9px;border-radius:100px;border:1px solid var(--gold-border);background:var(--gold-bg);font-size:10px;color:var(--gold)">Q Hotels</span>
               <span style="padding:3px 9px;border-radius:100px;border:1px solid var(--gold-border);background:var(--gold-bg);font-size:10px;color:var(--gold)">Castilla Termal</span>
@@ -461,15 +461,15 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
     <div class="tc" id="tc-config">
       <div class="sh"><div class="sh-t">Configuración</div></div>
       <div style="display:flex;flex-direction:column;gap:12px">
-        <div class="dc"><div class="dch"><span class="dct">🔑 Groq API Key</span></div><div class="dcb">
-  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">Tu API key se guarda en el navegador (localStorage). <strong style="color:var(--text)">Nunca se sube a GitHub.</strong></p>
+        <div class="dc"><div class="dch"><span class="dct">🤖 Claude API Key</span></div><div class="dcb">
+  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">Tu API key se guarda en el navegador (localStorage). <strong style="color:var(--text)">Nunca se sube a GitHub.</strong> Empieza por <code style="color:var(--gold)">sk-ant-...</code></p>
   <div id="api-status-block"></div>
   <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap">
     <button class="btn btn-gold btn-sm" onclick="document.getElementById('api-modal').style.display='flex';document.getElementById('api-key-input').value=getAPIKey();document.getElementById('api-save-btn').style.opacity='1'">🔑 Configurar API key</button>
     <button class="btn btn-dark btn-sm" onclick="if(confirm('¿Borrar API key?')){localStorage.removeItem('fjm_api_key');renderAPIStatus();toast('🗑️ API key eliminada');}">Eliminar key</button>
-    <a href="https://console.groq.com/keys" target="_blank" class="btn btn-dark btn-sm">Obtener key gratis →</a>
+    <a href="https://console.anthropic.com/settings/api-keys" target="_blank" class="btn btn-dark btn-sm">Obtener key →</a>
   </div>
-  <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:10px;color:var(--muted)">Modelo: llama-3.3-70b · Funciones: Dossier adaptativo · Análisis de vacantes · Generador LinkedIn</div>
+  <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:10px;color:var(--muted)">Modelo: claude-haiku-4-5 · Funciones: Dossier adaptativo · PDF profesional · Análisis ATS · Generador LinkedIn</div>
 </div></div>
         <div class="dc"><div class="dch"><span class="dct">🔍 Adzuna API — Vacantes reales</span></div><div class="dcb">
   <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">Adzuna agrega ofertas reales de Infojobs, Indeed, LinkedIn España. <strong style="color:var(--text)">250 búsquedas/mes gratis.</strong></p>
@@ -930,7 +930,7 @@ async function runSearch(){
   document.getElementById('srch-prog').style.display='block';
   document.getElementById('srch-res').innerHTML='';
   document.getElementById('srch-hist').style.display='none';
-  document.getElementById('srch-steps').innerHTML=['hotel','docencia','admin','gmail','compile'].map(s=>`<div class="sstep" id="ss-${s}"><div class="sic"></div><span>${{hotel:'Adzuna: Director Hotelero...',docencia:'Adzuna: Docente FP...',admin:'Adzuna: Puestos administrativos...',gmail:'Gmail: emails desde último acceso...',compile:'Groq analizando match...'}[s]}</span></div>`).join('');
+  document.getElementById('srch-steps').innerHTML=['hotel','docencia','admin','gmail','compile'].map(s=>`<div class="sstep" id="ss-${s}"><div class="sic"></div><span>${{hotel:'Adzuna: Director Hotelero...',docencia:'Adzuna: Docente FP...',admin:'Adzuna: Puestos administrativos...',gmail:'Gmail: emails desde último acceso...',compile:'Claude analizando match...'}[s]}</span></div>`).join('');
   const results={hotel:[],docencia:[],admin:[]};
   for(const sec of['hotel','docencia','admin']){
     setSSt(sec,'active');
@@ -1413,11 +1413,11 @@ function lDH(i){
   showDOut(h.empresa,h.cargo,h.sector,h.docs,Object.keys(h.docs));toast('📂 Dossier cargado: '+h.empresa);
 }
 
-// GROQ API
+// CLAUDE API
 function getAPIKey(){return localStorage.getItem('fjm_api_key')||'';}
 function saveAPIKey(){
   const k=document.getElementById('api-key-input').value.trim();
-  if(!k.startsWith('gsk_')){alert('⚠️ La clave de Groq debe empezar por gsk_...');return;}
+  if(!k.startsWith('sk-ant-')){alert('⚠️ La clave de Claude debe empezar por sk-ant-...');return;}
   localStorage.setItem('fjm_api_key',k);
   document.getElementById('api-modal').style.display='none';
   toast('✅ API key guardada — ya puedes usar la búsqueda y el dossier');
@@ -1433,17 +1433,26 @@ function checkAPIKey(){
 async function cClaude(prompt){
   const apiKey=getAPIKey();
   if(!apiKey){checkAPIKey();throw new Error('API key no configurada. Ve a Config → API Key.');}
-  const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+  const res=await fetch('https://api.anthropic.com/v1/messages',{
     method:'POST',
-    headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
-    body:JSON.stringify({model:'llama-3.3-70b-versatile',messages:[{role:'user',content:prompt}],max_tokens:2048})
+    headers:{
+      'Content-Type':'application/json',
+      'x-api-key':apiKey,
+      'anthropic-version':'2023-06-01',
+      'anthropic-dangerous-allow-browser':'true'
+    },
+    body:JSON.stringify({
+      model:'claude-haiku-4-5-20251001',
+      max_tokens:2048,
+      messages:[{role:'user',content:prompt}]
+    })
   });
   const d=await res.json();
   if(!res.ok){
     if(res.status===401){localStorage.removeItem('fjm_api_key');checkAPIKey();throw new Error('API key inválida — vuelve a introducirla');}
     throw new Error(d.error?.message||'API error '+res.status);
   }
-  return d.choices?.[0]?.message?.content||'';
+  return d.content?.[0]?.text||'';
 }
 
 const PPROF=`Francisco Javier Martínez Alba. Director Hotel 30 años, Bridge Leader 4.0. IA 2026. SSCE0110 Docente FP nota 8,62. Business English C1.`;
@@ -1546,22 +1555,251 @@ async function getOrCreateFolder(name,parentId){
   const d=await driveFetch('https://www.googleapis.com/drive/v3/files',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(meta)});
   return d.id;
 }
-function buildPDF(titulo,empresa,cargo,contenido){
+function buildPDF(titulo,empresa,cargo,contenido,tipo){
   const {jsPDF}=window.jspdf;
-  const doc=new jsPDF({unit:'mm',format:'a4'});
-  doc.setFont('helvetica','bold');doc.setFontSize(13);doc.setTextColor(30);
-  doc.text('Francisco Javier Martínez Alba',20,18);
-  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(120);
-  doc.text('635 493 853 · pacozzy@hotmail.com · Algeciras (Cádiz) · Bridge Leader 4.0',20,24);
-  doc.setDrawColor(201,168,76);doc.setLineWidth(0.5);doc.line(20,27,190,27);
-  doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(160,130,50);
-  doc.text(titulo,20,35);
-  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(100);
-  doc.text(`${empresa} · ${cargo}`,20,41);
-  doc.setTextColor(30);doc.setFontSize(10);
-  const lines=doc.splitTextToSize(contenido||'',170);
-  let y=50;
-  for(const l of lines){if(y>280){doc.addPage();y=20;}doc.text(l,20,y);y+=5.2;}
+  // pt units para máximo control tipográfico (igual que pdf-lib)
+  const doc=new jsPDF({unit:'pt',format:'a4'});
+  const W=595.28,H=841.89,ML=45,MR=45,CW=W-ML-MR;
+
+  // ── Paleta ──────────────────────────────────────
+  const BLUE=[31,78,121],BLUEL=[46,117,182],BGROW=[238,244,251];
+  const GRAY=[89,89,89],LGRAY=[160,160,160],WHITE=[255,255,255],BLACK=[20,20,20];
+  const GOLD=[201,168,76];
+
+  // tipos de documento → color de acento lateral
+  const TIPO_COLOR={carta:BLUEL,cv:BLUE,perfil:BLUEL,email:[80,140,80],ats:[120,60,180]};
+  const accentC=TIPO_COLOR[tipo]||BLUEL;
+
+  // ── Estado por página ─────────────────────────────
+  let y=0,pageNum=0;
+  const pages=[];
+
+  function newPage(isFirst){
+    doc.addPage && pageNum>0 ? doc.addPage() : null;
+    pageNum++;
+    pages.push(pageNum);
+
+    if(isFirst){
+      // CABECERA AZUL COMPLETA
+      const HDR=100;
+      doc.setFillColor(...BLUE);
+      doc.rect(0,0,W,HDR,'F');
+      // Nombre
+      doc.setFont('helvetica','bold');doc.setFontSize(16.5);
+      doc.setTextColor(...WHITE);
+      doc.text('FRANCISCO JAVIER MARTÍNEZ ALBA',ML,34);
+      // Subtítulo documento
+      doc.setFont('helvetica','italic');doc.setFontSize(9);
+      doc.setTextColor(140,200,255);
+      doc.text(titulo+'  ·  '+empresa,ML,51);
+      // Separador
+      doc.setDrawColor(80,130,200);doc.setLineWidth(0.5);
+      doc.line(ML,58,W-MR,58);
+      // Contacto
+      doc.setFont('helvetica','normal');doc.setFontSize(7.5);
+      doc.setTextColor(...WHITE);
+      doc.text('Tel: 635 493 853   ·   pacozzy@hotmail.com   ·   Algeciras (Cádiz)   ·   fjmacarmen-blip.github.io/Mypersonalweb/cv.html',ML,72);
+      // Cargo / rol
+      doc.setTextColor(180,215,255);
+      doc.text(cargo||'Director de Hotel  |  Bridge Leader 4.0',ML,86);
+      y=HDR+18;
+    } else {
+      // MINI CABECERA en páginas siguientes
+      doc.setFillColor(...BLUE);
+      doc.rect(0,0,W,24,'F');
+      doc.setFont('helvetica','bold');doc.setFontSize(8);
+      doc.setTextColor(...WHITE);
+      doc.text('FRANCISCO JAVIER MARTÍNEZ ALBA  ·  '+empresa+'  ·  '+titulo,ML,16);
+      y=40;
+    }
+  }
+
+  function checkPage(needed){
+    if(y+(needed||14)>H-50) newPage(false);
+  }
+
+  // ── Helpers de dibujo ─────────────────────────────
+  function sectionLine(text){
+    checkPage(28);
+    y+=6;
+    doc.setFillColor(...BLUEL);
+    doc.rect(ML,y-1,CW,1.5,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(9.5);
+    doc.setTextColor(...BLUE);
+    doc.text(text.replace(/^[0-9]+[.\-\s]+/,'').toUpperCase(),ML,y+8);
+    y+=18;
+  }
+
+  function bodyLine(text,size,style,color,indent){
+    const sz=size||9,st=style||'normal',cl=color||GRAY,ix=indent||0;
+    doc.setFont('helvetica',st);doc.setFontSize(sz);doc.setTextColor(...cl);
+    const wrapped=doc.splitTextToSize(text,CW-ix);
+    checkPage(wrapped.length*(sz*1.45));
+    doc.text(wrapped,ML+ix,y);
+    y+=wrapped.length*(sz*1.45)+1;
+  }
+
+  function bulletLine(text,size){
+    const sz=size||8.5;
+    const wrapped=doc.splitTextToSize(text.replace(/^[·\-•]\s*/,''),CW-16);
+    checkPage(wrapped.length*(sz*1.4)+3);
+    doc.setFont('helvetica','normal');doc.setFontSize(sz);
+    doc.setTextColor(...BLUEL);
+    doc.text('–',ML+3,y);
+    doc.setTextColor(...GRAY);
+    doc.text(wrapped,ML+14,y);
+    y+=wrapped.length*(sz*1.4)+3;
+  }
+
+  function separatorLine(){
+    checkPage(12);
+    doc.setDrawColor(...BLUEL);doc.setLineWidth(0.3);
+    doc.line(ML,y+2,W-MR,y+2);
+    y+=10;
+  }
+
+  function drawTableRow(cols,widths,rowIdx,header){
+    const ROW_H=14;
+    checkPage(ROW_H+4);
+    if(header){
+      doc.setFillColor(...BLUE);
+    } else {
+      if(rowIdx%2===0) doc.setFillColor(...BGROW);
+      else doc.setFillColor(...WHITE);
+    }
+    doc.rect(ML,y-ROW_H+3,CW,ROW_H,'F');
+    doc.setFont('helvetica',header?'bold':'normal');
+    doc.setFontSize(7.5);
+    doc.setTextColor(...(header?WHITE:GRAY));
+    let x=ML+3;
+    cols.forEach((c,i)=>{
+      doc.text(String(c),x,y-3);
+      x+=widths[i];
+    });
+    y+=ROW_H-2;
+  }
+
+  // ── Iniciar página 1 ────────────────────────────
+  newPage(true);
+
+  // ── Parser de contenido ─────────────────────────
+  const rawLines=(contenido||'').split('\n');
+  let i=0;
+  while(i<rawLines.length){
+    const line=rawLines[i].trimEnd();
+    const trim=line.trim();
+    i++;
+
+    if(!trim){y+=5;continue;}
+
+    // Separadores visuales tipo ══════
+    if(/^[═=─]{6,}/.test(trim)){separatorLine();continue;}
+
+    // SECCIÓN: línea ALL-CAPS de 6+ chars o con número al inicio
+    if(/^[0-9]+[\.\)]\s+[A-ZÁÉÍÓÚÑÜ\s&·\-—\/]{4,}$/.test(trim)||
+       /^[A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s&·\-—\/]{5,}[A-ZÁÉÍÓÚÑÜ]$/.test(trim)){
+      sectionLine(trim);
+      continue;
+    }
+
+    // Emoji + sección (ej: 🤖 PUNTUACIÓN ATS)
+    if(/^[🤖🎯✏️🔑]{1}\s+[A-ZÁÉÍÓÚÑÜ]/.test(trim)){
+      sectionLine(trim.replace(/^[^\s]+\s/,''));
+      continue;
+    }
+
+    // BULLETS: · - • o con indentación
+    if(/^[·\-•]\s/.test(trim)||/^\s{2,}[·\-•]\s/.test(line)){
+      bulletLine(trim);
+      continue;
+    }
+
+    // FIRMA / CIERRE
+    if(/^Atentamente[,.]?$/i.test(trim)){
+      y+=8;
+      doc.setFont('helvetica','italic');doc.setFontSize(9);
+      doc.setTextColor(...LGRAY);
+      doc.text(trim,ML,y);
+      y+=14;
+      continue;
+    }
+    if(/^Francisco Javier/.test(trim)){
+      doc.setFont('helvetica','bold');doc.setFontSize(9);
+      doc.setTextColor(...BLUE);
+      doc.text(trim,ML,y);
+      y+=13;
+      continue;
+    }
+    if(/^635 493 853|^pacozzy@/.test(trim)){
+      doc.setFont('helvetica','normal');doc.setFontSize(8);
+      doc.setTextColor(...LGRAY);
+      doc.text(trim,ML,y);
+      y+=12;
+      continue;
+    }
+
+    // Línea tipo "CARGO | EMPRESA | PERÍODO" (tabla inline)
+    if(/\|/.test(trim)&&trim.split('|').length>=2&&trim.length<120){
+      const parts=trim.split('|').map(p=>p.trim());
+      checkPage(22);
+      doc.setFillColor(...BGROW);
+      doc.rect(ML,y-11,CW,14,'F');
+      doc.setFont('helvetica','bold');doc.setFontSize(8.5);
+      doc.setTextColor(...BLUE);
+      doc.text(parts[0],ML+4,y);
+      if(parts[1]){
+        const pw=doc.getTextWidth(parts[1]);
+        doc.setFont('helvetica','italic');doc.setFontSize(8);
+        doc.setTextColor(...BLUEL);
+        doc.text(parts[1],ML+CW/2-pw/2,y);
+      }
+      if(parts[2]){
+        const pw2=doc.getTextWidth(parts[2]);
+        doc.setFont('helvetica','bold');doc.setFontSize(8);
+        doc.setTextColor(...BLUEL);
+        doc.text(parts[2],ML+CW-pw2-2,y);
+      }
+      y+=16;
+      continue;
+    }
+
+    // Puntuación ATS — "X/100"
+    if(/\d+\/100/.test(trim)){
+      checkPage(30);
+      const score=trim.match(/(\d+)\/100/)?.[1]||'?';
+      doc.setFillColor(...BLUE);
+      doc.roundedRect(ML,y-16,CW,26,4,4,'F');
+      doc.setFont('helvetica','bold');doc.setFontSize(18);
+      doc.setTextColor(...WHITE);
+      const sw=doc.getTextWidth(score+'/100');
+      doc.text(score+'/100',W/2-sw/2,y+4);
+      y+=30;
+      continue;
+    }
+
+    // Texto normal
+    bodyLine(trim);
+  }
+
+  // ── FOOTER en todas las páginas ─────────────────
+  const total=doc.internal.getNumberOfPages();
+  for(let p=1;p<=total;p++){
+    doc.setPage(p);
+    doc.setDrawColor(...BLUEL);doc.setLineWidth(0.4);
+    doc.line(ML,H-36,W-MR,H-36);
+    doc.setFont('helvetica','italic');doc.setFontSize(7);
+    doc.setTextColor(...LGRAY);
+    doc.text('Francisco Javier Martínez Alba  ·  '+titulo+'  ·  '+empresa,ML,H-22);
+    doc.setFont('helvetica','normal');doc.setTextColor(...BLUEL);
+    const pg=`${p} / ${total}`;
+    doc.text(pg,W-MR-doc.getTextWidth(pg),H-22);
+    // Fecha generación
+    const hoy=new Date().toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'});
+    doc.setTextColor(...LGRAY);
+    const hw=doc.getTextWidth(hoy);
+    doc.text(hoy,W/2-hw/2,H-22);
+  }
+
   return doc.output('arraybuffer');
 }
 async function uploadPDF(name,buffer,folderId){
@@ -1597,7 +1835,7 @@ async function uploadDossierToDrive(){
     for(const k of keys){
       btn.textContent=`📄 Subiendo ${labels[k]||k}... (${done+1}/${keys.length})`;
       const txt=document.getElementById('oc-'+k)?.innerText||results[k];
-      const pdf=buildPDF(labels[k]||k,emp,cargo,txt);
+      const pdf=buildPDF(labels[k]||k,emp,cargo,txt,k);
       await uploadPDF(`${k}_${emp}_FJM.pdf`,pdf,folderId);
       done++;
     }
@@ -1756,16 +1994,16 @@ load();rDash();rTrack();rEmps();uCounts();renderAPIStatus();renderAdzunaStatus()
 <!-- API KEY MODAL -->
 <div id="api-modal" style="position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px)">
   <div style="background:#0d1f3c;border:1px solid rgba(201,168,76,.35);border-radius:20px;padding:32px;max-width:440px;width:90%;box-shadow:0 24px 64px rgba(0,0,0,.6)">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;margin-bottom:6px;color:#e8eaf0">🔑 Configurar Groq API</div>
-    <p style="font-size:12px;color:#7a8499;line-height:1.7;margin-bottom:20px">Para usar el Dossier Adaptativo y el análisis de vacantes necesitas una API key de Groq.<br/><strong style="color:#e8eaf0">100% gratuita, sin tarjeta</strong> — lista en 2 minutos.</p>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;margin-bottom:6px;color:#e8eaf0">🤖 Configurar Claude API</div>
+    <p style="font-size:12px;color:#7a8499;line-height:1.7;margin-bottom:20px">Para usar el Dossier Adaptativo y el análisis de vacantes necesitas una API key de Anthropic (Claude).<br/><strong style="color:#e8eaf0">Mayor calidad · Sin colgones</strong> — lista en 2 minutos.</p>
     <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:11px;color:#7a8499">
       <strong style="color:#c9a84c">Cómo obtener tu API key:</strong><br/>
-      1. Ve a <a href="https://console.groq.com/keys" target="_blank" style="color:#c9a84c">console.groq.com/keys</a><br/>
-      2. Regístrate gratis (no requiere tarjeta)<br/>
-      3. Pulsa "Create API key"<br/>
-      4. Copia la clave que empieza por <code style="color:#e8c96a">gsk_...</code>
+      1. Ve a <a href="https://console.anthropic.com/settings/api-keys" target="_blank" style="color:#c9a84c">console.anthropic.com</a><br/>
+      2. Crea una cuenta o inicia sesión<br/>
+      3. Pulsa "Create Key"<br/>
+      4. Copia la clave que empieza por <code style="color:#e8c96a">sk-ant-...</code>
     </div>
-    <input id="api-key-input" type="password" placeholder="gsk_..." style="width:100%;padding:12px 14px;border:1px solid rgba(201,168,76,.35);border-radius:10px;background:rgba(255,255,255,.06);color:#e8eaf0;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-bottom:12px" oninput="document.getElementById('api-save-btn').style.opacity=this.value.startsWith('gsk_')?'1':'.4'"/>
+    <input id="api-key-input" type="password" placeholder="sk-ant-..." style="width:100%;padding:12px 14px;border:1px solid rgba(201,168,76,.35);border-radius:10px;background:rgba(255,255,255,.06);color:#e8eaf0;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-bottom:12px" oninput="document.getElementById('api-save-btn').style.opacity=this.value.startsWith('sk-ant-')?'1':'.4'"/>
     <div style="display:flex;gap:8px">
       <button id="api-save-btn" onclick="saveAPIKey()" style="flex:1;padding:12px;border-radius:10px;background:linear-gradient(135deg,#c9a84c,#e8c96a);color:#0a1628;border:none;font-family:'DM Sans',sans-serif;font-weight:700;font-size:13px;cursor:pointer;opacity:.4;transition:all .2s">Guardar y continuar</button>
       <button onclick="document.getElementById('api-modal').style.display='none'" style="padding:12px 18px;border-radius:10px;background:rgba(255,255,255,.07);color:#7a8499;border:1px solid rgba(255,255,255,.1);font-family:'DM Sans',sans-serif;cursor:pointer;font-size:12px">Ahora no</button>
