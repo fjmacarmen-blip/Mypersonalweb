@@ -1571,6 +1571,10 @@ async function driveFetch(url,opts={}){
   return r.json();
 }
 async function getOrCreateFolder(name,parentId){
+  let q=`name='${name.replace(/'/g,"\\'")}' and mimeType='application/vnd.google-apps.folder' and trashed=false`;
+  if(parentId)q+=` and '${parentId}' in parents`;
+  const s=await driveFetch(`https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(q)}&fields=files(id,name)&spaces=drive`);
+  if(s.files&&s.files.length>0)return s.files[0].id;
   const meta={name,mimeType:'application/vnd.google-apps.folder',...(parentId?{parents:[parentId]}:{})};
   const d=await driveFetch('https://www.googleapis.com/drive/v3/files',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(meta)});
   return d.id;
