@@ -461,13 +461,13 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
     <div class="tc" id="tc-config">
       <div class="sh"><div class="sh-t">Configuración</div></div>
       <div style="display:flex;flex-direction:column;gap:12px">
-        <div class="dc"><div class="dch"><span class="dct">🤖 Claude API Key</span></div><div class="dcb">
-  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">Tu API key se guarda en el navegador (localStorage). <strong style="color:var(--text)">Nunca se sube a GitHub.</strong> Empieza por <code style="color:var(--gold)">sk-ant-...</code></p>
+        <div class="dc"><div class="dch"><span class="dct">🔑 Groq API Key</span></div><div class="dcb">
+  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">Tu API key se guarda en el navegador (localStorage). <strong style="color:var(--text)">Nunca se sube a GitHub.</strong> Empieza por <code style="color:var(--gold)">gsk_...</code></p>
   <div id="api-status-block"></div>
   <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap">
     <button class="btn btn-gold btn-sm" onclick="document.getElementById('api-modal').style.display='flex';document.getElementById('api-key-input').value=getAPIKey();document.getElementById('api-save-btn').style.opacity='1'">🔑 Configurar API key</button>
     <button class="btn btn-dark btn-sm" onclick="if(confirm('¿Borrar API key?')){localStorage.removeItem('fjm_api_key');renderAPIStatus();toast('🗑️ API key eliminada');}">Eliminar key</button>
-    <a href="https://console.anthropic.com/settings/api-keys" target="_blank" class="btn btn-dark btn-sm">Obtener key →</a>
+    <a href="https://console.groq.com/keys" target="_blank" class="btn btn-dark btn-sm">Obtener key →</a>
   </div>
   <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:10px;color:var(--muted)">Modelo: claude-haiku-4-5 · Funciones: Dossier adaptativo · PDF profesional · Análisis ATS · Generador LinkedIn</div>
 </div></div>
@@ -1413,11 +1413,11 @@ function lDH(i){
   showDOut(h.empresa,h.cargo,h.sector,h.docs,Object.keys(h.docs));toast('📂 Dossier cargado: '+h.empresa);
 }
 
-// CLAUDE API
+// GROQ API
 function getAPIKey(){return localStorage.getItem('fjm_api_key')||'';}
 function saveAPIKey(){
   const k=document.getElementById('api-key-input').value.trim();
-  if(!k.startsWith('sk-ant-')){alert('⚠️ La clave de Claude debe empezar por sk-ant-...');return;}
+  if(!k.startsWith('gsk_')){alert('⚠️ La clave de Groq debe empezar por gsk_...');return;}
   localStorage.setItem('fjm_api_key',k);
   document.getElementById('api-modal').style.display='none';
   toast('✅ API key guardada — ya puedes usar la búsqueda y el dossier');
@@ -1430,29 +1430,37 @@ function checkAPIKey(){
   }
   return true;
 }
-async function cClaude(prompt){
+async function cClaude(prompt,_retries=2){
   const apiKey=getAPIKey();
   if(!apiKey){checkAPIKey();throw new Error('API key no configurada. Ve a Config → API Key.');}
-  const res=await fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{
-      'Content-Type':'application/json',
-      'x-api-key':apiKey,
-      'anthropic-version':'2023-06-01',
-      'anthropic-dangerous-allow-browser':'true'
-    },
-    body:JSON.stringify({
-      model:'claude-haiku-4-5-20251001',
-      max_tokens:2048,
-      messages:[{role:'user',content:prompt}]
-    })
-  });
-  const d=await res.json();
-  if(!res.ok){
-    if(res.status===401){localStorage.removeItem('fjm_api_key');checkAPIKey();throw new Error('API key inválida — vuelve a introducirla');}
-    throw new Error(d.error?.message||'API error '+res.status);
+  const controller=new AbortController();
+  const tid=setTimeout(()=>controller.abort(),28000);
+  try{
+    const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
+      signal:controller.signal,
+      body:JSON.stringify({
+        model:'llama-3.3-70b-versatile',
+        max_tokens:2048,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    clearTimeout(tid);
+    const d=await res.json();
+    if(!res.ok){
+      if(res.status===401){localStorage.removeItem('fjm_api_key');checkAPIKey();throw new Error('API key inválida — vuelve a introducirla');}
+      throw new Error(d.error?.message||'API error '+res.status);
+    }
+    return d.choices?.[0]?.message?.content||'';
+  }catch(e){
+    clearTimeout(tid);
+    if((e.name==='AbortError'||e.message?.includes('fetch'))&&_retries>0){
+      await new Promise(r=>setTimeout(r,1500));
+      return cClaude(prompt,_retries-1);
+    }
+    throw e;
   }
-  return d.content?.[0]?.text||'';
 }
 
 const PPROF=`Francisco Javier Martínez Alba. Director Hotel 30 años, Bridge Leader 4.0. IA 2026. SSCE0110 Docente FP nota 8,62. Business English C1.`;
@@ -1994,16 +2002,16 @@ load();rDash();rTrack();rEmps();uCounts();renderAPIStatus();renderAdzunaStatus()
 <!-- API KEY MODAL -->
 <div id="api-modal" style="position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px)">
   <div style="background:#0d1f3c;border:1px solid rgba(201,168,76,.35);border-radius:20px;padding:32px;max-width:440px;width:90%;box-shadow:0 24px 64px rgba(0,0,0,.6)">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;margin-bottom:6px;color:#e8eaf0">🤖 Configurar Claude API</div>
-    <p style="font-size:12px;color:#7a8499;line-height:1.7;margin-bottom:20px">Para usar el Dossier Adaptativo y el análisis de vacantes necesitas una API key de Anthropic (Claude).<br/><strong style="color:#e8eaf0">Mayor calidad · Sin colgones</strong> — lista en 2 minutos.</p>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;margin-bottom:6px;color:#e8eaf0">🔑 Configurar Groq API</div>
+    <p style="font-size:12px;color:#7a8499;line-height:1.7;margin-bottom:20px">Para usar el Dossier Adaptativo y el análisis de vacantes necesitas una API key de Groq.<br/><strong style="color:#e8eaf0">Rápido · Gratuito · Sin límite diario generoso</strong> — lista en 2 minutos.</p>
     <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:11px;color:#7a8499">
       <strong style="color:#c9a84c">Cómo obtener tu API key:</strong><br/>
       1. Ve a <a href="https://console.anthropic.com/settings/api-keys" target="_blank" style="color:#c9a84c">console.anthropic.com</a><br/>
       2. Crea una cuenta o inicia sesión<br/>
       3. Pulsa "Create Key"<br/>
-      4. Copia la clave que empieza por <code style="color:#e8c96a">sk-ant-...</code>
+      4. Copia la clave que empieza por <code style="color:#e8c96a">gsk_...</code>
     </div>
-    <input id="api-key-input" type="password" placeholder="sk-ant-..." style="width:100%;padding:12px 14px;border:1px solid rgba(201,168,76,.35);border-radius:10px;background:rgba(255,255,255,.06);color:#e8eaf0;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-bottom:12px" oninput="document.getElementById('api-save-btn').style.opacity=this.value.startsWith('sk-ant-')?'1':'.4'"/>
+    <input id="api-key-input" type="password" placeholder="gsk_..." style="width:100%;padding:12px 14px;border:1px solid rgba(201,168,76,.35);border-radius:10px;background:rgba(255,255,255,.06);color:#e8eaf0;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-bottom:12px" oninput="document.getElementById('api-save-btn').style.opacity=this.value.startsWith('gsk_')?'1':'.4'"/>
     <div style="display:flex;gap:8px">
       <button id="api-save-btn" onclick="saveAPIKey()" style="flex:1;padding:12px;border-radius:10px;background:linear-gradient(135deg,#c9a84c,#e8c96a);color:#0a1628;border:none;font-family:'DM Sans',sans-serif;font-weight:700;font-size:13px;cursor:pointer;opacity:.4;transition:all .2s">Guardar y continuar</button>
       <button onclick="document.getElementById('api-modal').style.display='none'" style="padding:12px 18px;border-radius:10px;background:rgba(255,255,255,.07);color:#7a8499;border:1px solid rgba(255,255,255,.1);font-family:'DM Sans',sans-serif;cursor:pointer;font-size:12px">Ahora no</button>
