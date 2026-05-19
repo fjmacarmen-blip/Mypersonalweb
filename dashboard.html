@@ -1575,9 +1575,19 @@ async function getOrCreateFolder(name,parentId){
   const d=await driveFetch('https://www.googleapis.com/drive/v3/files',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(meta)});
   return d.id;
 }
-function buildPDF(titulo,empresa,cargo,contenido,tipo){
+const PDF_API='https://pdf-service-sage.vercel.app/api/generate-pdf';
+async function buildPDF(titulo,empresa,cargo,contenido,tipo){
+  const res=await fetch(PDF_API,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({tipo,titulo,empresa,cargo,contenido})
+  });
+  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error||'PDF error '+res.status);}
+  return res.arrayBuffer();
+}
+// legacy stub — kept so callers that were sync still work after await
+function _buildPDF_jsPDF_REMOVED(titulo,empresa,cargo,contenido,tipo){
   const {jsPDF}=window.jspdf;
-  // pt units para máximo control tipográfico (igual que pdf-lib)
   const doc=new jsPDF({unit:'pt',format:'a4'});
   const W=595.28,H=841.89,ML=45,MR=45,CW=W-ML-MR;
 
@@ -1855,7 +1865,9 @@ async function uploadDossierToDrive(){
     for(const k of keys){
       btn.textContent=`📄 Subiendo ${labels[k]||k}... (${done+1}/${keys.length})`;
       const txt=document.getElementById('oc-'+k)?.innerText||results[k];
-      const pdf=buildPDF(labels[k]||k,emp,cargo,txt,k);
+      btn.textContent=`📄 Generando ${labels[k]||k}...`;
+      const pdf=await buildPDF(labels[k]||k,emp,cargo,txt,k);
+      btn.textContent=`☁️ Subiendo ${labels[k]||k}... (${done+1}/${keys.length})`;
       await uploadPDF(`${k}_${emp}_FJM.pdf`,pdf,folderId);
       done++;
     }
@@ -1880,7 +1892,9 @@ async function uploadSingleToDrive(k,btn){
     const subName=`${emp} — ${cargo} — ${today()}`;
     const folderId=await getOrCreateFolder(subName,parentId);
     const txt=document.getElementById('oc-'+k)?.innerText||results[k];
-    const pdf=buildPDF(labels[k]||k,emp,cargo,txt,k);
+    btn.textContent='⏳ Generando PDF...';
+    const pdf=await buildPDF(labels[k]||k,emp,cargo,txt,k);
+    btn.textContent='☁️ Subiendo...';
     await uploadPDF(`${k}_${emp}_FJM.pdf`,pdf,folderId);
     btn.textContent='✅';
     toast(`✅ ${labels[k]||k} subido a Drive`);
