@@ -1231,11 +1231,23 @@ KEYWORDS ATS CRÍTICOS: P&L Management | CAPEX/OPEX | GOP | GOPPAR | Revenue Man
 FRASE PROPIA: "Mi visión se fundamenta en el equilibrio entre el legado arquitectónico y la vanguardia operativa, utilizando la tecnología para devolver al hotelero su función primordial."`;
 
 const TD={ejecutivo:'Ejecutivo senior maduro. Tono directivo con calidez. Destaca P&L, CAPEX, GOPPAR, LQA/Forbes, liderazgo equipos y cifras concretas.',patrimonial:'Reverencial con el patrimonio hotelero. Destaca Reina Cristina 1901, legado/modernidad, equilibrio entre historia y vanguardia. Cita la frase propia del candidato.',docente:'Vocacional y pedagógico. Destaca SSCE0110 nota 8,62, la vocación de transmitir 30 años de conocimiento, liderazgo formativo como multiplicador de talento.',tecnico:'Técnico y riguroso. Destaca UC0988_3, RGPD, Legionelosis RD487/2022, gestión documental N3, cumplimiento normativo y control de riesgos.',internacional:'Cosmopolita y global. Destaca Hilton UK, Dominican Bay +400hab, movilidad total, Business English C1, Hospitality 5.0, estándares internacionales de lujo.',lujo:'Sofisticado y detallista. Vocabulario de excelencia y legado. Nombres propios de marcas (Fairmont, Marbella Club, LQA, Forbes). Elegancia sin grandilocuencia. Énfasis en cultura de servicio como arte y en la identidad patrimonial de los activos.',operativo:'Energético y orientado a resultados. Frases cortas. Métricas y eficiencia ante todo. Destaca capacidad de renovación, gestión de equipos grandes, resolución rápida, KPIs y ahorro de costes. Ideal para TUI, easyHotel, cadenas de volumen.',cercano:'Humano y vocacional. Cercano sin ser informal. Destaca el placer de compartir conocimiento, el liderazgo de proximidad, la formación de equipos, la identidad de empresa familiar o de escala media. Ideal para Barceló, Q Hotels, hoteles independientes.'};
+// Identidades adaptadas por tono — cada CV tiene una IDENTIDAD distintiva
+const IDS={
+  ejecutivo:    {name:'The Hybrid Leader 4.0',     value:'Un legado de 30 años en dirección hotelera de lujo que converge con la frontera tecnológica de 2026 (IA, ESG, Ciberseguridad).'},
+  lujo:         {name:'The Modern Veteran',         value:'Un legado de 30 años en operativa de lujo 4★/5★ que ahora integra IA aplicada y estándares Forbes/LQA con la elegancia de quien ha gestionado activos emblemáticos.'},
+  operativo:    {name:'The Resilient Operator',    value:'30 años orquestando operaciones complejas (+400 habitaciones, equipos de 115+, pre-aperturas desde cero) ahora reforzados con IA aplicada para eficiencia administrativa.'},
+  cercano:      {name:'Hotelero de Vocación',      value:'Entiendo la hospitalidad como el arte de ser el anfitrión que transforma una estancia en un recuerdo. 30 años de trato humano, ahora con IA y formación oficial FPE para multiplicar el equipo.'},
+  patrimonial:  {name:'Guardian of Legacy',         value:'Especialista en activos hoteleros patrimoniales (Reina Cristina 1901): equilibrio entre legado arquitectónico y vanguardia operativa, con IA aplicada al servicio del histórico.'},
+  docente:      {name:'El Director Formador',      value:'30 años de dirección hotelera convertidos en capital pedagógico oficial: SSCE0110 nota 8,62 + IA aplicada = formación interna que ahorra costes de consultoría externa.'},
+  tecnico:      {name:'The Compliance Architect',  value:'Director hotelero con dominio técnico-jurídico (UC0988_3, RGPD, Legionelosis RD487/2022, ESG/SEAG16, Ciberseguridad IFCT103): rigor normativo + IA aplicada al cumplimiento.'},
+  internacional:{name:'Global Hospitality Executive',value:'Carrera internacional consolidada en Hilton UK + Dominican Bay (+400 hab), ahora con Business English C1 (Abr.2026) e IA aplicada para liderar transformación en grupos multinacionales.'}
+};
 const DCC={carta:{label:'Carta de Presentación',icon:'✉️',step:'Redactando carta estratégica...'},perfil:{label:'Perfil Ejecutivo',icon:'🎯',step:'Construyendo perfil ejecutivo...'},cv:{label:'CV Adaptado',icon:'📄',step:'Adaptando CV...'},email:{label:'Email / LinkedIn',icon:'📧',step:'Redactando email...'},ats:{label:'Análisis ATS + Entrevista',icon:'🤖',step:'Analizando compatibilidad ATS...'},resumen:{label:'Resumen Ejecutivo (100 car.)',icon:'📌',step:'Generando resumen ejecutivo...'}};
 const SL2={hotel:'Hostelería/Dirección Hotelera',docencia:'Docencia FP Hostelería y Turismo',admin:'Gestión Administrativa y Asistencia a la Dirección'};
 
 function bDP(doc,emp,cargo,sec,ctx,tono){
   const t=TD[tono]||TD.ejecutivo;const s=SL2[sec]||sec;
+  const id=IDS[tono]||IDS.ejecutivo;
   const P={
     carta:`Redacta una CARTA DE PRESENTACIÓN en español para el cargo "${cargo}" en "${emp}".
 
@@ -1243,8 +1255,7 @@ PERFIL COMPLETO DEL CANDIDATO:
 ${PM}
 
 EMPRESA: "${emp}" | CARGO: "${cargo}" | SECTOR: ${s} | CONTEXTO: ${ctx||'No especificado'} | TONO: ${t}
-
-IDENTIDAD A TRANSMITIR: Este candidato es el "Líder Puente" — une 30 años de sabiduría operativa hotelera con certificaciones IA (Mar.2026) e Inglés C1 (Abr.2026). No es un candidato "senior convencional". Es el perfil Hospitality 5.0 que ya existe y puede transformar "${emp}" desde el día 1.
+IDENTIDAD DEL DOCUMENTO: "${id.name}" — ${id.value}
 
 ESTRUCTURA (4 párrafos, 300-370 palabras):
 1. APERTURA — "A la atencion del Departamento de Seleccion de ${emp}," + por que "${emp}" especificamente, referenciando algo concreto de la empresa o el cargo que demuestre que conoce la empresa
@@ -1265,88 +1276,122 @@ REGLAS DE ESCRITURA (CRITICAS):
 - Terminar siempre con "Atentamente," + firma completa
 - PROHIBIDO INVENTAR: Solo usa datos que figuren en el perfil. Nunca inventes cifras, presupuestos, nombres de hoteles ni resultados que no estén documentados en el perfil.`,
 
-    perfil:`Redacta un PERFIL EJECUTIVO Y PROPUESTA DE VALOR en español.
+    perfil:`Redacta un PERFIL EJECUTIVO Y PROPUESTA DE VALOR en español para "${cargo}" en "${emp}".
 
 PERFIL COMPLETO DEL CANDIDATO:
 ${PM}
 
 EMPRESA: "${emp}" | CARGO: "${cargo}" | SECTOR: ${s} | TONO: ${t}
+IDENTIDAD DEL DOCUMENTO: "${id.name}" — ${id.value}
 
-IDENTIDAD A TRANSMITIR: "El Líder Puente" — El candidato no es un senior convencional. Es el directivo que tiene la sabiduría operativa de 30 años en hoteles emblemáticos Y la capacidad técnica de alguien que acaba de certificarse en IA y Negociación Internacional en 2026. Ese perfil no existe en el mercado. Hazlo evidente.
+INSTRUCCIONES DE FORMATO:
+- Usa los marcadores [VALOR] y [ORNAMENT] literalmente.
+- Sin asteriscos ni markdown.
+- Bullets con guion "- ".
 
-ESTRUCTURA OBLIGATORIA (máx 320 palabras):
-1. TITULAR DE IMPACTO — Una frase que posicione al candidato como el "Líder Puente" para "${cargo}" en "${emp}". Menciona explícitamente la dualidad: experiencia operativa + certificaciones 2026.
-2. PROPUESTA DE VALOR — 2-3 frases sobre qué puede hacer por "${emp}" específicamente que otro candidato con 30 años de experiencia tradicional NO puede.
+ESTRUCTURA (máx 350 palabras):
 
-3. ACTIVOS ESTRATÉGICOS (seleccionar 4-5 bullets más relevantes para "${cargo}"):
-• [Activo hotelero más relevante del perfil para "${emp}": cargo + empresa + logro concreto con dato real]
-• [Segundo activo hotelero relevante]
-• **Factor Wow IA 2026:** Diploma IA Aplicada (90h, Mar.2026) — [cómo aplica específicamente a "${cargo}"]
-• **Inglés C1 Operativo:** Business English C1 (Abr.2026) + Hilton UK — [valor para "${emp}"]
-• **El Director Formador:** SSCE0110 nota 8,62 — "No solo dirijo, formo a mi equipo en los estándares de la marca"
-• [Bullet adicional relevante para "${cargo}" si aplica: ESG, UC0988_3, LQA, Forbes, etc.]
+[VALOR]: Una frase impactante (máx 25 palabras) que posicione al candidato como "${id.name}" para "${cargo}" en "${emp}". Inspírate en "${id.value}" pero adáptala 100% al puesto.
 
-4. HITOS VANGUARDIA 2026 (3-4 hitos concretos con datos reales: empresa, año, cifra del perfil)
-5. DISPONIBILIDAD — Incorporación inmediata | Traslado total | Nacional e internacional
+PROPUESTA DIFERENCIAL
 
-REGLAS: Tono ${t}. Sin gerundios encadenados. Sin listas de adjetivos. Una idea por frase.
-PROHIBIDO INVENTAR: Solo usa datos reales del perfil. Nunca inventes cifras, presupuestos, nombres de hoteles o resultados que no figuren en el perfil del candidato.`,
+(3 frases cortas. Por qué este candidato es la pieza que "${emp}" necesita para "${cargo}". Que otro candidato con 30 años NO puede ofrecer lo mismo: la combinación de sabiduría operativa + certificaciones 2026. Tono "${t}".)
 
-    cv:`Redacta un CV ADAPTADO en espanol para el cargo "${cargo}" en "${emp}".
+[ORNAMENT]
+
+ÁREAS DE EXPERTISE
+
+- Dirección Integral de Activos Hoteleros: [logro concreto del perfil relevante para "${cargo}"]
+- Transformación Digital 2026: IA Aplicada (90h, Mar.2026) y aplicación a "${cargo}"
+- Liderazgo Pedagógico Oficial: SSCE0110 nota 8,62, formación interna que ahorra costes de consultoría
+- [Cuarto bullet relevante específicamente para "${cargo}" — usa keywords del puesto]
+- [Quinto bullet relevante]
+
+HITOS VANGUARDIA 2026
+
+- IA Aplicada al Sector Administrativo: 90h, Cámara de Comercio de Cádiz, Mar.2026
+- Inglés Comercial C1: 60h, Cámara de Comercio de Cádiz, Abr.2026
+- Habilitación Docente FPE SSCE0110: nota 8,62, Junta de Andalucía, Dic.2025
+
+DISPONIBILIDAD — Incorporación inmediata. Traslado total nacional e internacional.
+
+REGLAS: Tono "${t}". Sin gerundios encadenados. Sin listas de adjetivos. Una idea por frase.
+PROHIBIDO INVENTAR: solo datos del perfil. Nunca inventes cifras, presupuestos, nombres de hoteles o resultados.`,
+
+    cv:`Redacta un CV ADAPTADO al cargo "${cargo}" en "${emp}", siguiendo EXACTAMENTE la estructura y los marcadores indicados.
 
 PERFIL COMPLETO DEL CANDIDATO:
 ${PM}
 
 SECTOR: ${s} | TONO: ${t}
+IDENTIDAD DEL CV: "${id.name}" — ${id.value}
 
-IDENTIDAD A TRANSMITIR: "El Lider Puente" — No es un senior convencional. Es el directivo Hospitality 5.0 que tiene sabiduria operativa de 30 anos EN hoteles emblematicos Y certificaciones IA + C1 ingles obtenidas en 2026. Ese perfil no existe en el mercado. El CV debe transmitirlo.
+INSTRUCCIONES DE FORMATO (CRÍTICAS):
+- Usa los marcadores especiales [VALOR], [ORNAMENT] y [HAIRLINE] literalmente — el renderizador los convierte en elementos gráficos.
+- Hoteles en formato pipe: "Cargo | Hotel/Empresa | Periodo" — una sola línea, el renderizador los formatea con tipografía serif.
+- Secciones en MAYUSCULAS, una línea sola.
+- Bullets con guion "- ".
+- Sin asteriscos, sin markdown, sin emojis.
 
-ESTRUCTURA (texto plano, secciones en MAYUSCULAS, 600-750 palabras):
+ESTRUCTURA EXACTA (600-720 palabras):
 
-1. ENCABEZADO
-Francisco Javier Martinez Alba | 635 493 853 | pacozzy@hotmail.com | Algeciras (Cadiz) | LinkedIn: linkedin.com/in/franciscojaviermartinezalba
-[Titulo adaptado exactamente a "${cargo}"] | IA Aplicada 2026 | Ingles C1 2026 | Disponibilidad inmediata | Traslado total
+[VALOR]: Una sola frase impactante (máx 25 palabras) que resuma la PROPUESTA DE VALOR del candidato para "${cargo}" en "${emp}". Inspírate en "${id.value}" pero adáptala 100% al puesto.
 
-2. PERFIL 4.0 — EL LIDER PUENTE
-3 frases cortas (max 20 palabras cada una) que transmitan la dualidad: sabiduria operativa 30 anos + capacidades 2026. Una idea por frase. Sin adjetivos encadenados.
+PERFIL "${id.name.toUpperCase()}"
 
-3. HITOS VANGUARDIA 2026 (nueva seccion antes de la experiencia)
-- IA Aplicada al Sector Administrativo — Diploma 90h, Camara Comercio Cadiz, Mar.2026 — [aplicacion concreta a "${cargo}"]
-- Ingles Comercial C1 — 60h, Camara Comercio Cadiz, Abr.2026 — [valor para "${emp}"]
-- El Director Formador: SSCE0110 nota 8,62 (380h, Junta Andalucia, Dic.2025) — "No solo dirijo, formo internamente a mi equipo en los estandares de la marca"
+(3 frases cortas, cada una bajo 22 palabras. Una idea por frase. Posicionan al candidato para "${cargo}" en "${emp}". Tono "${t}". Mencionan al menos una vez "${emp}" o algo concreto del puesto.)
 
-4. EXPERIENCIA POR ACTIVOS ESTRATEGICOS (30 anos)
-Selecciona las 4-5 experiencias MAS relevantes para "${cargo}" del perfil. Ordena por relevancia para este puesto, no por cronologia. Para cada una:
-CARGO | EMPRESA | PERIODO
-- [Verbo accion pasado] + [metodo] + [resultado con cifra REAL del perfil]
-- [Verbo accion pasado] + [responsabilidad clave para "${cargo}"]
-- [Verbo accion pasado] + [impacto medible si existe en el perfil]
-Verbos validos: Dirigi, Implante, Lidere, Reestructure, Negocié, Reduje, Incremente, Abri, Forme, Diseñe, Implante, Gestione
-PROHIBIDO: Siendo responsable de, Contribuyendo a, Apoyando, Colaborando, Gestionando (gerundio)
+[ORNAMENT]
 
-5. CERTIFICACIONES OFICIALES (15 UC acreditadas — IACP / Junta de Andalucia)
-- ADGG0108 Asistencia a la Direccion N3 (UC0988_3, UC0980_2, UC0979_2)
-- ADGG0308 Asistencia Documental N3 (UC0987_3)
-- SSCE0110 Docencia FPE N3 (UC1442_3, UC1443_3, UC1444_3, UC1445_3, UC1446_3)
-- Sostenibilidad ESG/SEAG16 (100h, SEPE, 2024) | Ciberseguridad IFCT103 (49h, SEPE, 2024) | Legionelosis RD487/2022
+ÁREAS DE EXPERTISE Y COMPETENCIAS CLAVE
 
-6. IDIOMAS
-- Ingles: C1 funcional operativo | B1 certificado (UC9999_3) | C1 contextual Hilton UK
-- Aleman: B1 operativo | A2 certificado (UC9996_2)
-- Frances e Italiano: nivel funcional
+(4-5 bullets. Cada bullet abre con un concepto en negocio claro: "Dirección Integral de Activos", "Transformación Digital 2026", "Liderazgo Pedagógico", etc. — luego dos puntos y descripción concreta con datos REALES del perfil. NO uses asteriscos para negrita, simplemente escribe el concepto y los dos puntos.)
 
-7. FORMACION BASE — TEAT, Universidad de Cadiz (Escuela de Turismo de Jerez)
+EXPERIENCIA POR ACTIVOS ESTRATÉGICOS
 
-8. DISPONIBILIDAD — Incorporacion inmediata | Traslado total | Nacional e internacional
+(Selecciona 4-5 experiencias del perfil MÁS relevantes para "${cargo}". Ordena por relevancia, no cronología. Para cada una, EXACTAMENTE este formato:
 
-REGLAS CRITICAS DE ESCRITURA:
-- PROHIBIDO INVENTAR: SOLO usa datos del perfil. Ninguna cifra, presupuesto, equipo ni resultado que no este documentado.
-- Cada bullet: verbo pasado + como + cifra real (si no hay cifra, no la inventes)
-- Espeja el lenguaje exacto de "${cargo}": si dice "revenue management" usa ese termino
-- Sin asteriscos, markdown ni caracteres especiales. Solo guiones normales.
-- PALABRAS PROHIBIDAS: "innovador", "apasionado", "dinamico", "proactivo", "solucion innovadora", "vanguardia", "cutting-edge", "altamente cualificado", "amplia trayectoria", "demostrando capacidad", "contribuyendo a", "solido conocimiento de"
-- Perfil 4.0: maximo 3 frases, cada una bajo 20 palabras, una idea por frase
-- Factor Wow siempre en cabecera: IA 2026 + C1 ingles 2026 deben aparecer en la primera seccion visible`,
+Cargo / Project Manager | Nombre del Hotel (Marca) | Periodo
+- Verbo acción pasado + método concreto + resultado real del perfil
+- Verbo acción pasado + responsabilidad clave para "${cargo}"
+- Verbo acción pasado + impacto medible si existe en el perfil
+
+Verbos válidos: Dirigí, Implanté, Lideré, Reestructuré, Negocié, Diseñé, Orquesté, Forjé, Abrí, Formé, Modernicé, Estandaricé, Coordiné.
+PROHIBIDO: Siendo responsable, Contribuyendo a, Apoyando, Colaborando, Gestionando (gerundio), Encargado de.)
+
+[ORNAMENT]
+
+VANGUARDIA 2026 — DIFERENCIAL ÚNICO
+
+- IA Aplicada al Sector Administrativo: Diploma 90h, Cámara de Comercio de Cádiz, Mar.2026. [Frase explicando aplicación concreta a "${cargo}"]
+- Inglés Comercial C1 / Business English: Diploma 60h, Cámara de Comercio de Cádiz, Abr.2026. [Frase explicando valor para "${emp}"]
+- El Director Formador (SSCE0110): Habilitación oficial Docencia FPE N3 (Junta de Andalucía, nota 8,62/10, 380h). Permite formar internamente al equipo en estándares de marca sin coste de consultoría externa.
+
+[HAIRLINE]
+
+ACREDITACIONES OFICIALES NIVEL 3 (IACP / Junta de Andalucía)
+
+- ADGG0108 Asistencia a la Dirección N3 — UC0988_3 (gestión expedientes ante AAPP) · UC0980_2 (RRHH) · UC0979_2 (Tesorería)
+- ADGG0308 Asistencia Documental y Gestión N3 — UC0987_3 (sistemas información y archivo digital)
+- SSCE0110 Docencia FPE N3 — UC1442_3 a UC1446_3 (programar, materiales, impartir, evaluar, orientar)
+- SEAG16 Sostenibilidad y Gestión Ambiental (100h, SEPE 2024) · IFCT103 Ciberseguridad (49h, SEPE 2024) · Legionelosis RD487/2022 (25h)
+
+IDIOMAS
+
+- Inglés: C1 funcional | B1 certificado UC9999_3 | C1 contextual Hilton UK | B2 en acreditación 2026
+- Alemán: B1 operativo | A2 certificado UC9996_2
+- Francés e Italiano: nivel funcional
+
+FORMACIÓN BASE — DISPONIBILIDAD
+
+TEAT (Técnico en Empresas y Actividades Turísticas) — Universidad de Cádiz, Escuela de Turismo de Jerez. Incorporación inmediata. Traslado total nacional e internacional sin restricciones geográficas.
+
+REGLAS CRÍTICAS:
+- PROHIBIDO INVENTAR: solo datos del perfil. Ningún hotel, cifra, presupuesto, tamaño de equipo o resultado que no esté en el perfil del candidato.
+- Espeja el lenguaje exacto de "${cargo}": si dice "revenue management", "asset management" o "Forbes standards", usa esos términos literalmente.
+- PALABRAS PROHIBIDAS: "innovador", "apasionado", "dinámico", "proactivo", "solución innovadora", "vanguardia", "cutting-edge", "altamente cualificado", "amplia trayectoria", "demostrando capacidad", "contribuyendo a", "sólido conocimiento de".
+- El Perfil son MÁXIMO 3 frases, cada una bajo 22 palabras.
+- Los marcadores [VALOR], [ORNAMENT], [HAIRLINE] deben aparecer literalmente entre corchetes en las posiciones indicadas.`,
 
     email:`Redacta un EMAIL / MENSAJE LINKEDIN en español para el cargo "${cargo}" en "${emp}".
 CANDIDATO: "El Lider Puente" — 30 anos direccion hotelera + IA 2026 + C1 Ingles 2026 + SSCE0110 nota 8,62 | 635 493 853 | pacozzy@hotmail.com
