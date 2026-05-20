@@ -127,16 +127,14 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .ab-d{background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--muted)}
 .dos-layout{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}
 @media(max-width:900px){.dos-layout{grid-template-columns:1fr}}
-.dos-panel{display:flex;flex-direction:column;gap:14px;position:sticky;top:12px;max-height:calc(100vh - 24px);overflow-y:auto;padding-right:6px}
-.dos-panel::-webkit-scrollbar{width:8px}
-.dos-panel::-webkit-scrollbar-track{background:transparent}
-.dos-panel::-webkit-scrollbar-thumb{background:var(--gold-border);border-radius:4px}
-.dos-panel::-webkit-scrollbar-thumb:hover{background:var(--gold)}
+.dos-panel{display:flex;flex-direction:column;gap:14px}
 .dch.collapsible{cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between}
 .dch.collapsible:hover{opacity:.85}
 .dch-chevron{font-size:12px;color:var(--muted);transition:transform .2s}
 .dch.collapsed .dch-chevron{transform:rotate(-90deg)}
 .dcb.collapsed{display:none}
+/* Card "Target de candidatura" también colapsable opcionalmente */
+.dc-collapsible .dch{cursor:pointer;user-select:none}
 .df{margin-bottom:12px}
 .df label{display:block;font-size:9px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
 .df input,.df select,.df textarea{width:100%;padding:9px 12px;border:1px solid var(--border2);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);background:rgba(255,255,255,.05);transition:all .2s;-webkit-appearance:none}
