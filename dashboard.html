@@ -127,7 +127,16 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .ab-d{background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--muted)}
 .dos-layout{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}
 @media(max-width:900px){.dos-layout{grid-template-columns:1fr}}
-.dos-panel{display:flex;flex-direction:column;gap:14px;position:sticky;top:0}
+.dos-panel{display:flex;flex-direction:column;gap:14px;position:sticky;top:12px;max-height:calc(100vh - 24px);overflow-y:auto;padding-right:6px}
+.dos-panel::-webkit-scrollbar{width:8px}
+.dos-panel::-webkit-scrollbar-track{background:transparent}
+.dos-panel::-webkit-scrollbar-thumb{background:var(--gold-border);border-radius:4px}
+.dos-panel::-webkit-scrollbar-thumb:hover{background:var(--gold)}
+.dch.collapsible{cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between}
+.dch.collapsible:hover{opacity:.85}
+.dch-chevron{font-size:12px;color:var(--muted);transition:transform .2s}
+.dch.collapsed .dch-chevron{transform:rotate(-90deg)}
+.dcb.collapsed{display:none}
 .df{margin-bottom:12px}
 .df label{display:block;font-size:9px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
 .df input,.df select,.df textarea{width:100%;padding:9px 12px;border:1px solid var(--border2);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);background:rgba(255,255,255,.05);transition:all .2s;-webkit-appearance:none}
@@ -376,7 +385,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
             </div></div>
           </div></div>
           <button class="gbtn" id="dos-btn" onclick="genDossier()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>Generar Dossier Completo</button>
-          <div class="dc" id="dh-card" style="display:none"><div class="dch"><span class="dct">📂 Dossieres anteriores</span></div><div class="dcb" id="dh-list"></div></div>
+          <div class="dc" id="dh-card" style="display:none"><div class="dch collapsible collapsed" onclick="tDH()"><span class="dct">📂 Dossieres anteriores <span id="dh-count" style="font-size:10px;color:var(--muted);font-weight:normal"></span></span><span class="dch-chevron">▼</span></div><div class="dcb collapsed" id="dh-list"></div></div>
         </div>
         <div id="dos-right">
           <div id="dos-empty" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:48px 24px;text-align:center">
@@ -1318,13 +1327,15 @@ DISPONIBILIDAD — Incorporación inmediata. Traslado total nacional e internaci
 REGLAS: Tono "${t}". Sin gerundios encadenados. Sin listas de adjetivos. Una idea por frase.
 PROHIBIDO INVENTAR: solo datos del perfil. Nunca inventes cifras, presupuestos, nombres de hoteles o resultados.`,
 
-    cv:`Redacta un CV ADAPTADO al cargo "${cargo}" en "${emp}", siguiendo EXACTAMENTE la estructura y los marcadores indicados.
+    cv:`Redacta un CV ADAPTADO al perfil profesional buscado por "${cargo}", siguiendo EXACTAMENTE la estructura y los marcadores indicados.
 
 PERFIL COMPLETO DEL CANDIDATO:
 ${PM}
 
 SECTOR: ${s} | TONO: ${t}
 IDENTIDAD DEL CV: "${id.name}" — ${id.value}
+
+REGLA FUNDAMENTAL: ESTE CV NO PUEDE MENCIONAR NUNCA EL NOMBRE DE LA EMPRESA DESTINATARIA ("${emp}"). El CV es un documento personal/profesional autónomo del candidato, no una carta dirigida a esa empresa. Las referencias específicas a la empresa van en la CARTA, NO aquí.
 
 INSTRUCCIONES DE FORMATO (CRÍTICAS):
 - Usa los marcadores especiales [VALOR], [ORNAMENT] y [HAIRLINE] literalmente — el renderizador los convierte en elementos gráficos.
@@ -1333,64 +1344,87 @@ INSTRUCCIONES DE FORMATO (CRÍTICAS):
 - Bullets con guion "- ".
 - Sin asteriscos, sin markdown, sin emojis.
 
-ESTRUCTURA EXACTA (600-720 palabras):
+ESTRUCTURA EXACTA (700-850 palabras):
 
-[VALOR]: Una sola frase impactante (máx 25 palabras) que resuma la PROPUESTA DE VALOR del candidato para "${cargo}" en "${emp}". Inspírate en "${id.value}" pero adáptala 100% al puesto.
+[VALOR]: Una sola frase impactante (máx 25 palabras) que resuma la PROPUESTA DE VALOR DEL CANDIDATO para el tipo de puesto "${cargo}" en su sector. NO menciones "${emp}". Inspírate en "${id.value}" pero adáptala al rol genérico, no a la empresa concreta.
 
 PERFIL "${id.name.toUpperCase()}"
 
-(3 frases cortas, cada una bajo 22 palabras. Una idea por frase. Posicionan al candidato para "${cargo}" en "${emp}". Tono "${t}". Mencionan al menos una vez "${emp}" o algo concreto del puesto.)
+(Párrafo bien contextualizado de 5-7 frases, 130-170 palabras. NO son notas breves: es un perfil narrativo y profesional. Debe transmitir:
+- Trayectoria total de 30 años y los activos hoteleros más representativos (Altos de Istán, Reina Cristina, Dominican Bay, Hilton UK).
+- La evolución desde la dirección operativa hacia el directivo Hospitality 5.0.
+- La triple certificación 2026 (IA + C1 + SSCE0110) como diferencial.
+- Capacidad de liderazgo de equipos multiculturales y resultados en P&L/CAPEX/LQA/Forbes.
+- El estilo personal que define al candidato según el tono "${t}".
+NO menciones "${emp}". Habla del candidato como profesional del sector, no como aspirante a un puesto concreto.)
 
 [ORNAMENT]
 
-ÁREAS DE EXPERTISE Y COMPETENCIAS CLAVE
+HITOS DE VANGUARDIA 2026
 
-(4-5 bullets. Cada bullet abre con un concepto en negocio claro: "Dirección Integral de Activos", "Transformación Digital 2026", "Liderazgo Pedagógico", etc. — luego dos puntos y descripción concreta con datos REALES del perfil. NO uses asteriscos para negrita, simplemente escribe el concepto y los dos puntos.)
+- IA Aplicada al Sector Administrativo: Diploma 90h, Cámara de Comercio de Cádiz, 11 Mar.2026. Prompt engineering, automatización de procesos administrativos, análisis predictivo y ROI operativo aplicado a la gestión hotelera.
+- Inglés Comercial / Business English C1: Diploma 60h, Cámara de Comercio de Cádiz, 10 Abr.2026. Negociaciones internacionales, presentaciones ejecutivas y atención de cliente premium en inglés operativo.
+- El Director Formador (SSCE0110): Habilitación oficial Docencia FPE Nivel 3 (Junta de Andalucía, nota 8,62/10, 380h, Dic.2025). Grados A+B+C habilitados. Permite diseñar e impartir formación interna en estándares de marca sin coste de consultoría externa.
+
+[ORNAMENT]
 
 EXPERIENCIA POR ACTIVOS ESTRATÉGICOS
 
-(Selecciona 4-5 experiencias del perfil MÁS relevantes para "${cargo}". Ordena por relevancia, no cronología. Para cada una, EXACTAMENTE este formato:
+(Ordena las experiencias por RELEVANCIA al tipo de puesto "${cargo}", no por cronología. Las TOP 4-5 con desarrollo completo. Después un bloque "OTRAS EXPERIENCIAS DESTACADAS" con 3-5 hoteles más en formato breve de una línea cada uno.
 
-Cargo / Project Manager | Nombre del Hotel (Marca) | Periodo
+Formato para los TOP 4-5 más relevantes:
+
+Cargo / Rol | Nombre del Hotel (Marca/Sociedad) | Periodo
 - Verbo acción pasado + método concreto + resultado real del perfil
-- Verbo acción pasado + responsabilidad clave para "${cargo}"
+- Verbo acción pasado + responsabilidad clave del rol
 - Verbo acción pasado + impacto medible si existe en el perfil
 
-Verbos válidos: Dirigí, Implanté, Lideré, Reestructuré, Negocié, Diseñé, Orquesté, Forjé, Abrí, Formé, Modernicé, Estandaricé, Coordiné.
-PROHIBIDO: Siendo responsable, Contribuyendo a, Apoyando, Colaborando, Gestionando (gerundio), Encargado de.)
+Verbos válidos: Dirigí, Implanté, Lideré, Reestructuré, Negocié, Diseñé, Orquesté, Forjé, Abrí, Formé, Modernicé, Estandaricé, Coordiné, Consolidé.
+PROHIBIDO: Siendo responsable, Contribuyendo a, Apoyando, Colaborando, Gestionando (gerundio).
 
-[ORNAMENT]
+Después, en una sección final tipo "OTRAS EXPERIENCIAS DESTACADAS" (subsección del bloque experiencia), lista en formato breve los hoteles que NO entraron en el top, cada uno como una sola línea bullet:
+- Director / Hotel BlueBay Beach Club 5★ (Bahía Feliz, Gran Canaria) | 2004 | Estándares 5 estrellas internacionales
+- Director / Aura Hotel Algeciras 3★ (Sercotel) | 2011-2013 | Posicionamiento urbano y operativa
+- Dirección operativa / BelleVue Belsana (Mallorca) y BelleVue Aquarius (Lanzarote) | Operativa hotelera vacacional
+- Ascenso directivo / Hotetur y Globales Groups | Front Office → Assistant Director → Hotel Director
 
-VANGUARDIA 2026 — DIFERENCIAL ÚNICO
-
-- IA Aplicada al Sector Administrativo: Diploma 90h, Cámara de Comercio de Cádiz, Mar.2026. [Frase explicando aplicación concreta a "${cargo}"]
-- Inglés Comercial C1 / Business English: Diploma 60h, Cámara de Comercio de Cádiz, Abr.2026. [Frase explicando valor para "${emp}"]
-- El Director Formador (SSCE0110): Habilitación oficial Docencia FPE N3 (Junta de Andalucía, nota 8,62/10, 380h). Permite formar internamente al equipo en estándares de marca sin coste de consultoría externa.
+Incluye TODOS los hoteles relevantes del perfil. Si un hotel ya está en el top, no lo repitas aquí.)
 
 [HAIRLINE]
 
-ACREDITACIONES OFICIALES NIVEL 3 (IACP / Junta de Andalucía)
+FORMACIÓN, ACREDITACIONES Y COMPETENCIAS
 
-- ADGG0108 Asistencia a la Dirección N3 — UC0988_3 (gestión expedientes ante AAPP) · UC0980_2 (RRHH) · UC0979_2 (Tesorería)
+(Bloque COMBINADO. Estructura interna por sub-bloques con guion en lugar de subsecciones. Usa formato como este, sin negritas):
+
+Formación académica de base
+- Técnico en Empresas y Actividades Turísticas (TEAT) — Universidad de Cádiz, Escuela de Turismo de Jerez
+
+Acreditaciones oficiales Nivel 3 (IACP / Junta de Andalucía)
+- ADGG0108 Asistencia a la Dirección N3 — UC0988_3 (expedientes ante AAPP) · UC0980_2 (RRHH) · UC0979_2 (Tesorería)
 - ADGG0308 Asistencia Documental y Gestión N3 — UC0987_3 (sistemas información y archivo digital)
-- SSCE0110 Docencia FPE N3 — UC1442_3 a UC1446_3 (programar, materiales, impartir, evaluar, orientar)
-- SEAG16 Sostenibilidad y Gestión Ambiental (100h, SEPE 2024) · IFCT103 Ciberseguridad (49h, SEPE 2024) · Legionelosis RD487/2022 (25h)
+- SSCE0110 Docencia FPE N3 — UC1442_3 a UC1446_3
+- SEAG16 Sostenibilidad y Gestión Ambiental (100h, SEPE 2024)
+- IFCT103 Ciberseguridad (49h, SEPE 2024)
+- Legionelosis RD 487/2022 (25h, 2023)
 
-IDIOMAS
+Competencias técnicas core
+- Operativa hotelera: P&L · CAPEX/OPEX · GOP · GOPPAR · Revenue Management · Pricing · LQA · Forbes Standards · Pre-opening · SOPs · Asset Digitization
+- Cumplimiento y gestión jurídica: UC0988_3 · RGPD · Legionelosis · Relaciones institucionales AAPP · Gestión documental N3
+- Vanguardia digital: IA aplicada · Prompt engineering · Automatización procesos · Ciberseguridad · Análisis predictivo
 
-- Inglés: C1 funcional | B1 certificado UC9999_3 | C1 contextual Hilton UK | B2 en acreditación 2026
-- Alemán: B1 operativo | A2 certificado UC9996_2
-- Francés e Italiano: nivel funcional
+Idiomas
+- Inglés C1 funcional (B1 certificado UC9999_3 · C1 contextual Hilton UK · B2 en acreditación 2026)
+- Alemán B1 operativo (A2 certificado UC9996_2)
+- Francés e Italiano nivel funcional
 
-FORMACIÓN BASE — DISPONIBILIDAD
-
-TEAT (Técnico en Empresas y Actividades Turísticas) — Universidad de Cádiz, Escuela de Turismo de Jerez. Incorporación inmediata. Traslado total nacional e internacional sin restricciones geográficas.
+DISPONIBILIDAD — Incorporación inmediata. Traslado total nacional e internacional sin restricciones geográficas.
 
 REGLAS CRÍTICAS:
+- NO MENCIONES "${emp}" en ningún punto. El CV es un documento del candidato, no una carta.
 - PROHIBIDO INVENTAR: solo datos del perfil. Ningún hotel, cifra, presupuesto, tamaño de equipo o resultado que no esté en el perfil del candidato.
-- Espeja el lenguaje exacto de "${cargo}": si dice "revenue management", "asset management" o "Forbes standards", usa esos términos literalmente.
+- Espeja el lenguaje genérico del sector si "${cargo}" usa términos como "revenue management", "asset management" o "Forbes standards" — usa esos términos literalmente.
 - PALABRAS PROHIBIDAS: "innovador", "apasionado", "dinámico", "proactivo", "solución innovadora", "vanguardia", "cutting-edge", "altamente cualificado", "amplia trayectoria", "demostrando capacidad", "contribuyendo a", "sólido conocimiento de".
-- El Perfil son MÁXIMO 3 frases, cada una bajo 22 palabras.
+- El PERFIL es un párrafo NARRATIVO de 5-7 frases (no notas breves) — bien contextualizado, transmitiendo trayectoria y diferencial.
 - Los marcadores [VALOR], [ORNAMENT], [HAIRLINE] deben aparecer literalmente entre corchetes en las posiciones indicadas.`,
 
     email:`Redacta un EMAIL / MENSAJE LINKEDIN en español para el cargo "${cargo}" en "${emp}".
@@ -1515,9 +1549,11 @@ function saveDT(emp,cargo,sec){
   save();uCounts();rDash();toast('✅ Candidatura añadida al Dashboard');
 }
 
+function tDH(){const h=document.querySelector('#dh-card .dch');const b=document.getElementById('dh-list');h.classList.toggle('collapsed');b.classList.toggle('collapsed');}
 function rDH(){
   if(!data.dossierHistory.length){document.getElementById('dh-card').style.display='none';return;}
   document.getElementById('dh-card').style.display='block';
+  const cEl=document.getElementById('dh-count');if(cEl)cEl.textContent='('+data.dossierHistory.length+')';
   const sC2={hotel:'#38bdf8',docencia:'#4ade80',admin:'#a78bfa'};
   document.getElementById('dh-list').innerHTML=data.dossierHistory.slice(0,8).map((d,i)=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);cursor:pointer" onclick="lDH(${i})"><div><div style="font-size:12px;font-weight:600;color:var(--text)">${d.empresa}</div><div style="font-size:10px;color:var(--muted)">${d.cargo} · ${fD(new Date(d.timestamp).toISOString().split('T')[0])}</div></div><span style="margin-left:auto;padding:2px 7px;border-radius:100px;font-size:9px;font-weight:700;color:${sC2[d.sector]||'var(--gold)'};background:rgba(255,255,255,.05)">${{hotel:'🏨',docencia:'🎓',admin:'📋'}[d.sector]||'📋'}</span></div>`).join('');
 }
