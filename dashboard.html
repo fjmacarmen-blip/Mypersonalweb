@@ -477,7 +477,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
     <button class="btn btn-dark btn-sm" onclick="if(confirm('¿Borrar API key?')){localStorage.removeItem('fjm_api_key');renderAPIStatus();toast('🗑️ API key eliminada');}">Eliminar key</button>
     <a href="https://console.groq.com/keys" target="_blank" class="btn btn-dark btn-sm">Obtener key →</a>
   </div>
-  <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:10px;color:var(--muted)">Modelo: claude-haiku-4-5 · Funciones: Dossier adaptativo · PDF profesional · Análisis ATS · Generador LinkedIn</div>
+  <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:10px;color:var(--muted)">Modelo: llama-3.3-70b-versatile (Groq) · Funciones: Dossier adaptativo · Análisis ATS · Generador LinkedIn</div>
 </div></div>
         <div class="dc"><div class="dch"><span class="dct">🔍 Adzuna API — Vacantes reales</span></div><div class="dcb">
   <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">Adzuna agrega ofertas reales de Infojobs, Indeed, LinkedIn España. <strong style="color:var(--text)">250 búsquedas/mes gratis.</strong></p>
@@ -1576,6 +1576,7 @@ function saveAPIKey(){
   if(!k.startsWith('gsk_')){alert('⚠️ La clave de Groq debe empezar por gsk_...');return;}
   localStorage.setItem('fjm_api_key',k);
   document.getElementById('api-modal').style.display='none';
+  renderAPIStatus();
   toast('✅ API key guardada — ya puedes usar la búsqueda y el dossier');
 }
 function checkAPIKey(){
@@ -2203,9 +2204,9 @@ load();rDash();rTrack();rEmps();uCounts();renderAPIStatus();renderAdzunaStatus()
     <p style="font-size:12px;color:#7a8499;line-height:1.7;margin-bottom:20px">Para usar el Dossier Adaptativo y el análisis de vacantes necesitas una API key de Groq.<br/><strong style="color:#e8eaf0">Rápido · Gratuito · Sin límite diario generoso</strong> — lista en 2 minutos.</p>
     <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:11px;color:#7a8499">
       <strong style="color:#c9a84c">Cómo obtener tu API key:</strong><br/>
-      1. Ve a <a href="https://console.anthropic.com/settings/api-keys" target="_blank" style="color:#c9a84c">console.anthropic.com</a><br/>
-      2. Crea una cuenta o inicia sesión<br/>
-      3. Pulsa "Create Key"<br/>
+      1. Ve a <a href="https://console.groq.com/keys" target="_blank" style="color:#c9a84c">console.groq.com/keys</a><br/>
+      2. Crea una cuenta o inicia sesión (gratis)<br/>
+      3. Pulsa "Create API Key"<br/>
       4. Copia la clave que empieza por <code style="color:#e8c96a">gsk_...</code>
     </div>
     <input id="api-key-input" type="password" placeholder="gsk_..." style="width:100%;padding:12px 14px;border:1px solid rgba(201,168,76,.35);border-radius:10px;background:rgba(255,255,255,.06);color:#e8eaf0;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-bottom:12px" oninput="document.getElementById('api-save-btn').style.opacity=this.value.startsWith('gsk_')?'1':'.4'"/>
