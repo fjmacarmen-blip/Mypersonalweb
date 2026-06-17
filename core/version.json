@@ -1,0 +1,17 @@
+{
+  "version": "1.1.0",
+  "date": "2026-06-17",
+  "tag": "v1.1",
+  "title": "OTE B2 Oxford + Bachiller + badge de versión",
+  "highlights": [
+    "Añadido Oxford Test of English Advanced B2 (Cert. 1085450, Jun.2026) al CV y al Profile-Master",
+    "Incorporado Título de Bachiller (Registro 10497, Oct.2025) como base académica oficial",
+    "Idiomas actualizado: Inglés C1 funcional (Speaking C1 · Listening C1 · Reading B2 · Writing B2)",
+    "Badge de versión visible en todas las páginas principales"
+  ],
+  "changelog_url": "https://github.com/fjmacarmen-blip/Mypersonalweb",
+  "history": [
+    { "v": "1.1.0", "d": "2026-06-17", "t": "OTE B2 + Bachiller + badge versión" },
+    { "v": "1.0.0", "d": "2026-06-08", "t": "Dashboard candidaturas + Profile-Master inicial" }
+  ]
+}

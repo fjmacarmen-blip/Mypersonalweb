@@ -127,14 +127,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
 .ab-d{background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--muted)}
 .dos-layout{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start}
 @media(max-width:900px){.dos-layout{grid-template-columns:1fr}}
-.dos-panel{display:flex;flex-direction:column;gap:14px}
-.dch.collapsible{cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between}
-.dch.collapsible:hover{opacity:.85}
-.dch-chevron{font-size:12px;color:var(--muted);transition:transform .2s}
-.dch.collapsed .dch-chevron{transform:rotate(-90deg)}
-.dcb.collapsed{display:none}
-/* Card "Target de candidatura" también colapsable opcionalmente */
-.dc-collapsible .dch{cursor:pointer;user-select:none}
+.dos-panel{display:flex;flex-direction:column;gap:14px;position:sticky;top:0}
 .df{margin-bottom:12px}
 .df label{display:block;font-size:9px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
 .df input,.df select,.df textarea{width:100%;padding:9px 12px;border:1px solid var(--border2);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:12px;color:var(--text);background:rgba(255,255,255,.05);transition:all .2s;-webkit-appearance:none}
@@ -372,18 +365,17 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
             <div class="df"><label>Cargo / Puesto *</label><input id="dc2" placeholder="Ej. Director General, Docente FP..."/></div>
             <div class="df"><label>Sector</label><div class="sg"><div class="so active" data-s="hotel" onclick="setDS('hotel')"><span>🏨</span>Hostelería</div><div class="so" data-s="docencia" onclick="setDS('docencia')"><span>🎓</span>Docencia</div><div class="so" data-s="admin" onclick="setDS('admin')"><span>📋</span>Admin</div></div></div>
             <div class="df"><label>Contexto sobre la empresa</label><textarea id="dctx" placeholder="Tipo, valores, posicionamiento, por qué interesa..."></textarea></div>
-            <div class="df"><label>Tono del dossier</label><select id="dtono"><option value="ejecutivo">Ejecutivo — directivo senior</option><option value="lujo">Lujo — Fairmont / Marbella Club</option><option value="operativo">Operativo — TUI / easyHotel</option><option value="cercano">Cercano — Barceló / Q Hotels</option><option value="patrimonial">Patrimonial — activo histórico</option><option value="docente">Docente — vocación formativa</option><option value="tecnico">Técnico — rigor normativo</option><option value="internacional">Internacional — lujo global</option></select></div>
+            <div class="df"><label>Tono del dossier</label><select id="dtono"><option value="ejecutivo">Ejecutivo — directivo senior</option><option value="patrimonial">Patrimonial — activo histórico</option><option value="docente">Docente — vocación formativa</option><option value="tecnico">Técnico — rigor normativo</option><option value="internacional">Internacional — lujo global</option></select></div>
             <div class="df"><label>Documentos</label><div class="dg">
               <div class="do active" data-d="carta" onclick="tdoc('carta')"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>Carta</div>
               <div class="do active" data-d="perfil" onclick="tdoc('perfil')"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>Perfil</div>
               <div class="do active" data-d="cv" onclick="tdoc('cv')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>CV</div>
               <div class="do" data-d="email" onclick="tdoc('email')"><svg viewBox="0 0 24 24"><path d="M2 10l10-5 10 5-10 5z"/></svg>Email LI</div>
               <div class="do" data-d="ats" onclick="tdoc('ats')"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><polyline points="21 21 16.65 16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>ATS+</div>
-              <div class="do" data-d="resumen" onclick="tdoc('resumen')"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="18" y2="18"/></svg>Resumen</div>
             </div></div>
           </div></div>
           <button class="gbtn" id="dos-btn" onclick="genDossier()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>Generar Dossier Completo</button>
-          <div class="dc" id="dh-card" style="display:none"><div class="dch collapsible collapsed" onclick="tDH()"><span class="dct">📂 Dossieres anteriores <span id="dh-count" style="font-size:10px;color:var(--muted);font-weight:normal"></span></span><span class="dch-chevron">▼</span></div><div class="dcb collapsed" id="dh-list"></div></div>
+          <div class="dc" id="dh-card" style="display:none"><div class="dch"><span class="dct">📂 Dossieres anteriores</span></div><div class="dcb" id="dh-list"></div></div>
         </div>
         <div id="dos-right">
           <div id="dos-empty" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:48px 24px;text-align:center">
@@ -469,15 +461,15 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(-
     <div class="tc" id="tc-config">
       <div class="sh"><div class="sh-t">Configuración</div></div>
       <div style="display:flex;flex-direction:column;gap:12px">
-        <div class="dc"><div class="dch"><span class="dct">🔑 Groq API Key</span></div><div class="dcb">
-  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">Tu API key se guarda en el navegador (localStorage). <strong style="color:var(--text)">Nunca se sube a GitHub.</strong> Empieza por <code style="color:var(--gold)">gsk_...</code></p>
+        <div class="dc"><div class="dch"><span class="dct">🤖 Claude API Key</span></div><div class="dcb">
+  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">Tu API key se guarda en el navegador (localStorage). <strong style="color:var(--text)">Nunca se sube a GitHub.</strong> Empieza por <code style="color:var(--gold)">sk-ant-...</code></p>
   <div id="api-status-block"></div>
   <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap">
     <button class="btn btn-gold btn-sm" onclick="document.getElementById('api-modal').style.display='flex';document.getElementById('api-key-input').value=getAPIKey();document.getElementById('api-save-btn').style.opacity='1'">🔑 Configurar API key</button>
     <button class="btn btn-dark btn-sm" onclick="if(confirm('¿Borrar API key?')){localStorage.removeItem('fjm_api_key');renderAPIStatus();toast('🗑️ API key eliminada');}">Eliminar key</button>
-    <a href="https://console.groq.com/keys" target="_blank" class="btn btn-dark btn-sm">Obtener key →</a>
+    <a href="https://console.anthropic.com/settings/api-keys" target="_blank" class="btn btn-dark btn-sm">Obtener key →</a>
   </div>
-  <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:10px;color:var(--muted)">Modelo: llama-3.3-70b-versatile (Groq) · Funciones: Dossier adaptativo · Análisis ATS · Generador LinkedIn</div>
+  <div style="margin-top:10px;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;font-size:10px;color:var(--muted)">Modelo: claude-haiku-4-5 · Funciones: Dossier adaptativo · PDF profesional · Análisis ATS · Generador LinkedIn</div>
 </div></div>
         <div class="dc"><div class="dch"><span class="dct">🔍 Adzuna API — Vacantes reales</span></div><div class="dcb">
   <p style="font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6">Adzuna agrega ofertas reales de Infojobs, Indeed, LinkedIn España. <strong style="color:var(--text)">250 búsquedas/mes gratis.</strong></p>
@@ -1195,316 +1187,166 @@ let dSec='hotel',dDocs=new Set(['carta','perfil','cv']);
 function setDS(s){dSec=s;document.querySelectorAll('.so').forEach(o=>o.classList.toggle('active',o.dataset.s===s));}
 function tdoc(d){const el=document.querySelector(`.do[data-d="${d}"]`);if(dDocs.has(d)){if(dDocs.size<=1)return;dDocs.delete(d);el.classList.remove('active');}else{dDocs.add(d);el.classList.add('active');}}
 
-const PM=`IDENTIDAD NUCLEAR: "El Líder Puente" — Estratega híbrido que une 30 años de sabiduría operativa hotelera (10.987+ días de vida laboral computable) con certificaciones IA y Negociación Internacional obtenidas en 2026. NO es un perfil "senior tradicional". Es el directivo Hospitality 5.0 que ya existe.
-MASTER PROMPT INTERNO: Genera un perfil ejecutivo que demuestre que este candidato tiene la sabiduría operativa de 30 años de dirección en hoteles emblemáticos, pero la capacidad técnica de un profesional que acaba de certificarse en IA y Negociación Internacional en 2026, convirtiéndolo en el "Líder Puente" ideal para la transformación digital del sector de lujo.
-
-DATOS DE CONTACTO: Francisco Javier Martínez Alba | Tel: 635 493 853 | pacozzy@hotmail.com | Algeciras (Cádiz) | linkedin.com/in/franciscojaviermartinezalba
-DISPONIBILIDAD: Inmediata | Traslado total nacional e internacional | Sin restricciones geográficas
-
-FACTOR WOW 2026 (SIEMPRE en cabecera de documentos, son el diferencial):
-[1] Diploma IA Aplicada al Sector Administrativo (90h, Cámara Comercio Cádiz, 11 Mar.2026) — prompt engineering, automatización, análisis predictivo, ROI operativo
-[2] Inglés Comercial C1 / Business English (60h, Cámara Comercio Cádiz, 10 Abr.2026) — negociaciones internacionales
-
-ACTIVOS ESTRATÉGICOS HOTELEROS (ordenar por relevancia para cada puesto, no cronología):
-- ACTIVO PRE-APERTURA: Hotel Altos de Istán 4★ (Four Force Capital SL), Istán/Marbella | Director / Project Manager | Mar.2019–Ene.2025 | FOCO: Pre-opening completo desde cero, SOPs propios, arquitectura operativa, licencias y tramitación AAPP, P&L, CAPEX/OPEX, estándares LQA y Forbes, relaciones institucionales
-- ACTIVO PATRIMONIO HISTÓRICO: Hotel Reina Cristina 4★ (Globales/AMLA Explotaciones Turísticas), Algeciras | Director | 2015–2018 (8 años acumulados en total) | FOCO: Legacy asset 1901, lujo histórico, eventos corporativos de alto nivel, negociación proveedores estratégicos, modernización sin perder identidad patrimonial
-- ACTIVO GRAN VOLUMEN: Hotel Dominican Bay, Boca Chica (Rep. Dominicana) | Director de Operaciones | 2005–2007 | FOCO: Resort +400 habitaciones, +115 colaboradores, brigadas internacionales, alta complejidad logística y operativa
-- ACTIVO LUJO INTERNACIONAL: Hilton London Gatwick (Hilton International), Reino Unido | Duty Manager / Reception Manager (NO director — rol operativo previo a la dirección) | FOCO: Blue-chip hospitality, rigor procedimental de lujo, exposición directiva internacional, inglés C1 operativo en contexto real anglosajón
-- ACTIVO VACACIONAL INSULAR: THB Flora 3★ / Tamaimo Tropical, Lanzarote (THB Hotels) | Director Operativo | 2013–2015 | FOCO: Mercado vacacional insular, LQA, alta ocupación, equipos multiculturales
-- BlueBay Beach Club 5★ (Bahía Feliz, Gran Canaria) | Director | 2004 | Lujo internacional 5 estrellas
+const PM=`CANDIDATO: Francisco Javier Martínez Alba | Tel: 635 493 853 | pacozzy@hotmail.com | Algeciras (Cádiz) | linkedin.com/in/franciscojaviermartinezalba
+MARCA PERSONAL: "Bridge Leader 4.0" — Senior Hospitality Executive & Hybrid Leader | Hospitality 5.0
+EXPERIENCIA: 30 años de veteranía acreditada (10.987+ días de vida laboral certificada)
+TRAYECTORIA DIRECTIVA (seleccionada):
+- Hotel Altos de Istán 4★ (Four Force Capital SL), Málaga | Director / Project Manager | Mar.2019–Ene.2025 | Pre-opening, licencias, SOPs, P&L, CAPEX/OPEX, LQA, Forbes, relaciones AAPP
+- Hotel Reina Cristina 4★ (Globales/AMLA Explotaciones Turísticas), Algeciras | Director | 2015–2018 (8 años acumulados) | Activo histórico 1901, Legacy Asset Modernization, negociación proveedores estratégicos
+- Hotel Dominican Bay, Boca Chica (Rep. Dominicana) | Director de Operaciones | 2005–2007 | Resort +400 habitaciones, brigadas internacionales, alta complejidad logística
+- Hilton International (Hilton London Gatwick), Reino Unido | Management & Operations | Consolidación internacional | Blue-chip hospitality, rigor procedimental de lujo
+- THB Flora 3★ / Tamaimo Tropical, Lanzarote (THB Hotels) | Director Operativo | 2013–2015 | LQA, alta ocupación vacacional
+- BlueBay Beach Club 5★ (Bahía Feliz, Gran Canaria) | Director | 2004 | Lujo internacional, estándares internacionales
 - Aura Hotel Algeciras 3★ (Sercotel) | Director | 2011–2013
-- BelleVue Belsana (Mallorca) / BelleVue Aquarius (Lanzarote) | Dirección operativa
+- BelleVue Belsana (Mallorca) y BelleVue Aquarius (Lanzarote) | Dirección operativa
 - Hotetur y Globales Groups | Ascenso directivo: Front Office → Assistant Director → Hotel Director
-
-EL DIRECTOR FORMADOR (diferencial único, usar siempre):
-SSCE0110 Docencia FPE N3 (Junta de Andalucía, NOTA 8,62/10, 380h, Dic.2025) — Habilitación Grados A+B+C | Módulos: Hostelería+Turismo+Administración+Gestión | Presencial y teleformación | UC1442_3 Programar · UC1443_3 Elaborar materiales · UC1444_3 Impartir · UC1445_3 Evaluar · UC1446_3 Orientar
-NARRATIVA: "No solo dirijo el hotel, sino que formo internamente a mi equipo para que cumpla los estándares de la marca, ahorrando costes de consultoría externa."
-
-FORMACIÓN ACADÉMICA Y CERTIFICACIONES (ORDENADAS POR IMPORTANCIA — NO POR FECHA):
-1. TEAT — Técnico en Empresas y Actividades Turísticas | Universidad de Cádiz, Escuela de Turismo de Jerez | Formación académica base de la trayectoria profesional
-2. SSCE0110 Docencia FPE Nivel 3 | Junta de Andalucía | 380h, nota 8,62/10, Dic.2025 | Habilitación oficial para impartir formación profesional (UC1442_3 a UC1446_3, Grados A+B+C)
-3. IA Aplicada al Sector Administrativo | Cámara de Comercio de Cádiz | 90h, Mar.2026 | Prompt engineering, automatización, análisis predictivo, ROI operativo
-4. SEAG16 Desarrollo Sostenible y Gestión Ambiental | SEPE | 100h, 2024 | Marcos ESG europeos, descarbonización
-5. Oxford Test of English Advanced — B2 OFICIAL (CEFR) | University of Oxford / Cámara de Comercio del Campo de Gibraltar (ES0656) | Jun.2026 | Cert. 1085450 | Speaking C1 (146) · Listening C1 (144) · Reading B2 (135) · Writing B2 (130)
-6. Inglés Comercial / Business English C1 | Cámara de Comercio de Cádiz | 60h, Abr.2026 | Negociaciones internacionales
-7. IFCT103 Ciberseguridad: Prevención e Incidentes | SEPE | 49h, 2024 | Gestión incidentes digitales
-8. ADGG0108 Asistencia a la Dirección Nivel 3 | IACP/Junta de Andalucía | UC0988_3 (expedientes ante AAPP) · UC0980_2 (RRHH) · UC0979_2 (Tesorería)
-9. ADGG0308 Asistencia Documental y Gestión Nivel 3 | IACP/Junta de Andalucía | UC0987_3 (sistemas información y archivo digital)
-10. Prevención y Control de Legionelosis | RD 487/2022 | 25h, 2023
-11. Título de Bachiller | Ministerio de Educación, FP y Deportes (España) | Expedido Madrid, Oct.2025 | Registro 10497/folio 71 nº 001188002548 | Base académica oficial
-IDIOMAS: Español nativo | Inglés Oxford Test of English Advanced B2 oficial (Cert. 1085450, Jun.2026 — Speaking C1, Listening C1, Reading B2, Writing B2) + C1 contextual Hilton UK + B1 previo UC9999_3 | Alemán B1 operativo (A2 cert. UC9996_2) | Francés / Italiano funcional
-
-KEYWORDS ATS CRÍTICOS: P&L Management | CAPEX/OPEX | GOP | GOPPAR | Revenue Management | Pricing | LQA Standards | Forbes Standards | Pre-opening Project Manager | SOPs | ESG Compliance | SEAG16 | AI Workflow Automation | Cybersecurity IFCT103 | Asset Management | RGPD | UC0988_3 | Gestión documental N3 | Asset Digitization | Relaciones institucionales AAPP
-
+ESPECIALIZACIONES 2026 (ventaja competitiva diferencial):
+- IA Aplicada al Sector Administrativo (90h, Cámara de Comercio, 11 Mar.2026) — prompt engineering, automatización procesos, análisis predictivo, ROI operativo
+- Inglés Comercial / Business English (60h, Cámara de Comercio, 10 Abr.2026) — negociaciones internacionales, nivel C1 funcional
+- Docencia FPE SSCE0110 (380h, Junta de Andalucía, Dic.2025) — NOTA 8,62 | Habilitado módulos A+B+C | Turismo+Hostelería+Administración | Presencial y teleformación
+- Sostenibilidad y Gestión Ambiental SEAG16 (100h, SEPE, 2024) — marcos ESG europeos, descarbonización
+- Ciberseguridad IFCT103 (49h, SEPE, 2024) — gestión incidentes digitales
+- Control Legionelosis (25h, RD 487/2022, 2023) — instalaciones de riesgo
+CERTIFICACIONES OFICIALES NIVEL 3 (IACP / Junta de Andalucía):
+- ADGG0108 Asistencia a la Dirección N3: UC0988_3 gestión expedientes/documentación jurídica ante Organismos Públicos · UC0980_2 RRHH · UC0979_2 Tesorería
+- ADGG0308 Asistencia Documental y Gestión N3: UC0987_3 Sistemas información y archivo digital
+FORMACIÓN ACADÉMICA: TEAT — Técnico Empresas y Actividades Turísticas, Universidad de Cádiz (Escuela de Turismo de Jerez)
+IDIOMAS: Español nativo | Inglés C1 funcional (B1 certificado UC9999_3; C1 contextual Hilton UK; B2 en acreditación 2026) | Alemán B1 operativo (A2 certificado UC9996_2) | Francés / Italiano nivel funcional
+COMPETENCIAS CORE: P&L · CAPEX/OPEX · GOP · GOPPAR · Revenue Management · Pricing · LQA · Forbes Standards · Pre-opening Project Manager · SOPs · ESG/SEAG16 · IA Aplicada · RGPD · Legionelosis RD487/2022 · Relaciones institucionales AAPP · Gestión jurídica UC0988_3 · Asset Digitization · SCADA
+DISPONIBILIDAD: Inmediata · Traslado total nacional e internacional · Sin restricciones geográficas
 FRASE PROPIA: "Mi visión se fundamenta en el equilibrio entre el legado arquitectónico y la vanguardia operativa, utilizando la tecnología para devolver al hotelero su función primordial."`;
 
-const TD={ejecutivo:'Ejecutivo senior maduro. Tono directivo con calidez. Destaca P&L, CAPEX, GOPPAR, LQA/Forbes, liderazgo equipos y cifras concretas.',patrimonial:'Reverencial con el patrimonio hotelero. Destaca Reina Cristina 1901, legado/modernidad, equilibrio entre historia y vanguardia. Cita la frase propia del candidato.',docente:'Vocacional y pedagógico. Destaca SSCE0110 nota 8,62, la vocación de transmitir 30 años de conocimiento, liderazgo formativo como multiplicador de talento.',tecnico:'Técnico y riguroso. Destaca UC0988_3, RGPD, Legionelosis RD487/2022, gestión documental N3, cumplimiento normativo y control de riesgos.',internacional:'Cosmopolita y global. Destaca Hilton UK, Dominican Bay +400hab, movilidad total, Business English C1, Hospitality 5.0, estándares internacionales de lujo.',lujo:'Sofisticado y detallista. Vocabulario de excelencia y legado. Nombres propios de marcas (Fairmont, Marbella Club, LQA, Forbes). Elegancia sin grandilocuencia. Énfasis en cultura de servicio como arte y en la identidad patrimonial de los activos.',operativo:'Energético y orientado a resultados. Frases cortas. Métricas y eficiencia ante todo. Destaca capacidad de renovación, gestión de equipos grandes, resolución rápida, KPIs y ahorro de costes. Ideal para TUI, easyHotel, cadenas de volumen.',cercano:'Humano y vocacional. Cercano sin ser informal. Destaca el placer de compartir conocimiento, el liderazgo de proximidad, la formación de equipos, la identidad de empresa familiar o de escala media. Ideal para Barceló, Q Hotels, hoteles independientes.'};
-// Identidades adaptadas por tono — cada CV tiene una IDENTIDAD distintiva
-const IDS={
-  ejecutivo:    {name:'The Hybrid Leader 4.0',     value:'Un legado de 30 años en dirección hotelera de lujo que converge con la frontera tecnológica de 2026 (IA, ESG, Ciberseguridad).'},
-  lujo:         {name:'The Modern Veteran',         value:'Un legado de 30 años en operativa de lujo 4★/5★ que ahora integra IA aplicada y estándares Forbes/LQA con la elegancia de quien ha gestionado activos emblemáticos.'},
-  operativo:    {name:'The Resilient Operator',    value:'30 años orquestando operaciones complejas (+400 habitaciones, equipos de 115+, pre-aperturas desde cero) ahora reforzados con IA aplicada para eficiencia administrativa.'},
-  cercano:      {name:'Hotelero de Vocación',      value:'Entiendo la hospitalidad como el arte de ser el anfitrión que transforma una estancia en un recuerdo. 30 años de trato humano, ahora con IA y formación oficial FPE para multiplicar el equipo.'},
-  patrimonial:  {name:'Guardian of Legacy',         value:'Especialista en activos hoteleros patrimoniales (Reina Cristina 1901): equilibrio entre legado arquitectónico y vanguardia operativa, con IA aplicada al servicio del histórico.'},
-  docente:      {name:'El Director Formador',      value:'30 años de dirección hotelera convertidos en capital pedagógico oficial: SSCE0110 nota 8,62 + IA aplicada = formación interna que ahorra costes de consultoría externa.'},
-  tecnico:      {name:'The Compliance Architect',  value:'Director hotelero con dominio técnico-jurídico (UC0988_3, RGPD, Legionelosis RD487/2022, ESG/SEAG16, Ciberseguridad IFCT103): rigor normativo + IA aplicada al cumplimiento.'},
-  internacional:{name:'Global Hospitality Executive',value:'Carrera internacional consolidada en Hilton UK + Dominican Bay (+400 hab), ahora con Business English C1 (Abr.2026) e IA aplicada para liderar transformación en grupos multinacionales.'}
-};
-const DCC={carta:{label:'Carta de Presentación',icon:'✉️',step:'Redactando carta estratégica...'},perfil:{label:'Perfil Ejecutivo',icon:'🎯',step:'Construyendo perfil ejecutivo...'},cv:{label:'CV Adaptado',icon:'📄',step:'Adaptando CV...'},email:{label:'Email / LinkedIn',icon:'📧',step:'Redactando email...'},ats:{label:'Análisis ATS + Entrevista',icon:'🤖',step:'Analizando compatibilidad ATS...'},resumen:{label:'Resumen Ejecutivo (100 car.)',icon:'📌',step:'Generando resumen ejecutivo...'}};
+const TD={ejecutivo:'Ejecutivo senior maduro. Tono directivo con calidez. Destaca P&L, CAPEX, GOPPAR, LQA/Forbes, liderazgo equipos y cifras concretas.',patrimonial:'Reverencial con el patrimonio hotelero. Destaca Reina Cristina 1901, legado/modernidad, equilibrio entre historia y vanguardia. Cita la frase propia del candidato.',docente:'Vocacional y pedagógico. Destaca SSCE0110 nota 8,62, la vocación de transmitir 30 años de conocimiento, liderazgo formativo como multiplicador de talento.',tecnico:'Técnico y riguroso. Destaca UC0988_3, RGPD, Legionelosis RD487/2022, gestión documental N3, cumplimiento normativo y control de riesgos.',internacional:'Cosmopolita y global. Destaca Hilton UK, Dominican Bay +400hab, movilidad total, Business English C1, Hospitality 5.0, estándares internacionales de lujo.'};
+const DCC={carta:{label:'Carta de Presentación',icon:'✉️',step:'Redactando carta estratégica...'},perfil:{label:'Perfil Ejecutivo',icon:'🎯',step:'Construyendo perfil ejecutivo...'},cv:{label:'CV Adaptado',icon:'📄',step:'Adaptando CV...'},email:{label:'Email / LinkedIn',icon:'📧',step:'Redactando email...'},ats:{label:'Análisis ATS + Entrevista',icon:'🤖',step:'Analizando compatibilidad ATS...'}};
 const SL2={hotel:'Hostelería/Dirección Hotelera',docencia:'Docencia FP Hostelería y Turismo',admin:'Gestión Administrativa y Asistencia a la Dirección'};
 
 function bDP(doc,emp,cargo,sec,ctx,tono){
   const t=TD[tono]||TD.ejecutivo;const s=SL2[sec]||sec;
-  const id=IDS[tono]||IDS.ejecutivo;
   const P={
-    carta:`Redacta una CARTA DE PRESENTACIÓN en español para el cargo "${cargo}" en "${emp}".
-
+    carta:`Redacta una CARTA DE PRESENTACIÓN ESTRATÉGICA en español, formal y personalizada para la empresa específica.
 PERFIL COMPLETO DEL CANDIDATO:
 ${PM}
+EMPRESA TARGET: "${emp}" | CARGO SOLICITADO: "${cargo}" | SECTOR: ${s} | CONTEXTO DE LA EMPRESA: ${ctx||'No especificado'} | TONO: ${t}
 
-EMPRESA: "${emp}" | CARGO: "${cargo}" | SECTOR: ${s} | CONTEXTO: ${ctx||'No especificado'} | TONO: ${t}
-IDENTIDAD DEL DOCUMENTO: "${id.name}" — ${id.value}
+ESTRUCTURA OBLIGATORIA (4-5 párrafos, 380-450 palabras):
+1. APERTURA — "A la atención del Departamento de Selección de ${emp}," + párrafo de apertura expresando por qué es un privilegio candidatarse a "${emp}" específicamente (usa el contexto dado sobre la empresa)
+2. TRAYECTORIA Y ARRAIGO — Vinculación del candidato con este tipo de empresa/sector + 2-3 logros concretos con datos reales (hoteles específicos, años, cifras como +400 hab., 30 años, 10.987 días)
+3. VENTAJA COMPETITIVA 2026 — El diferencial "Bridge Leader 4.0": cómo las especializaciones 2026 (IA, ESG, SSCE0110 nota 8,62) aportan valor concreto a "${emp}" para el cargo "${cargo}"
+4. PROPUESTA DE VALOR ESPECÍFICA — Qué aporta exactamente a "${emp}": eficiencia operativa, GOP, estándares, liderazgo de equipos, cumplimiento normativo
+5. CIERRE CON CTA — Agradecimiento + llamada explícita a entrevista personal + disponibilidad inmediata y traslado total
 
-ESTRUCTURA (4 párrafos, 300-370 palabras):
-1. APERTURA — "A la atencion del Departamento de Seleccion de ${emp}," + por que "${emp}" especificamente, referenciando algo concreto de la empresa o el cargo que demuestre que conoce la empresa
-2. TRAYECTORIA — Selecciona 2-3 activos estratégicos hoteleros del perfil que sean más relevantes para "${cargo}" en "${emp}". Para cada uno: cargo, empresa, periodo, logro concreto con dato real del perfil. Conecta directamente con lo que "${emp}" necesita.
-3. DIFERENCIAL 2026 (El Líder Puente) — Como la combinación de IA (90h, Mar.2026) + C1 inglés (Abr.2026) + SSCE0110 docente (nota 8,62) crea un perfil que "${emp}" no encontrará en otro candidato con 30 años de experiencia. Específico para "${cargo}".
-4. CIERRE — Solicitud directa de entrevista + disponibilidad inmediata + traslado total sin restricciones
+FIRMA AL PIE: Francisco Javier Martínez Alba | 635 493 853 | pacozzy@hotmail.com
 
-FIRMA: Francisco Javier Martinez Alba | 635 493 853 | pacozzy@hotmail.com
+REGLAS CRÍTICAS: Tono ${t}. Primera persona. Sin asteriscos ni markdown. Párrafos fluidos y bien construidos. Mencionar "${emp}" al menos 2 veces en el cuerpo. Usar cifras y nombres reales del candidato. Terminar siempre con "Atentamente," y firma completa.`,
 
-REGLAS DE ESCRITURA (CRITICAS):
-- Escribe como un profesional real, no como un AI. Frases cortas. Una idea por frase.
-- Cada logro: verbo en pasado + método concreto + resultado medible del perfil
-- Menciona "${emp}" minimo 2 veces en el cuerpo
-- FACTOR WOW siempre presente: diploma IA Mar.2026 + C1 inglés Abr.2026
-- No usar: "me complace", "con el fin de", "en virtud de", "en el marco de", "contribuyendo a"
-- No usar gerundios encadenados: mal "gestionando equipos logrando resultados"; bien "Dirigí X equipos. Resultado: Y"
-- Sin asteriscos, markdown, guiones dobles ni caracteres especiales
-- Terminar siempre con "Atentamente," + firma completa
-- PROHIBIDO INVENTAR: Solo usa datos que figuren en el perfil. Nunca inventes cifras, presupuestos, nombres de hoteles ni resultados que no estén documentados en el perfil.`,
-
-    perfil:`Redacta un PERFIL EJECUTIVO Y PROPUESTA DE VALOR en español para "${cargo}" en "${emp}".
-
+    perfil:`Redacta un PERFIL EJECUTIVO Y PROPUESTA DE VALOR en español.
 PERFIL COMPLETO DEL CANDIDATO:
 ${PM}
-
 EMPRESA: "${emp}" | CARGO: "${cargo}" | SECTOR: ${s} | TONO: ${t}
-IDENTIDAD DEL DOCUMENTO: "${id.name}" — ${id.value}
 
-INSTRUCCIONES DE FORMATO:
-- Usa los marcadores [VALOR] y [ORNAMENT] literalmente.
-- Sin asteriscos ni markdown.
-- Bullets con guion "- ".
+ESTRUCTURA OBLIGATORIA (máx 320 palabras):
+1. TITULAR DE IMPACTO — "Francisco Javier Martínez Alba es un estratega de la operación hotelera..." (una frase que posicione al candidato para "${cargo}" en "${emp}")
+2. PROPUESTA DE VALOR — 2-3 frases que resuman el diferencial para este cargo específico en esta empresa específica
 
-ESTRUCTURA (máx 350 palabras):
+3. ÁREAS DE EXPERTISE (5-6 bullets, usar negrita en el concepto clave):
+• **Dirección Integral de Activos:** gestión 360° hoteles 3★ a 5★ y resorts internacionales, P&L, CAPEX, GOPPAR, LQA, Forbes
+• **Transformación Digital 2026:** IA aplicada al sector (90h, 2026), automatización procesos, análisis predictivo, prompt engineering
+• **Cumplimiento Legal y Administrativo:** UC0988_3 expedientes ante AAPP, RGPD, Legionelosis RD487/2022, gestión documental N3
+• **Sostenibilidad y ESG:** SEAG16 (100h), marcos de descarbonización europeos, alineación normativa
+• **Liderazgo Pedagógico:** SSCE0110 nota 8,62 (380h, Junta Andalucía), formación interna equipos alto rendimiento
+• [Sexto bullet relevante específicamente para "${cargo}" en "${emp}"]
 
-[VALOR]: Una frase impactante (máx 25 palabras) que posicione al candidato como "${id.name}" para "${cargo}" en "${emp}". Inspírate en "${id.value}" pero adáptala 100% al puesto.
+4. HITOS DIFERENCIALES — 3-4 logros concretos con datos: empresa, años, cifras reales del candidato
+5. DISPONIBILIDAD — Incorporación inmediata, traslado total nacional e internacional
 
-PROPUESTA DIFERENCIAL
+REGLAS: Tono ${t}. Negrita solo en conceptos clave de cada bullet. Texto plano en el resto.`,
 
-(3 frases cortas. Por qué este candidato es la pieza que "${emp}" necesita para "${cargo}". Que otro candidato con 30 años NO puede ofrecer lo mismo: la combinación de sabiduría operativa + certificaciones 2026. Tono "${t}".)
-
-[ORNAMENT]
-
-ÁREAS DE EXPERTISE
-
-- Dirección Integral de Activos Hoteleros: [logro concreto del perfil relevante para "${cargo}"]
-- Transformación Digital 2026: IA Aplicada (90h, Mar.2026) y aplicación a "${cargo}"
-- Liderazgo Pedagógico Oficial: SSCE0110 nota 8,62, formación interna que ahorra costes de consultoría
-- [Cuarto bullet relevante específicamente para "${cargo}" — usa keywords del puesto]
-- [Quinto bullet relevante]
-
-HITOS VANGUARDIA 2026
-
-- IA Aplicada al Sector Administrativo: 90h, Cámara de Comercio de Cádiz, Mar.2026
-- Inglés Comercial C1: 60h, Cámara de Comercio de Cádiz, Abr.2026
-- Habilitación Docente FPE SSCE0110: nota 8,62, Junta de Andalucía, Dic.2025
-
-DISPONIBILIDAD — Incorporación inmediata. Traslado total nacional e internacional.
-
-REGLAS: Tono "${t}". Sin gerundios encadenados. Sin listas de adjetivos. Una idea por frase.
-PROHIBIDO INVENTAR: solo datos del perfil. Nunca inventes cifras, presupuestos, nombres de hoteles o resultados.`,
-
-    cv:`Redacta un CV ADAPTADO al perfil profesional buscado por "${cargo}", siguiendo EXACTAMENTE la estructura y los marcadores indicados.
-
+    cv:`Redacta un CV ADAPTADO en español para el cargo "${cargo}" en la empresa "${emp}".
 PERFIL COMPLETO DEL CANDIDATO:
 ${PM}
-
 SECTOR: ${s} | TONO: ${t}
-IDENTIDAD DEL CV: "${id.name}" — ${id.value}
 
-REGLA FUNDAMENTAL: ESTE CV NO PUEDE MENCIONAR NUNCA EL NOMBRE DE LA EMPRESA DESTINATARIA ("${emp}"). El CV es un documento personal/profesional autónomo del candidato, no una carta dirigida a esa empresa. Las referencias específicas a la empresa van en la CARTA, NO aquí.
+ESTRUCTURA (texto plano, secciones en MAYÚSCULAS, máx 520 palabras):
+1. ENCABEZADO — Francisco Javier Martínez Alba | 635 493 853 | pacozzy@hotmail.com | Algeciras (Cádiz) | [Título adaptado al cargo]
 
-INSTRUCCIONES DE FORMATO (CRÍTICAS):
-- Usa los marcadores especiales [VALOR], [ORNAMENT] y [HAIRLINE] literalmente — el renderizador los convierte en elementos gráficos.
-- Hoteles en formato pipe: "Cargo | Hotel/Empresa | Periodo" — una sola línea, el renderizador los formatea con tipografía serif.
-- Secciones en MAYUSCULAS, una línea sola.
-- Bullets con guion "- ".
-- Sin asteriscos, sin markdown, sin emojis.
+2. PERFIL EJECUTIVO — 3-4 líneas resumen ejecutivo orientado específicamente a "${cargo}" en "${emp}"
 
-ESTRUCTURA EXACTA (700-850 palabras):
+3. TRAYECTORIA DIRECTIVA — Selecciona las 4-5 experiencias más relevantes para "${cargo}". Para cada una:
+   CARGO | EMPRESA | PERÍODO
+   · Bullet de logro concreto con cifra o resultado
+   · Bullet de responsabilidad o habilidad relevante para "${cargo}"
 
-[VALOR]: Una sola frase impactante (máx 25 palabras) que resuma la PROPUESTA DE VALOR DEL CANDIDATO para el tipo de puesto "${cargo}" en su sector. NO menciones "${emp}". Inspírate en "${id.value}" pero adáptala al rol genérico, no a la empresa concreta.
+4. ESPECIALIZACIONES 2026
+   · IA Aplicada al Sector Administrativo — 90h, Cámara Comercio, Mar.2026
+   · Inglés Comercial C1 — 60h, Cámara Comercio, Abr.2026
+   · Docencia FPE SSCE0110 — 380h, Junta Andalucía, Dic.2025 (nota 8,62)
+   · Sostenibilidad ESG/SEAG16 — 100h, SEPE, 2024
+   · Ciberseguridad IFCT103 — 49h, SEPE, 2024
 
-PERFIL "${id.name.toUpperCase()}"
+5. CERTIFICACIONES OFICIALES
+   · ADGG0108 Asistencia a la Dirección N3 (UC0988_3 · UC0980_2 · UC0979_2)
+   · ADGG0308 Asistencia Documental N3 (UC0987_3)
+   · TEAT — Universidad de Cádiz (Escuela de Turismo de Jerez)
 
-(Párrafo bien contextualizado de 5-7 frases, 130-170 palabras. NO son notas breves: es un perfil narrativo y profesional. Debe transmitir:
-- Trayectoria total de 30 años y los activos hoteleros más representativos (Altos de Istán, Reina Cristina, Dominican Bay, Hilton UK).
-- La evolución desde la dirección operativa hacia el directivo Hospitality 5.0.
-- La triple certificación 2026 (IA + C1 + SSCE0110) como diferencial.
-- Capacidad de liderazgo de equipos multiculturales y resultados en P&L/CAPEX/LQA/Forbes.
-- El estilo personal que define al candidato según el tono "${t}".
-NO menciones "${emp}". Habla del candidato como profesional del sector, no como aspirante a un puesto concreto.)
+6. IDIOMAS — Inglés C1 funcional (B1 certificado) · Alemán B1 operativo (A2 certificado) · Francés/Italiano funcional
 
-[ORNAMENT]
-
-HITOS DE VANGUARDIA 2026
-
-- IA Aplicada al Sector Administrativo: Diploma 90h, Cámara de Comercio de Cádiz, 11 Mar.2026. Prompt engineering, automatización de procesos administrativos, análisis predictivo y ROI operativo aplicado a la gestión hotelera.
-- Inglés Comercial / Business English C1: Diploma 60h, Cámara de Comercio de Cádiz, 10 Abr.2026. Negociaciones internacionales, presentaciones ejecutivas y atención de cliente premium en inglés operativo.
-- El Director Formador (SSCE0110): Habilitación oficial Docencia FPE Nivel 3 (Junta de Andalucía, nota 8,62/10, 380h, Dic.2025). Grados A+B+C habilitados. Permite diseñar e impartir formación interna en estándares de marca sin coste de consultoría externa.
-
-[ORNAMENT]
-
-EXPERIENCIA POR ACTIVOS ESTRATÉGICOS
-
-(Ordena las experiencias por RELEVANCIA al tipo de puesto "${cargo}", no por cronología. Las TOP 4-5 con desarrollo completo. Después un bloque "OTRAS EXPERIENCIAS DESTACADAS" con 3-5 hoteles más en formato breve de una línea cada uno.
-
-Formato para los TOP 4-5 más relevantes:
-
-Cargo / Rol | Nombre del Hotel (Marca/Sociedad) | Periodo
-- Verbo acción pasado + método concreto + resultado real del perfil
-- Verbo acción pasado + responsabilidad clave del rol
-- Verbo acción pasado + impacto medible si existe en el perfil
-
-Verbos válidos: Dirigí, Implanté, Lideré, Reestructuré, Negocié, Diseñé, Orquesté, Forjé, Abrí, Formé, Modernicé, Estandaricé, Coordiné, Consolidé.
-PROHIBIDO: Siendo responsable, Contribuyendo a, Apoyando, Colaborando, Gestionando (gerundio).
-
-Después de los top, añade una subsección clara titulada "OTRAS EXPERIENCIAS DESTACADAS" (en MAYÚSCULAS, en línea sola) con los hoteles restantes. SIN FECHAS, redactados de forma natural y profesional. Cada uno una sola línea bullet con esta estructura: "Hotel/Marca (Ubicación) — Rol desempeñado y aportación principal". Ejemplos del estilo correcto:
-- BlueBay Beach Club 5★ (Bahía Feliz, Gran Canaria) — Dirección de activo de lujo internacional con estándares 5 estrellas
-- Aura Hotel Algeciras 3★ (Sercotel) — Dirección operativa y posicionamiento urbano en mercado local
-- BelleVue Belsana (Mallorca) y BelleVue Aquarius (Lanzarote) — Dirección operativa en entorno vacacional insular
-- Hilton London Gatwick (Hilton International, Reino Unido) — Duty Manager / Reception Manager: rigor procedimental blue-chip y exposición a estándares internacionales (NOTA: aquí NO fui director)
-- Hotetur y Globales Groups — Trayectoria de ascenso directivo (Front Office → Assistant Director → Hotel Director)
-
-REGLA CRÍTICA: NUNCA incluyas fechas en la sección OTRAS EXPERIENCIAS DESTACADAS. NUNCA digas que fui director del Hilton — mi rol allí fue Duty Manager / Reception Manager (operativo). Incluye TODOS los hoteles relevantes del perfil que no estén en el top.)
-
-[HAIRLINE]
-
-FORMACIÓN ACADÉMICA Y ACREDITACIONES OFICIALES
-
-INSTRUCCIÓN ESTRICTA: Copia EXACTAMENTE estos 9 bullets en este orden (NO los reordenes, NO los reescribas). Cada bullet sigue el mismo orden de campos: NOMBRE DEL CURSO/TÍTULO — CÓDIGO (si aplica) — INSTITUCIÓN — HORAS — FECHA — Descripción breve (opcional). Mantén el formato literal:
-
-- Técnico en Empresas y Actividades Turísticas (TEAT) — Universidad de Cádiz, Escuela de Turismo de Jerez — Formación académica base de la trayectoria profesional
-- Docencia de la FPE — Cód. SSCE0110 — Junta de Andalucía — 380h — Dic.2025 — Habilitación oficial Grados A+B+C, nota 8,62/10 (UC1442_3 a UC1446_3)
-- IA Aplicada al Sector Administrativo — Cámara de Comercio de Cádiz — 90h — Mar.2026 — Prompt engineering, automatización y análisis predictivo aplicado a gestión hotelera
-- Desarrollo Sostenible y Gestión Ambiental — Cód. SEAG16 — SEPE — 100h — 2024 — Marcos ESG europeos y descarbonización
-- Oxford Test of English Advanced — Nivel B2 (CEFR) — University of Oxford / Cámara de Comercio del Campo de Gibraltar (ES0656) — Jun.2026 — Cert. 1085450 — Speaking C1 (146) · Listening C1 (144) · Reading B2 (135) · Writing B2 (130)
-- Inglés Comercial / Business English C1 — Cámara de Comercio de Cádiz — 60h — Abr.2026 — Negociaciones internacionales y atención premium
-- Ciberseguridad: Prevención e Incidentes — Cód. IFCT103 — SEPE — 49h — 2024 — Gestión de incidentes digitales
-- Asistencia a la Dirección Nivel 3 — Cód. ADGG0108 — IACP/Junta de Andalucía — Certificado Profesional — UC0988_3 (AAPP) · UC0980_2 (RRHH) · UC0979_2 (Tesorería)
-- Asistencia Documental y Gestión Nivel 3 — Cód. ADGG0308 — IACP/Junta de Andalucía — Certificado Profesional — UC0987_3 (sistemas información y archivo digital)
-- Prevención y Control de Legionelosis — RD 487/2022 — Formación Sanitaria Oficial — 25h — 2023
-- Título de Bachiller — Ministerio de Educación, Formación Profesional y Deportes (Reino de España) — Expedido Madrid, Oct.2025 — Registro 10497/folio 71 nº 001188002548 — Base académica oficial
-
-COMPETENCIAS TÉCNICAS CORE
-
-INSTRUCCIÓN ESTRICTA: Copia EXACTAMENTE este bloque de tabla. Los marcadores [TABLE:Título] y [/TABLE] son LITERALES (no los traduzcas ni los modifiques). Las 4 filas tienen formato CLAVE|VALOR con barra vertical, sin espacios alrededor de la barra:
-
-[TABLE:Competencias Técnicas Core]
-Operativa Hotelera|P&L · CAPEX/OPEX · GOP · GOPPAR · Revenue Management · Pricing · LQA · Forbes Standards · Pre-opening · SOPs · Asset Digitization
-Cumplimiento y Gestión|UC0988_3 · RGPD · Legionelosis RD 487/2022 · Relaciones AAPP · Gestión documental N3 · Cumplimiento ESG
-Vanguardia Digital 2026|IA Aplicada · Prompt Engineering · Automatización procesos · Ciberseguridad IFCT103 · Análisis predictivo
-Liderazgo y Equipos|Dirección equipos multiculturales · Onboarding técnico · Mentoría directiva · Habilitación docente FPE
-[/TABLE]
-
-IDIOMAS
-
-- Inglés C1 funcional — Oxford Test of English Advanced B2 oficial (Cert. 1085450, Jun.2026): Speaking C1 / Listening C1 / Reading B2 / Writing B2 · C1 contextual Hilton UK · B1 certificado previo UC9999_3
-- Alemán B1 operativo (A2 certificado UC9996_2)
-- Francés e Italiano nivel funcional
-
-DISPONIBILIDAD — Incorporación inmediata. Traslado total nacional e internacional sin restricciones geográficas.
-
-REGLAS CRÍTICAS:
-- NO MENCIONES "${emp}" en ningún punto. El CV es un documento del candidato, no una carta.
-- PROHIBIDO INVENTAR: solo datos del perfil. Ningún hotel, cifra, presupuesto, tamaño de equipo o resultado que no esté en el perfil del candidato.
-- Espeja el lenguaje genérico del sector si "${cargo}" usa términos como "revenue management", "asset management" o "Forbes standards" — usa esos términos literalmente.
-- PALABRAS PROHIBIDAS: "innovador", "apasionado", "dinámico", "proactivo", "solución innovadora", "vanguardia", "cutting-edge", "altamente cualificado", "amplia trayectoria", "demostrando capacidad", "contribuyendo a", "sólido conocimiento de".
-- El PERFIL es un párrafo NARRATIVO de 5-7 frases (no notas breves) — bien contextualizado, transmitiendo trayectoria y diferencial.
-- Los marcadores [VALOR], [ORNAMENT], [HAIRLINE] deben aparecer literalmente entre corchetes en las posiciones indicadas.`,
+7. DISPONIBILIDAD — Inmediata · Traslado total · Nacional e internacional`,
 
     email:`Redacta un EMAIL / MENSAJE LINKEDIN en español para el cargo "${cargo}" en "${emp}".
-CANDIDATO: "El Lider Puente" — 30 anos direccion hotelera + IA 2026 + C1 Ingles 2026 + SSCE0110 nota 8,62 | 635 493 853 | pacozzy@hotmail.com
+CANDIDATO: Bridge Leader 4.0 | 30 años dirección hotelera | IA 2026 | SSCE0110 nota 8,62 | 635 493 853 | pacozzy@hotmail.com
 TONO: ${t}
 
-IDENTIDAD: Este candidato no es un senior buscando empleo. Es el "Lider Puente" que une sabiduria operativa con capacidades 2026. El asunto y el primer parrafo deben transmitir esa dualidad.
-
 FORMATO EXACTO — Respeta exactamente esta estructura:
-[ASUNTO]: [Asunto impactante max 65 caracteres — debe mencionar el diferencial, no solo el cargo]
+[ASUNTO]: [Asunto impactante, máx 65 caracteres, que mencione el cargo]
 
 [CUERPO]:
-Parrafo 1 (2 lineas): Por que "${emp}" especificamente y que puede aportar este candidato que otros no pueden
-Parrafo 2 (2-3 lineas): 1-2 activos estrategicos hoteleros del perfil relevantes para "${cargo}" + Factor Wow 2026 (IA o C1 segun relevancia)
-Parrafo 3 (1-2 lineas): Propuesta concreta de reunion o llamada con disponibilidad inmediata
+Párrafo 1 (2 líneas): Por qué "${emp}" específicamente y el cargo que solicita
+Párrafo 2 (2-3 líneas): 2 logros cuantificados más relevantes para "${cargo}" (usa datos reales del candidato)
+Párrafo 3 (1-2 líneas): Propuesta de reunión o entrevista con apertura a contacto
 
 [FIRMA]:
-Francisco Javier Martinez Alba
-Director de Hotel · El Lider Puente · IA 2026 · C1 Ingles
+Francisco Javier Martínez Alba
+Senior Hospitality Executive · Bridge Leader 4.0
 Tel: 635 493 853 | pacozzy@hotmail.com
 
-REGLAS: Cuerpo maximo 120 palabras. Directo, sin jerga. Sin markdown ni asteriscos. PROHIBIDO INVENTAR datos.`,
-    ats:`Eres un experto en sistemas ATS (Applicant Tracking System) y seleccion de personal de alto nivel. Analiza la compatibilidad del candidato "El Lider Puente" con el puesto y genera un informe completo.
-
+REGLAS: Cuerpo máximo 120 palabras. Directo, ejecutivo, sin jerga. Sin markdown ni asteriscos.`
+    ,ats:`Eres un experto en sistemas ATS (Applicant Tracking System) y selección de personal. Analiza la compatibilidad del candidato con el puesto y genera un informe completo.
 PERFIL COMPLETO DEL CANDIDATO:
 ${PM}
-
 EMPRESA: "${emp}" | CARGO: "${cargo}" | SECTOR: ${s} | TONO: ${t}
 
-GENERA UN INFORME ATS COMPLETO con estas 5 secciones. Usa === como separador:
+GENERA UN INFORME ATS COMPLETO con estas 4 secciones:
 
-=== PUNTUACION ATS ESTIMADA: [X/100] ===
-Explicacion breve de la puntuacion (2-3 lineas). Menciona especificamente si el perfil "Lider Puente" (IA 2026 + 30 anos experiencia) es un differenciador para este puesto.
+══════════════════════════════════
+🤖 PUNTUACIÓN ATS ESTIMADA: [X/100]
+══════════════════════════════════
+Explicación breve de la puntuación (2-3 líneas).
 
-=== PALABRAS CLAVE ATS CRITICAS ===
+══════════════════════════════════
+🔑 PALABRAS CLAVE ATS CRÍTICAS
+══════════════════════════════════
 PRESENTES en el perfil del candidato (lista 8-10 keywords del puesto que ya tiene):
-- [keyword]: cubierta por [experiencia/certificacion especifica del perfil]
+• [keyword] — ✅ cubierta por [experiencia/certificación específica]
 
-AUSENTES o a reforzar (lista 3-5 keywords importantes que faltan o deben destacarse mas):
-- [keyword]: Recomendacion: como y donde mencionarlo en el CV
+AUSENTES o a reforzar (lista 3-5 keywords importantes que faltan o deben destacarse más):
+• [keyword] — ⚠️ Recomendación: mencionar explícitamente en CV/carta
 
-=== CAMBIOS CLAVE PARA OPTIMIZAR EL CV ===
-Lista 5-7 cambios concretos y accionables para mejorar el CV para este puesto especifico:
-1. [Cambio especifico con justificacion — siempre basado en datos reales del perfil]
+══════════════════════════════════
+✏️ CAMBIOS CLAVE PARA OPTIMIZAR EL CV
+══════════════════════════════════
+Lista 5-7 cambios concretos y accionables para mejorar el CV para este puesto específico:
+1. [Cambio específico con justificación]
 2. ...
 
-=== POSICIONAMIENTO "LIDER PUENTE" PARA ESTE PUESTO ===
-Analiza como aprovechar el diferencial del candidato para "${emp}":
-- Como presentar los 30 anos de experiencia SIN que suene a "demasiado senior"
-- Como posicionar IA 2026 + C1 ingles como activos, no como adornos
-- Narrativa recomendada: que historia contar en la entrevista para conectar con los valores de "${emp}"
-- Posible objecion del seleccionador y como contrarrestarla
+══════════════════════════════════
+🎯 RECOMENDACIONES PARA LA ENTREVISTA
+══════════════════════════════════
+3-4 recomendaciones específicas para la entrevista con "${emp}":
+• Pregunta probable: "[pregunta típica]" → Respuesta sugerida basada en el perfil del candidato
+• Argumento diferenciador: [qué destacar específicamente para "${emp}"]
+• Punto a gestionar: [posible objeción y cómo contrarrestarla]
 
-=== RECOMENDACIONES PARA LA ENTREVISTA ===
-3-4 recomendaciones especificas para la entrevista con "${emp}":
-- Pregunta probable: "[pregunta tipica]" / Respuesta sugerida basada en activos reales del perfil
-- Argumento diferenciador: el "Lider Puente" que "${emp}" no encontrara en otro candidato
-- Punto a gestionar: [posible objecion y como contrarrestarla con datos del perfil]
-
-REGLAS: Solo texto plano y ASCII. Sin markdown, sin emojis, sin caracteres especiales. Especifico para "${emp}" y "${cargo}". Solo datos reales del candidato. PROHIBIDO INVENTAR.`,
-    resumen:`Genera un RESUMEN EJECUTIVO ULTRA-BREVE adaptado al cargo y empresa.
-CANDIDATO: Francisco Javier Martinez Alba | "El Lider Puente" | 30 anos direccion hotelera | IA 2026 | C1 ingles 2026 | SSCE0110 nota 8,62 | A2 Aleman
-EMPRESA: "${emp}" | CARGO: "${cargo}" | TONO: ${t}
-
-INSTRUCCION EXACTA: Escribe UNA SOLA LINEA de MAXIMO 100 CARACTERES que sirva como tagline ejecutivo o pitch de titular para este cargo en esta empresa. Debe transmitir la dualidad del Lider Puente: experiencia operativa + capacidad 2026.
-
-EJEMPLOS DE FORMATO (no copies, adapta al cargo y empresa):
-"30 anos ops hoteleras · IA 2026 · C1 ingles · Traslado inmediato"
-"Lider Puente: sabiduria 30 anos + IA aplicada 2026 · Disponible"
-"Pre-opening experto · Forbes/LQA · IA 2026 · Incorporacion inmediata"
-
-REGLAS CRITICAS: Solo el texto del resumen, sin etiquetas ni prefijos. Maximo 100 caracteres — cuenta los caracteres antes de responder. Sin puntuacion final. Sin markdown. Solo ASCII basico.`
+REGLAS: Texto plano, sin markdown. Usa los ══ como separadores visuales. Específico para "${emp}" y "${cargo}". Usa datos reales del candidato.`
   };return P[doc]||'';}
 
 function setDStep(id,s){const el=document.getElementById('ds-'+id);if(!el)return;el.className='dstep '+(s==='active'?'sa':s==='done'?'sd':s==='err'?'se':'');const ic={active:`<div class="spinner"></div>`,done:'✅',err:'❌'};el.querySelector('.di').innerHTML=ic[s]||'';}
@@ -1545,7 +1387,7 @@ function showDOut(emp,cargo,sec,results,docsArr){
     <button class="btn btn-green btn-sm" onclick="saveDT('${eS}','${cS}','${seS}')">+ Dashboard</button>
     <button id="drive-btn" class="btn btn-dark btn-sm" onclick="uploadDossierToDrive()"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Subir a Drive</button>
   </div>`;
-  html+=docsArr.filter(d=>results[d]).map(d=>`<div class="oc"><div class="och"><div class="ocl"><span style="font-size:18px">${DCC[d].icon}</span><div><div class="oct">${d.toUpperCase()}</div><div class="octt">${DCC[d].label}</div></div></div><div style="display:flex;gap:6px"><button class="btn btn-dark btn-sm" onclick="cpOC('oc-${d}')">📋 Copiar</button><button class="btn btn-dark btn-sm" onclick="dlOC('oc-${d}','${eS}_${d}')">↓ TXT</button><button class="btn btn-dark btn-sm" onclick="uploadSingleToDrive('${d}',this)"><svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Drive</button></div></div><div class="ocb"><div class="oct-text" id="oc-${d}" contenteditable="true">${eH(results[d])}</div></div></div>`).join('');
+  html+=docsArr.filter(d=>results[d]).map(d=>`<div class="oc"><div class="och"><div class="ocl"><span style="font-size:18px">${DCC[d].icon}</span><div><div class="oct">${d.toUpperCase()}</div><div class="octt">${DCC[d].label}</div></div></div><div style="display:flex;gap:6px"><button class="btn btn-dark btn-sm" onclick="cpOC('oc-${d}')">📋 Copiar</button><button class="btn btn-dark btn-sm" onclick="dlOC('oc-${d}','${eS}_${d}')">↓ TXT</button></div></div><div class="ocb"><div class="oct-text" id="oc-${d}" contenteditable="true">${eH(results[d])}</div></div></div>`).join('');
   document.getElementById('dos-out').innerHTML=html;document.getElementById('dos-out').style.display='block';
 }
 
@@ -1557,11 +1399,9 @@ function saveDT(emp,cargo,sec){
   save();uCounts();rDash();toast('✅ Candidatura añadida al Dashboard');
 }
 
-function tDH(){const h=document.querySelector('#dh-card .dch');const b=document.getElementById('dh-list');h.classList.toggle('collapsed');b.classList.toggle('collapsed');}
 function rDH(){
   if(!data.dossierHistory.length){document.getElementById('dh-card').style.display='none';return;}
   document.getElementById('dh-card').style.display='block';
-  const cEl=document.getElementById('dh-count');if(cEl)cEl.textContent='('+data.dossierHistory.length+')';
   const sC2={hotel:'#38bdf8',docencia:'#4ade80',admin:'#a78bfa'};
   document.getElementById('dh-list').innerHTML=data.dossierHistory.slice(0,8).map((d,i)=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);cursor:pointer" onclick="lDH(${i})"><div><div style="font-size:12px;font-weight:600;color:var(--text)">${d.empresa}</div><div style="font-size:10px;color:var(--muted)">${d.cargo} · ${fD(new Date(d.timestamp).toISOString().split('T')[0])}</div></div><span style="margin-left:auto;padding:2px 7px;border-radius:100px;font-size:9px;font-weight:700;color:${sC2[d.sector]||'var(--gold)'};background:rgba(255,255,255,.05)">${{hotel:'🏨',docencia:'🎓',admin:'📋'}[d.sector]||'📋'}</span></div>`).join('');
 }
@@ -1573,14 +1413,13 @@ function lDH(i){
   showDOut(h.empresa,h.cargo,h.sector,h.docs,Object.keys(h.docs));toast('📂 Dossier cargado: '+h.empresa);
 }
 
-// GROQ API
+// CLAUDE API
 function getAPIKey(){return localStorage.getItem('fjm_api_key')||'';}
 function saveAPIKey(){
   const k=document.getElementById('api-key-input').value.trim();
-  if(!k.startsWith('gsk_')){alert('⚠️ La clave de Groq debe empezar por gsk_...');return;}
+  if(!k.startsWith('sk-ant-')){alert('⚠️ La clave de Claude debe empezar por sk-ant-...');return;}
   localStorage.setItem('fjm_api_key',k);
   document.getElementById('api-modal').style.display='none';
-  renderAPIStatus();
   toast('✅ API key guardada — ya puedes usar la búsqueda y el dossier');
 }
 function checkAPIKey(){
@@ -1591,37 +1430,29 @@ function checkAPIKey(){
   }
   return true;
 }
-async function cClaude(prompt,_retries=2){
+async function cClaude(prompt){
   const apiKey=getAPIKey();
   if(!apiKey){checkAPIKey();throw new Error('API key no configurada. Ve a Config → API Key.');}
-  const controller=new AbortController();
-  const tid=setTimeout(()=>controller.abort(),28000);
-  try{
-    const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
-      signal:controller.signal,
-      body:JSON.stringify({
-        model:'llama-3.3-70b-versatile',
-        max_tokens:2048,
-        messages:[{role:'user',content:prompt}]
-      })
-    });
-    clearTimeout(tid);
-    const d=await res.json();
-    if(!res.ok){
-      if(res.status===401){localStorage.removeItem('fjm_api_key');checkAPIKey();throw new Error('API key inválida — vuelve a introducirla');}
-      throw new Error(d.error?.message||'API error '+res.status);
-    }
-    return d.choices?.[0]?.message?.content||'';
-  }catch(e){
-    clearTimeout(tid);
-    if((e.name==='AbortError'||e.message?.includes('fetch'))&&_retries>0){
-      await new Promise(r=>setTimeout(r,1500));
-      return cClaude(prompt,_retries-1);
-    }
-    throw e;
+  const res=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'x-api-key':apiKey,
+      'anthropic-version':'2023-06-01',
+      'anthropic-dangerous-allow-browser':'true'
+    },
+    body:JSON.stringify({
+      model:'claude-haiku-4-5-20251001',
+      max_tokens:2048,
+      messages:[{role:'user',content:prompt}]
+    })
+  });
+  const d=await res.json();
+  if(!res.ok){
+    if(res.status===401){localStorage.removeItem('fjm_api_key');checkAPIKey();throw new Error('API key inválida — vuelve a introducirla');}
+    throw new Error(d.error?.message||'API error '+res.status);
   }
+  return d.content?.[0]?.text||'';
 }
 
 const PPROF=`Francisco Javier Martínez Alba. Director Hotel 30 años, Bridge Leader 4.0. IA 2026. SSCE0110 Docente FP nota 8,62. Business English C1.`;
@@ -1720,27 +1551,13 @@ async function driveFetch(url,opts={}){
   return r.json();
 }
 async function getOrCreateFolder(name,parentId){
-  let q=`name='${name.replace(/'/g,"\\'")}' and mimeType='application/vnd.google-apps.folder' and trashed=false`;
-  if(parentId)q+=` and '${parentId}' in parents`;
-  const s=await driveFetch(`https://www.googleapis.com/drive/v3/files?q=${encodeURIComponent(q)}&fields=files(id,name)&spaces=drive`);
-  if(s.files&&s.files.length>0)return s.files[0].id;
   const meta={name,mimeType:'application/vnd.google-apps.folder',...(parentId?{parents:[parentId]}:{})};
   const d=await driveFetch('https://www.googleapis.com/drive/v3/files',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(meta)});
   return d.id;
 }
-const PDF_API='https://pdf-service-sage.vercel.app/api/generate-pdf';
-async function buildPDF(titulo,empresa,cargo,contenido,tipo){
-  const res=await fetch(PDF_API,{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({tipo,titulo,empresa,cargo,contenido})
-  });
-  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error||'PDF error '+res.status);}
-  return res.arrayBuffer();
-}
-// legacy stub — kept so callers that were sync still work after await
-function _buildPDF_jsPDF_REMOVED(titulo,empresa,cargo,contenido,tipo){
+function buildPDF(titulo,empresa,cargo,contenido,tipo){
   const {jsPDF}=window.jspdf;
+  // pt units para máximo control tipográfico (igual que pdf-lib)
   const doc=new jsPDF({unit:'pt',format:'a4'});
   const W=595.28,H=841.89,ML=45,MR=45,CW=W-ML-MR;
 
@@ -2012,15 +1829,13 @@ async function uploadDossierToDrive(){
     const subName=`${emp} — ${cargo} — ${today()}`;
     btn.textContent='📁 Creando subcarpeta...';
     const folderId=await getOrCreateFolder(subName,parentId);
-    const labels={carta:'Carta de Presentación',perfil:'Perfil Ejecutivo',cv:'CV Adaptado',email:'Email LinkedIn',resumen:'Resumen Ejecutivo',ats:'Análisis ATS'};
+    const labels={carta:'Carta de Presentación',perfil:'Perfil Ejecutivo',cv:'CV Adaptado',email:'Email LinkedIn'};
     const keys=Object.keys(results).filter(k=>results[k]&&!results[k].startsWith('Error:'));
     let done=0;
     for(const k of keys){
       btn.textContent=`📄 Subiendo ${labels[k]||k}... (${done+1}/${keys.length})`;
       const txt=document.getElementById('oc-'+k)?.innerText||results[k];
-      btn.textContent=`📄 Generando ${labels[k]||k}...`;
-      const pdf=await buildPDF(labels[k]||k,emp,cargo,txt,k);
-      btn.textContent=`☁️ Subiendo ${labels[k]||k}... (${done+1}/${keys.length})`;
+      const pdf=buildPDF(labels[k]||k,emp,cargo,txt,k);
       await uploadPDF(`${k}_${emp}_FJM.pdf`,pdf,folderId);
       done++;
     }
@@ -2030,31 +1845,6 @@ async function uploadDossierToDrive(){
   }catch(err){
     toast('❌ Error Drive: '+err.message);
     btn.disabled=false;btn.innerHTML='<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Subir a Drive';
-  }
-}
-async function uploadSingleToDrive(k,btn){
-  const {emp,cargo,results}=_driveCurrentDossier;
-  if(!emp){toast('⚠️ Genera primero un dossier');return;}
-  if(!getGClientId()){toast('⚠️ Configura el Google Client ID en Config');gT('config',document.querySelectorAll('.ni')[6]);return;}
-  const labels={carta:'Carta de Presentación',perfil:'Perfil Ejecutivo',cv:'CV Adaptado',email:'Email LinkedIn',resumen:'Resumen Ejecutivo',ats:'Análisis ATS'};
-  const origHTML=btn.innerHTML;
-  try{
-    btn.disabled=true;btn.textContent='⏳...';
-    if(!_gToken)await gAuth();
-    const parentId=await getOrCreateFolder('BUSQUEDA EMPLEO - Dashboard');
-    const subName=`${emp} — ${cargo} — ${today()}`;
-    const folderId=await getOrCreateFolder(subName,parentId);
-    const txt=document.getElementById('oc-'+k)?.innerText||results[k];
-    btn.textContent='⏳ Generando PDF...';
-    const pdf=await buildPDF(labels[k]||k,emp,cargo,txt,k);
-    btn.textContent='☁️ Subiendo...';
-    await uploadPDF(`${k}_${emp}_FJM.pdf`,pdf,folderId);
-    btn.textContent='✅';
-    toast(`✅ ${labels[k]||k} subido a Drive`);
-    setTimeout(()=>{btn.disabled=false;btn.innerHTML=origHTML;},3000);
-  }catch(err){
-    toast('❌ Error Drive: '+err.message);
-    btn.disabled=false;btn.innerHTML=origHTML;
   }
 }
 
@@ -2204,16 +1994,16 @@ load();rDash();rTrack();rEmps();uCounts();renderAPIStatus();renderAdzunaStatus()
 <!-- API KEY MODAL -->
 <div id="api-modal" style="position:fixed;inset:0;background:rgba(5,10,20,.92);z-index:100;display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px)">
   <div style="background:#0d1f3c;border:1px solid rgba(201,168,76,.35);border-radius:20px;padding:32px;max-width:440px;width:90%;box-shadow:0 24px 64px rgba(0,0,0,.6)">
-    <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;margin-bottom:6px;color:#e8eaf0">🔑 Configurar Groq API</div>
-    <p style="font-size:12px;color:#7a8499;line-height:1.7;margin-bottom:20px">Para usar el Dossier Adaptativo y el análisis de vacantes necesitas una API key de Groq.<br/><strong style="color:#e8eaf0">Rápido · Gratuito · Sin límite diario generoso</strong> — lista en 2 minutos.</p>
+    <div style="font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;margin-bottom:6px;color:#e8eaf0">🤖 Configurar Claude API</div>
+    <p style="font-size:12px;color:#7a8499;line-height:1.7;margin-bottom:20px">Para usar el Dossier Adaptativo y el análisis de vacantes necesitas una API key de Anthropic (Claude).<br/><strong style="color:#e8eaf0">Mayor calidad · Sin colgones</strong> — lista en 2 minutos.</p>
     <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:11px;color:#7a8499">
       <strong style="color:#c9a84c">Cómo obtener tu API key:</strong><br/>
-      1. Ve a <a href="https://console.groq.com/keys" target="_blank" style="color:#c9a84c">console.groq.com/keys</a><br/>
-      2. Crea una cuenta o inicia sesión (gratis)<br/>
-      3. Pulsa "Create API Key"<br/>
-      4. Copia la clave que empieza por <code style="color:#e8c96a">gsk_...</code>
+      1. Ve a <a href="https://console.anthropic.com/settings/api-keys" target="_blank" style="color:#c9a84c">console.anthropic.com</a><br/>
+      2. Crea una cuenta o inicia sesión<br/>
+      3. Pulsa "Create Key"<br/>
+      4. Copia la clave que empieza por <code style="color:#e8c96a">sk-ant-...</code>
     </div>
-    <input id="api-key-input" type="password" placeholder="gsk_..." style="width:100%;padding:12px 14px;border:1px solid rgba(201,168,76,.35);border-radius:10px;background:rgba(255,255,255,.06);color:#e8eaf0;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-bottom:12px" oninput="document.getElementById('api-save-btn').style.opacity=this.value.startsWith('gsk_')?'1':'.4'"/>
+    <input id="api-key-input" type="password" placeholder="sk-ant-..." style="width:100%;padding:12px 14px;border:1px solid rgba(201,168,76,.35);border-radius:10px;background:rgba(255,255,255,.06);color:#e8eaf0;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;margin-bottom:12px" oninput="document.getElementById('api-save-btn').style.opacity=this.value.startsWith('sk-ant-')?'1':'.4'"/>
     <div style="display:flex;gap:8px">
       <button id="api-save-btn" onclick="saveAPIKey()" style="flex:1;padding:12px;border-radius:10px;background:linear-gradient(135deg,#c9a84c,#e8c96a);color:#0a1628;border:none;font-family:'DM Sans',sans-serif;font-weight:700;font-size:13px;cursor:pointer;opacity:.4;transition:all .2s">Guardar y continuar</button>
       <button onclick="document.getElementById('api-modal').style.display='none'" style="padding:12px 18px;border-radius:10px;background:rgba(255,255,255,.07);color:#7a8499;border:1px solid rgba(255,255,255,.1);font-family:'DM Sans',sans-serif;cursor:pointer;font-size:12px">Ahora no</button>
